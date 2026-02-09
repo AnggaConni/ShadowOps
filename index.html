@@ -360,90 +360,244 @@
         
         // EXPANDED DUMMY LOGS (5-12 entries per person)
         const logsA = [
-            { date: "Today, 09:30", text: "Coordination meeting with venue vendor (JCC).", period: 'week' },
-            { date: "Yesterday, 14:00", text: "Spice sample collection from Maluku arrives.", period: 'week' },
-            { date: "Tue, 10:00", text: "Approved draft layout for the main exhibition hall.", period: 'week' },
-            { date: "Mon, 13:00", text: "Budget review for catering services.", period: 'week' },
-            { date: "Last Fri", text: "Report submitted to HQ regarding Phase 1.", period: 'month' },
-            { date: "Last Thu", text: "Zoom call with Ministry of Trade.", period: 'month' },
-            { date: "Last Wed", text: "Selected 3 keynote speakers for the opening.", period: 'month' },
-            { date: "Last Mon", text: "Initial deposit paid to contractor.", period: 'month' }
-        ];
+    // --- WEEKLY (Added 5 lines) ---
+    { date: "Today, 11:45", text: "Final layout walkthrough with fire safety officer.", period: 'week' },
+    { date: "Today, 09:30", text: "Coordination meeting with venue vendor (JCC).", period: 'week' },
+    { date: "Yesterday, 16:30", text: "VIP guest list synchronization with protocol team.", period: 'week' },
+    { date: "Yesterday, 14:00", text: "Spice sample collection from Maluku arrives.", period: 'week' },
+    { date: "Wed, 09:00", text: "Technical rehearsal for opening ceremony lighting.", period: 'week' },
+    { date: "Tue, 10:00", text: "Approved draft layout for the main exhibition hall.", period: 'week' },
+    { date: "Mon, 13:00", text: "Budget review for catering services.", period: 'week' },
+    
+    // --- MONTHLY (Massive Expansion) ---
+    { date: "Last Fri", text: "Report submitted to HQ regarding Phase 1.", period: 'month' },
+    { date: "Last Thu", text: "Zoom call with Ministry of Trade.", period: 'month' },
+    { date: "Last Wed", text: "Selected 3 keynote speakers for the opening.", period: 'month' },
+    { date: "Last Mon", text: "Initial deposit paid to contractor.", period: 'month' },
+    { date: "Jan 28", text: "Crisis management meeting regarding cargo delay.", period: 'month' },
+    { date: "Jan 27", text: "Reviewing 50+ booth design submissions from tenants.", period: 'month' },
+    { date: "Jan 26", text: "Permit application submitted to Polda Metro Jaya.", period: 'month' },
+    { date: "Jan 25", text: "Procurement meeting for eco-friendly grandiose wall.", period: 'month' },
+    { date: "Jan 24", text: "Drafting press release for media partners.", period: 'month' },
+    { date: "Jan 23", text: "Site survey for backup generator placement.", period: 'month' },
+    { date: "Jan 22", text: "Evaluation of security vendor proposals (3 candidates).", period: 'month' },
+    { date: "Jan 20", text: "Merchandise production sampling (Tote bags & Lanyards).", period: 'month' },
+    { date: "Jan 18", text: "Quarterly budget projection finalized.", period: 'month' },
+    { date: "Jan 15", text: "Kick-off meeting with creative agency.", period: 'month' },
+    { date: "Jan 12", text: "Signing MoU with main sponsor (Bank Mandiri).", period: 'month' },
+    { date: "Jan 10", text: "Concept presentation to Steering Committee.", period: 'month' },
+    { date: "Jan 08", text: "Hotel block booking for international delegates.", period: 'month' },
+    { date: "Jan 05", text: "Internal team restructuring for Q1.", period: 'month' }
+];
 
-        const logsSiti = [
-            { date: "Today, 08:00", text: "On-site visit to Batik Danar Hadi workshop.", period: 'week' },
-            { date: "Wed, 11:30", text: "Meeting with local artisans regarding natural dyes.", period: 'week' },
-            { date: "Tue, 15:45", text: "Data entry for 50 new motifs into the database.", period: 'week' },
-            { date: "Mon, 09:00", text: "Completed inventory check in Pekalongan.", period: 'week' },
-            { date: "Last Fri", text: "Drafted preservation guidelines for coastal batik.", period: 'month' },
-            { date: "Last Thu", text: "Submitted monthly report for Batik preservation.", period: 'month' },
-            { date: "Last Wed", text: "Workshop facilitation for young apprentices.", period: 'month' },
-            { date: "Last Tue", text: "Procurement of wax and canting tools.", period: 'month' },
-            { date: "Last Mon", text: "Coordination with Museum Tekstil Jakarta.", period: 'month' }
-        ];
+const logsSiti = [
+    // --- WEEKLY (Added 5 lines) ---
+    { date: "Today, 13:00", text: "Quality control check on indigo paste batch #45.", period: 'week' },
+    { date: "Today, 08:00", text: "On-site visit to Batik Danar Hadi workshop.", period: 'week' },
+    { date: "Thu, 14:20", text: "Digitizing 20 vintage 'Pagi-Sore' patterns.", period: 'week' },
+    { date: "Wed, 11:30", text: "Meeting with local artisans regarding natural dyes.", period: 'week' },
+    { date: "Tue, 15:45", text: "Data entry for 50 new motifs into the database.", period: 'week' },
+    { date: "Mon, 09:00", text: "Completed inventory check in Pekalongan.", period: 'week' },
+    
+    // --- MONTHLY (Massive Expansion) ---
+    { date: "Last Fri", text: "Drafted preservation guidelines for coastal batik.", period: 'month' },
+    { date: "Last Thu", text: "Submitted monthly report for Batik preservation.", period: 'month' },
+    { date: "Last Wed", text: "Workshop facilitation for young apprentices.", period: 'month' },
+    { date: "Last Tue", text: "Procurement of wax and canting tools.", period: 'month' },
+    { date: "Last Mon", text: "Coordination with Museum Tekstil Jakarta.", period: 'month' },
+    { date: "Jan 29", text: "Field research: Lasem Chinese-influence motifs.", period: 'month' },
+    { date: "Jan 28", text: "Oral history recording of Ibu Sudarmi (Age 85).", period: 'month' },
+    { date: "Jan 26", text: "Analyzing fabric degradation in Storage Room B.", period: 'month' },
+    { date: "Jan 25", text: "Meeting with chemical waste disposal vendor.", period: 'month' },
+    { date: "Jan 23", text: "Drafting proposal for UNESCO ICH safeguarding grant.", period: 'month' },
+    { date: "Jan 21", text: "Cataloging donation from Royal Palace archive.", period: 'month' },
+    { date: "Jan 19", text: "Testing pH levels of local river water sources.", period: 'month' },
+    { date: "Jan 17", text: "Facilitating 'Mencanting' class for foreign diplomats.", period: 'month' },
+    { date: "Jan 15", text: "Sourcing organic cotton from Tuban farmers.", period: 'month' },
+    { date: "Jan 12", text: "Reviewing translation of Batik philosophical meanings.", period: 'month' },
+    { date: "Jan 10", text: "Repairing humidity control system in gallery.", period: 'month' },
+    { date: "Jan 08", text: "Scanning ancient copper stamps (Cap).", period: 'month' },
+    { date: "Jan 04", text: "Annual stock opname of silk materials.", period: 'month' }
+];
 
-        const logsBudi = [
-            { date: "Thu, 10:15", text: "Wayang prototype approved by school principal.", period: 'week' },
-            { date: "Wed, 13:00", text: "Teacher training session (Batch 2).", period: 'week' },
-            { date: "Tue, 09:00", text: "Curriculum alignment meeting with Kemdikbud.", period: 'week' },
-            { date: "Last Fri", text: "Vendor payment for puppets processed.", period: 'month' },
-            { date: "Last Thu", text: "School visit to SDN 01 Menteng.", period: 'month' },
-            { date: "Last Wed", text: "Feedback collection from students.", period: 'month' },
-            { date: "Last Tue", text: "Drafted Q3 activity plan.", period: 'month' },
-            { date: "Last Mon", text: "Drafted curriculum for Q3.", period: 'month' }
-        ];
+const logsBudi = [
+    // --- WEEKLY (Added 5 lines) ---
+    { date: "Today, 08:30", text: "Observing pilot class implementation at SDN 03.", period: 'week' },
+    { date: "Thu, 16:00", text: "Uploading tutorial videos to the e-learning portal.", period: 'week' },
+    { date: "Thu, 10:15", text: "Wayang prototype approved by school principal.", period: 'week' },
+    { date: "Wed, 13:00", text: "Teacher training session (Batch 2).", period: 'week' },
+    { date: "Tue, 09:00", text: "Curriculum alignment meeting with Kemdikbud.", period: 'week' },
+    { date: "Mon, 14:00", text: "Drafting quiz questions for Module 4.", period: 'week' },
 
-        const logsDewi = [
-            { date: "Thu, 13:45", text: "Gamelan tuning maintenance completed.", period: 'week' },
-            { date: "Wed, 10:00", text: "Recording session for archival purposes.", period: 'week' },
-            { date: "Tue, 14:30", text: "Meeting with ISI Surakarta regarding experts.", period: 'week' },
-            { date: "Mon, 11:00", text: "Review of audio equipment rental quotes.", period: 'week' },
-            { date: "Last Fri", text: "Coordination with music conservatory.", period: 'week' },
-            { date: "Last Thu", text: "Weekly progress report sent.", period: 'month' },
-            { date: "Last Tue", text: "Budget adjustment request sent.", period: 'month' },
-            { date: "Last Mon", text: "Venue booking for year-end concert.", period: 'month' }
-        ];
+    // --- MONTHLY (Massive Expansion) ---
+    { date: "Last Fri", text: "Vendor payment for puppets processed.", period: 'month' },
+    { date: "Last Thu", text: "School visit to SDN 01 Menteng.", period: 'month' },
+    { date: "Last Wed", text: "Feedback collection from students.", period: 'month' },
+    { date: "Last Tue", text: "Drafted Q3 activity plan.", period: 'month' },
+    { date: "Last Mon", text: "Drafted curriculum for Q3.", period: 'month' },
+    { date: "Jan 29", text: "Focus Group Discussion with art teachers.", period: 'month' },
+    { date: "Jan 27", text: "Sourcing recycled materials for student puppet kits.", period: 'month' },
+    { date: "Jan 25", text: "Meeting with parents association regarding extracurriculars.", period: 'month' },
+    { date: "Jan 24", text: "Finalizing storyboard for 'Ramayana for Kids' animation.", period: 'month' },
+    { date: "Jan 22", text: "Budget allocation for regional teacher workshops.", period: 'month' },
+    { date: "Jan 20", text: "Analyzing pre-test scores from 5 pilot schools.", period: 'month' },
+    { date: "Jan 18", text: "Coordination with Dinas Pendidikan for venue usage.", period: 'month' },
+    { date: "Jan 15", text: "Editing gamification handbook for facilitators.", period: 'month' },
+    { date: "Jan 14", text: "Procurement of 200 units of Wayang Kardus.", period: 'month' },
+    { date: "Jan 11", text: "Webinar speaker: 'Local Wisdom in Modern Education'.", period: 'month' },
+    { date: "Jan 09", text: "Reviewing accessibility features for diverse learners.", period: 'month' },
+    { date: "Jan 06", text: "Submission of annual impact report.", period: 'month' },
+    { date: "Jan 05", text: "Initial roadmap planning for Semester 1.", period: 'month' }
+];
 
-        const logsEko = [
-            { date: "Today, 10:00", text: "Safety briefing for workshop participants.", period: 'week' },
-            { date: "Wed, 15:20", text: "Kris smithing workshop venue booked.", period: 'week' },
-            { date: "Tue, 11:00", text: "Metallurgy analysis report received.", period: 'week' },
-            { date: "Last Fri", text: "Invitation letters sent to Empu (masters).", period: 'month' },
-            { date: "Last Wed", text: "Participant list finalized (20 pax).", period: 'month' },
-            { date: "Last Mon", text: "Raw material (iron/nickel) sourcing confirmed.", period: 'month' }
-        ];
+const logsDewi = [
+    // --- WEEKLY (Added 5 lines) ---
+    { date: "Fri, 10:00", text: "Final sound check for virtual concert streaming.", period: 'week' },
+    { date: "Thu, 13:45", text: "Gamelan tuning maintenance completed.", period: 'week' },
+    { date: "Wed, 16:30", text: "Uploading metadata for 100 audio tracks.", period: 'week' },
+    { date: "Wed, 10:00", text: "Recording session for archival purposes.", period: 'week' },
+    { date: "Tue, 14:30", text: "Meeting with ISI Surakarta regarding experts.", period: 'week' },
+    { date: "Mon, 11:00", text: "Review of audio equipment rental quotes.", period: 'week' },
 
-        const logsGita = [
-            { date: "Thu, 14:00", text: "Fair trade certification documents reviewed.", period: 'week' },
-            { date: "Tue, 09:30", text: "Coordination with Wamena local gov.", period: 'week' },
-            { date: "Mon, 08:30", text: "Video conference with Jayapura office.", period: 'week' },
-            { date: "Last Fri", text: "Material shipment delayed due to weather.", period: 'month' },
-            { date: "Last Thu", text: "Training module for weavers translation completed.", period: 'month' },
-            { date: "Last Wed", text: "Market access study published.", period: 'month' },
-            { date: "Last Mon", text: "Grant proposal submitted for expansion.", period: 'month' }
-        ];
+    // --- MONTHLY (Massive Expansion) ---
+    { date: "Last Fri", text: "Coordination with music conservatory.", period: 'week' },
+    { date: "Last Thu", text: "Weekly progress report sent.", period: 'month' },
+    { date: "Last Tue", text: "Budget adjustment request sent.", period: 'month' },
+    { date: "Last Mon", text: "Venue booking for year-end concert.", period: 'month' },
+    { date: "Jan 30", text: "Restoration of 1950s reel-to-reel tapes.", period: 'month' },
+    { date: "Jan 28", text: "Meeting with Spotify regarding traditional playlists.", period: 'month' },
+    { date: "Jan 26", text: "Acoustic treatment installation in Studio B.", period: 'month' },
+    { date: "Jan 25", text: "Interviewing candidates for Sound Engineer role.", period: 'month' },
+    { date: "Jan 23", text: "Cataloging sheet music from the Kraton archive.", period: 'month' },
+    { date: "Jan 21", text: "Procurement of high-fidelity condenser microphones.", period: 'month' },
+    { date: "Jan 19", text: "Field recording: Village folk songs in Banyumas.", period: 'month' },
+    { date: "Jan 17", text: "Copyright clearance for collaborative composition.", period: 'month' },
+    { date: "Jan 15", text: "Server maintenance for digital asset management system.", period: 'month' },
+    { date: "Jan 12", text: "Collaborative workshop with Jazz musicians.", period: 'month' },
+    { date: "Jan 10", text: "Writing liner notes for upcoming album release.", period: 'month' },
+    { date: "Jan 07", text: "Inventory check of brass instruments.", period: 'month' },
+    { date: "Jan 04", text: "Meeting with ethnomusicologists from UCLA.", period: 'month' },
+    { date: "Jan 02", text: "Annual calibration of mixing consoles.", period: 'month' }
+];
 
-        const logsSomsak = [
-            { date: "Today, 08:00", text: "Water quality sampling at Station A4.", period: 'week' },
-            { date: "Thu, 09:00", text: "Meeting with Mekong River Commission.", period: 'week' },
-            { date: "Wed, 16:00", text: "Data synchronization with Laos team.", period: 'week' },
-            { date: "Tue, 14:00", text: "Hydrological survey data received.", period: 'week' },
-            { date: "Last Fri", text: "Community interview results compiled.", period: 'month' },
-            { date: "Last Thu", text: "Fish migration pattern chart updated.", period: 'month' },
-            { date: "Last Mon", text: "Q2 Impact Assessment uploaded.", period: 'month' },
-            { date: "Last week", text: "Drone survey footage analyzed.", period: 'month' }
-        ];
+const logsEko = [
+    // --- WEEKLY (Added 5 lines) ---
+    { date: "Today, 10:00", text: "Safety briefing for workshop participants.", period: 'week' },
+    { date: "Thu, 13:00", text: "Inspection of charcoal quality for smelting.", period: 'week' },
+    { date: "Wed, 15:20", text: "Kris smithing workshop venue booked.", period: 'week' },
+    { date: "Wed, 09:00", text: "Ritual preparation (Sesajen) for new forging cycle.", period: 'week' },
+    { date: "Tue, 11:00", text: "Metallurgy analysis report received.", period: 'week' },
+    { date: "Mon, 14:45", text: "Repairing the main bellows (ubub).", period: 'week' },
 
-        const logsMalai = [
-            { date: "Fri, 11:00", text: "Site inspection at Ayutthaya (Sector 3).", period: 'week' },
-            { date: "Thu, 13:00", text: "Visitor flow management plan drafted.", period: 'week' },
-            { date: "Wed, 09:00", text: "Meeting with brick conservation experts.", period: 'week' },
-            { date: "Tue, 10:30", text: "Structural integrity sensor calibration.", period: 'week' },
-            { date: "Last Fri", text: "Drainage system cleaning completed.", period: 'month' },
-            { date: "Last Wed", text: "Restoration blueprints approved by Ministry.", period: 'month' },
-            { date: "Last Mon", text: "Emergency consolidation of West wall.", period: 'month' },
-            { date: "Last week", text: "Report on lichen growth submitted.", period: 'month' }
-        ];
+    // --- MONTHLY (Massive Expansion) ---
+    { date: "Last Fri", text: "Invitation letters sent to Empu (masters).", period: 'month' },
+    { date: "Last Wed", text: "Participant list finalized (20 pax).", period: 'month' },
+    { date: "Last Mon", text: "Raw material (iron/nickel) sourcing confirmed.", period: 'month' },
+    { date: "Jan 29", text: "Acquisition of meteorite ore sample for Pamor.", period: 'month' },
+    { date: "Jan 27", text: "Cleaning and oiling (Warangan) of 50 museum pieces.", period: 'month' },
+    { date: "Jan 26", text: "Designing wooden sheath (Warangka) templates.", period: 'month' },
+    { date: "Jan 24", text: "Discussion with chemist regarding arsenic usage safety.", period: 'month' },
+    { date: "Jan 22", text: "Documentation of 'Tangguh' identification methods.", period: 'month' },
+    { date: "Jan 20", text: "Meeting with Indonesian Keris Brotherhood.", period: 'month' },
+    { date: "Jan 18", text: "Translating old Javanese manuscripts on metalworking.", period: 'month' },
+    { date: "Jan 16", text: "Heat treatment testing on new alloy blend.", period: 'month' },
+    { date: "Jan 14", text: "Guest lecture at Fine Arts Faculty.", period: 'month' },
+    { date: "Jan 11", text: "Procurement of sandalwood oil for preservation.", period: 'month' },
+    { date: "Jan 09", text: "Reviewing ventilation system in the forge.", period: 'month' },
+    { date: "Jan 06", text: "Filing patent for new forging tool ergonomics.", period: 'month' },
+    { date: "Jan 05", text: "Exhibition layout planning: 'Iron & Spirit'.", period: 'month' },
+    { date: "Jan 03", text: "Coordination with shipping for overseas exhibit.", period: 'month' }
+];
+
+const logsGita = [
+    // --- WEEKLY (Added 5 lines) ---
+    { date: "Today, 09:00", text: "Logistics check for cargo flight to Wamena.", period: 'week' },
+    { date: "Thu, 14:00", text: "Fair trade certification documents reviewed.", period: 'week' },
+    { date: "Wed, 16:00", text: "Quality assurance of Noken bags batch #12.", period: 'week' },
+    { date: "Tue, 09:30", text: "Coordination with Wamena local gov.", period: 'week' },
+    { date: "Mon, 13:00", text: "Briefing with field facilitators regarding safety.", period: 'week' },
+    { date: "Mon, 08:30", text: "Video conference with Jayapura office.", period: 'week' },
+
+    // --- MONTHLY (Massive Expansion) ---
+    { date: "Last Fri", text: "Material shipment delayed due to weather.", period: 'month' },
+    { date: "Last Thu", text: "Training module for weavers translation completed.", period: 'month' },
+    { date: "Last Wed", text: "Market access study published.", period: 'month' },
+    { date: "Last Mon", text: "Grant proposal submitted for expansion.", period: 'month' },
+    { date: "Jan 29", text: "Negotiating shipping rates with Susi Air.", period: 'month' },
+    { date: "Jan 27", text: "Community health check program coordination.", period: 'month' },
+    { date: "Jan 25", text: "Surveying new fiber sources in Baliem Valley.", period: 'month' },
+    { date: "Jan 23", text: "Financial literacy workshop for artisan groups.", period: 'month' },
+    { date: "Jan 21", text: "Meeting with potential buyers from Japan.", period: 'month' },
+    { date: "Jan 19", text: "Resolving satellite internet connectivity issues.", period: 'month' },
+    { date: "Jan 17", text: "Documentation of traditional knotting techniques.", period: 'month' },
+    { date: "Jan 15", text: "Annual stakeholder meeting in Jayapura.", period: 'month' },
+    { date: "Jan 13", text: "Conflict resolution mediation between two village groups.", period: 'month' },
+    { date: "Jan 10", text: "Drafting sustainability report for donor.", period: 'month' },
+    { date: "Jan 08", text: "Procurement of solar lamps for night weaving.", period: 'month' },
+    { date: "Jan 06", text: "Recruitment of local Papua program officer.", period: 'month' },
+    { date: "Jan 04", text: "Reviewing coffee supply chain integration plan.", period: 'month' }
+];
+
+const logsSomsak = [
+    // --- WEEKLY (Added 5 lines) ---
+    { date: "Today, 08:00", text: "Water quality sampling at Station A4.", period: 'week' },
+    { date: "Fri, 10:30", text: "Drone battery charging and firmware update.", period: 'week' },
+    { date: "Thu, 09:00", text: "Meeting with Mekong River Commission.", period: 'week' },
+    { date: "Wed, 16:00", text: "Data synchronization with Laos team.", period: 'week' },
+    { date: "Tue, 14:00", text: "Hydrological survey data received.", period: 'week' },
+    { date: "Mon, 11:00", text: "Boat engine maintenance schedule.", period: 'week' },
+
+    // --- MONTHLY (Massive Expansion) ---
+    { date: "Last Fri", text: "Community interview results compiled.", period: 'month' },
+    { date: "Last Thu", text: "Fish migration pattern chart updated.", period: 'month' },
+    { date: "Last Mon", text: "Q2 Impact Assessment uploaded.", period: 'month' },
+    { date: "Last week", text: "Drone survey footage analyzed.", period: 'month' },
+    { date: "Jan 30", text: "Calibration of sediment sensors.", period: 'month' },
+    { date: "Jan 28", text: "Conference call with WWF regarding Irrawaddy Dolphin.", period: 'month' },
+    { date: "Jan 26", text: "Reporting illegal sand mining activity to authorities.", period: 'month' },
+    { date: "Jan 24", text: "Database migration for 10-year historical data.", period: 'month' },
+    { date: "Jan 22", text: "Training villagers on simple water testing kits.", period: 'month' },
+    { date: "Jan 20", text: "Erosion impact modeling simulation run.", period: 'month' },
+    { date: "Jan 18", text: "Drafting policy brief on dam impact.", period: 'month' },
+    { date: "Jan 16", text: "Visa processing for cross-border field trip.", period: 'month' },
+    { date: "Jan 14", text: "Purchase of new waterproof tablets for field team.", period: 'month' },
+    { date: "Jan 11", text: "Meeting with fishery department.", period: 'month' },
+    { date: "Jan 09", text: "Analyzing satellite imagery for flood prediction.", period: 'month' },
+    { date: "Jan 07", text: "Presenting findings at Regional Water Forum.", period: 'month' },
+    { date: "Jan 05", text: "Annual budget reconciliation.", period: 'month' },
+    { date: "Jan 03", text: "Installation of telemetry station at Chiang Khong.", period: 'month' }
+];
+
+const logsMalai = [
+    // --- WEEKLY (Added 5 lines) ---
+    { date: "Fri, 11:00", text: "Site inspection at Ayutthaya (Sector 3).", period: 'week' },
+    { date: "Thu, 15:30", text: "Briefing security team on night shift protocols.", period: 'week' },
+    { date: "Thu, 13:00", text: "Visitor flow management plan drafted.", period: 'week' },
+    { date: "Wed, 09:00", text: "Meeting with brick conservation experts.", period: 'week' },
+    { date: "Tue, 10:30", text: "Structural integrity sensor calibration.", period: 'week' },
+    { date: "Mon, 08:00", text: "Weekly cleanup coordination with volunteers.", period: 'week' },
+
+    // --- MONTHLY (Massive Expansion) ---
+    { date: "Last Fri", text: "Drainage system cleaning completed.", period: 'month' },
+    { date: "Last Wed", text: "Restoration blueprints approved by Ministry.", period: 'month' },
+    { date: "Last Mon", text: "Emergency consolidation of West wall.", period: 'month' },
+    { date: "Last week", text: "Report on lichen growth submitted.", period: 'month' },
+    { date: "Jan 30", text: "3D Laser scanning of Wat Chaiwatthanaram.", period: 'month' },
+    { date: "Jan 28", text: "Chemical treatment trial on sandstone surfaces.", period: 'month' },
+    { date: "Jan 26", text: "Meeting with French archaeological mission.", period: 'month' },
+    { date: "Jan 25", text: "Training session for local tour guides.", period: 'month' },
+    { date: "Jan 23", text: "Excavation permit renewal application.", period: 'month' },
+    { date: "Jan 21", text: "Cataloging pottery shards from Trench 4.", period: 'month' },
+    { date: "Jan 19", text: "Impact assessment of new lighting installation.", period: 'month' },
+    { date: "Jan 17", text: "Reviewing souvenir vendor zoning regulations.", period: 'month' },
+    { date: "Jan 15", text: "Disaster risk reduction workshop (Flood focus).", period: 'month' },
+    { date: "Jan 13", text: "Public consultation with nearby community.", period: 'month' },
+    { date: "Jan 11", text: "Updating signage texts to 3 languages.", period: 'month' },
+    { date: "Jan 09", text: "Inspection of tourist walkways for safety.", period: 'month' },
+    { date: "Jan 06", text: "Report writing: 'Decade of Conservation'.", period: 'month' },
+    { date: "Jan 04", text: "Meeting with landscape architects.", period: 'month' },
+    { date: "Jan 02", text: "Annual inventory of excavation tools.", period: 'month' }
+];
         
         const massiveData = {
             id: "HQ", type: "HQ", name: "UNESCO HQ", owner: "ADG/CLT", status: "Active",
