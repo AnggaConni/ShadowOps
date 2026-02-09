@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>International Shadow Ops</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0077CC;
+            --secondary: #F4F6F8;
+            --line-color: #94a3b8;
+            --highlight-color: #f59e0b;
+        }
+        body { font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: var(--secondary); }
+        .glass-panel { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2); box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); }
+
+        /* --- TREE VISUALIZATION STYLES --- */
+        .tree { white-space: nowrap; padding: 50px; display: inline-block; min-width: 100%; text-align: center; }
+        .tree ul { padding-top: 20px; position: relative; transition: all 0.5s; display: flex; justify-content: center; gap: 10px; }
+        .tree li { float: left; text-align: center; list-style-type: none; position: relative; padding: 20px 5px 0 5px; transition: all 0.5s; }
+        
+        /* Connector Lines */
+        .tree li::before, .tree li::after { content: ''; position: absolute; top: 0; right: 50%; border-top: 2px solid var(--line-color); width: 50%; height: 20px; transition: all 0.3s; }
+        .tree li::after { right: auto; left: 50%; border-left: 2px solid var(--line-color); }
+        .tree li:only-child::after, .tree li:only-child::before { display: none; }
+        .tree li:only-child { padding-top: 0; }
+        .tree li:first-child::before, .tree li:last-child::after { border: 0 none; }
+        .tree li:last-child::before { border-right: 2px solid var(--line-color); border-radius: 0 5px 0 0; }
+        .tree li:first-child::after { border-radius: 5px 0 0 0; }
+        .tree ul ul::before { content: ''; position: absolute; top: 0; left: 50%; border-left: 2px solid var(--line-color); width: 0; height: 20px; }
+
+        /* Node Cards */
+        .tree-card { 
+            background: white; border: 1px solid #cbd5e1; 
+            padding: 8px 12px; border-radius: 6px; 
+            display: inline-block; min-width: 120px; max-width: 160px;
+            transition: all 0.3s; cursor: pointer; position: relative; z-index: 10; 
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05); white-space: normal;
+        }
+        .tree-card:hover { border-color: var(--primary); transform: translateY(-3px); box-shadow: 0 8px 15px rgba(0,0,0,0.1); }
+        
+        /* Specific Styles */
+        .type-HQ { border-top: 4px solid #0077CC; background: #f0f9ff; font-size: 1.1em; }
+        .type-Regional { border-top: 4px solid #0ea5e9; background: #fff; }
+        .type-Theme { border-left: 4px solid #8b5cf6; text-align: left; }
+        .type-Focal { border-left: 4px solid #f59e0b; text-align: left; background: #fffbeb; }
+        .type-Activity { border-left: 4px solid #10b981; text-align: left; background: #f0fdf4; min-width: 140px; }
+
+        /* Hover Path Highlight */
+        .active-path > .tree-card { border-color: var(--highlight-color); background: #fffbeb; }
+        .active-path::before, .active-path::after { border-color: var(--highlight-color) !important; width: 50.5%; }
+        ul.active-path::before { border-color: var(--highlight-color) !important; }
+
+        /* Canvas & Controls */
+        #workflow-container { width: 100%; height: 100%; overflow: hidden; background-image: radial-gradient(#cbd5e1 1px, transparent 1px); background-size: 20px 20px; cursor: grab; }
+        #workflow-container:active { cursor: grabbing; }
+        #workflow-canvas { transform-origin: center top; transition: transform 0.3s ease-out; }
+
+        /* --- MODAL STYLES --- */
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 50; display: flex; justify-content: center; align-items: center; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
+        .modal-overlay.open { opacity: 1; pointer-events: auto; }
+        .modal-content { background: white; width: 90%; max-width: 600px; max-height: 85vh; overflow-y: auto; border-radius: 12px; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1); transform: scale(0.9); transition: transform 0.3s; }
+        .modal-overlay.open .modal-content { transform: scale(1); }
+
+        .timeline-item { position: relative; padding-left: 20px; border-left: 2px solid #e2e8f0; padding-bottom: 20px; }
+        .timeline-item::before { content: ''; position: absolute; left: -5px; top: 0; width: 8px; height: 8px; border-radius: 50%; background: #0077CC; }
+        .timeline-item:last-child { border-left: transparent; }
+
+        .badge { padding: 2px 6px; border-radius: 4px; font-size: 10px; font-weight: bold; margin-right: 4px; display: inline-block; margin-bottom: 2px;}
+        .badge-sdg { background: #E5243B; color: white; }
+        .badge-gender { background: #FF69B4; color: white; }
+        .badge-sids { background: #00BFFF; color: white; }
+    </style>
+</head>
+<body class="text-slate-800 h-screen flex flex-col overflow-hidden">
+
+    <!-- Header -->
+    <header class="bg-white border-b border-slate-200 h-16 flex items-center justify-between px-6 shadow-sm z-20">
+        <div class="flex items-center gap-3">
+            <div class="w-8 h-8 bg-[#0077CC] rounded text-white flex items-center justify-center font-bold text-lg">IO</div>
+            <div>
+                <h1 class="font-bold text-slate-800 leading-tight">Shadow Ops System</h1>
+                <p class="text-xs text-slate-500">Global Operations Map</p>
+            </div>
+        </div>
+        <div class="flex items-center gap-4">
+            <div class="text-right">
+                <p class="text-xs text-slate-400 uppercase font-bold">Logged In As</p>
+                <p class="text-sm font-semibold text-[#0077CC] flex items-center gap-2">
+                    <i class="fas fa-user-circle"></i> Angga (Focal Point)
+                </p>
+            </div>
+        </div>
+    </header>
+
+    <div class="flex flex-1 overflow-hidden">
+        <!-- Sidebar -->
+        <aside class="w-20 bg-slate-900 text-slate-300 flex flex-col items-center py-6 gap-6 z-20 shadow-xl">
+            <button onclick="switchMode('workflow')" id="btn-workflow" class="nav-btn active p-3 rounded-xl hover:bg-slate-700 text-[#0077CC] bg-slate-800 transition" title="Workflow Map">
+                <i class="fas fa-sitemap text-xl"></i>
+            </button>
+            <button onclick="switchMode('micro')" id="btn-micro" class="nav-btn p-3 rounded-xl hover:bg-slate-700 hover:text-white transition" title="Micro Input">
+                <i class="fas fa-microphone-lines text-xl"></i>
+            </button>
+            <button onclick="switchMode('macro')" id="btn-macro" class="nav-btn p-3 rounded-xl hover:bg-slate-700 hover:text-white transition" title="Macro Dashboard">
+                <i class="fas fa-chart-pie text-xl"></i>
+            </button>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 relative bg-[#F4F6F8]">
+            
+            <!-- 1. VIEW: WORKFLOW (Hierarchy Map) -->
+            <div id="view-workflow" class="w-full h-full relative">
+                <div class="absolute top-6 right-6 z-30 flex flex-col gap-2">
+                    <button onclick="autoFitTree()" class="bg-white p-2 rounded shadow text-green-600 hover:text-green-700 font-bold text-xs"><i class="fas fa-compress-arrows-alt mr-1"></i> FIT</button>
+                    <button onclick="zoomIn()" class="bg-white p-2 rounded shadow text-slate-600 hover:text-[#0077CC]"><i class="fas fa-plus"></i></button>
+                    <button onclick="zoomOut()" class="bg-white p-2 rounded shadow text-slate-600 hover:text-[#0077CC]"><i class="fas fa-minus"></i></button>
+                </div>
+                
+                <div class="absolute bottom-6 left-6 z-30 bg-white/80 p-3 rounded-lg backdrop-blur text-xs text-slate-500 border border-slate-200">
+                    <p><b>Tips:</b> Gunakan scroll mouse untuk zoom, drag untuk geser.</p>
+                </div>
+
+                <div id="workflow-container">
+                    <div id="workflow-canvas" class="tree">
+                        <!-- Tree will be rendered here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. VIEW: MICRO (Input Form) -->
+            <div id="view-micro" class="hidden h-full overflow-y-auto p-6 transition-all duration-300">
+                <div class="max-w-2xl mx-auto">
+                    <div class="glass-panel rounded-2xl p-8">
+                        <h2 class="text-2xl font-bold text-slate-800 mb-2">Update Activity Log</h2>
+                        
+                        <div class="mb-4 p-3 bg-blue-50 rounded-lg border border-blue-100 flex items-center justify-between text-sm text-blue-800">
+                            <div class="flex items-center gap-2">
+                                <i class="fas fa-sitemap"></i>
+                                <span class="font-semibold">Context:</span>
+                                <span id="microContext">Select from Workflow...</span>
+                            </div>
+                            <button onclick="switchMode('workflow')" class="text-xs underline hover:text-blue-600">Back to Map</button>
+                        </div>
+
+                        <!-- INPUT METHOD TABS -->
+                        <div class="flex border-b border-slate-200 mb-6">
+                            <button onclick="switchInputMethod('ai')" id="tabInputAI" class="w-1/2 py-2 text-center font-bold text-[#0077CC] border-b-2 border-[#0077CC] transition">
+                                <i class="fas fa-magic mr-2"></i> AI Smart Log
+                            </button>
+                            <button onclick="switchInputMethod('manual')" id="tabInputManual" class="w-1/2 py-2 text-center font-bold text-slate-400 hover:text-slate-600 border-b-2 border-transparent transition">
+                                <i class="fas fa-edit mr-2"></i> Manual Entry
+                            </button>
+                        </div>
+    
+                        <!-- AI INPUT MODE -->
+                        <div id="inputModeAI">
+                            <div class="relative mb-6">
+                                <textarea id="rawInput" class="w-full h-40 p-4 border border-slate-300 rounded-xl focus:ring-2 focus:ring-[#0077CC] focus:border-transparent outline-none resize-none text-lg" placeholder="Ceritakan progres hari ini (cth: Diskusi vendor pameran, ada kenaikan biaya sewa...)"></textarea>
+                                <button class="absolute bottom-4 right-4 bg-slate-100 hover:bg-slate-200 text-slate-600 p-2 rounded-full w-10 h-10 flex items-center justify-center transition" title="Voice Input">
+                                    <i class="fas fa-microphone"></i>
+                                </button>
+                            </div>
+                            <div class="text-xs text-slate-400 mb-4 flex items-center gap-2">
+                                <i class="fas fa-info-circle"></i> AI will automatically detect Category, Budget, and Status.
+                            </div>
+                        </div>
+
+                        <!-- MANUAL INPUT MODE (ADDED) -->
+                        <div id="inputModeManual" class="hidden space-y-4 mb-6">
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Date</label>
+                                    <input type="date" class="w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-[#0077CC] outline-none text-sm">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Status</label>
+                                    <select class="w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-[#0077CC] outline-none text-sm bg-white">
+                                        <option value="On Track">On Track</option>
+                                        <option value="Delayed">Delayed</option>
+                                        <option value="Issue">Critical Issue</option>
+                                        <option value="Completed">Completed</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Activity Description</label>
+                                <textarea class="w-full h-24 p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-[#0077CC] outline-none text-sm resize-none" placeholder="Describe the specific activity update..."></textarea>
+                            </div>
+
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Budget Spent (USD)</label>
+                                    <div class="relative">
+                                        <span class="absolute left-3 top-3 text-slate-400">$</span>
+                                        <input type="number" class="w-full p-3 pl-6 border border-slate-300 rounded-lg focus:ring-2 focus:ring-[#0077CC] outline-none text-sm" placeholder="0">
+                                    </div>
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Upload Evidence</label>
+                                    <div class="border border-dashed border-slate-300 rounded-lg p-2 flex items-center justify-center bg-slate-50 hover:bg-slate-100 cursor-pointer text-slate-500 text-xs h-[46px]">
+                                        <i class="fas fa-paperclip mr-2"></i> Attach File/Photo
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+    
+                        <button onclick="saveLog()" class="w-full bg-[#0077CC] hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-xl shadow-lg transition">
+                            Save Log Entry
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. VIEW: MACRO (Dashboard) -->
+            <div id="view-macro" class="hidden h-full overflow-y-auto p-6 transition-all duration-300">
+                <div class="max-w-6xl mx-auto">
+                    <div class="flex justify-between items-center mb-6">
+                        <h2 class="text-2xl font-bold text-slate-800">HQ Strategic Dashboard</h2>
+                        <span class="text-sm bg-blue-100 text-blue-800 py-1 px-3 rounded-full font-bold">Real-time Data</span>
+                    </div>
+
+                    <!-- KPI Cards -->
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+                        <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
+                            <div class="text-xs text-slate-400 font-bold uppercase mb-1">Total Shadow Budget</div>
+                            <div class="text-2xl font-bold text-[#0077CC]">$124,500</div>
+                            <div class="text-xs text-green-600 mt-1"><i class="fas fa-arrow-up"></i> 12% vs last month</div>
+                        </div>
+                        <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
+                            <div class="text-xs text-slate-400 font-bold uppercase mb-1">Active Projects</div>
+                            <div class="text-2xl font-bold text-slate-800">18</div>
+                            <div class="text-xs text-slate-500 mt-1">Across 2 Regions</div>
+                        </div>
+                        <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm border-l-4 border-l-red-500">
+                            <div class="text-xs text-slate-400 font-bold uppercase mb-1">Critical Issues</div>
+                            <div class="text-2xl font-bold text-red-500">2</div>
+                            <div class="text-xs text-red-400 mt-1">Require immediate attention</div>
+                        </div>
+                        <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
+                            <div class="text-xs text-slate-400 font-bold uppercase mb-1">Burn Rate</div>
+                            <div class="text-2xl font-bold text-slate-800">65%</div>
+                            <div class="text-xs text-green-600 mt-1">On Track (Q3 Target)</div>
+                        </div>
+                    </div>
+
+                    <!-- Charts & Lists -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Regional Performance -->
+                        <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+                            <h3 class="font-bold text-slate-700 mb-4">Regional Budget Absorption</h3>
+                            
+                            <div class="mb-4">
+                                <div class="flex justify-between text-sm mb-1">
+                                    <span class="font-semibold text-slate-600">Jakarta Office (CLT)</span>
+                                    <span class="text-slate-500">78%</span>
+                                </div>
+                                <div class="w-full bg-slate-100 rounded-full h-3">
+                                    <div class="bg-[#0077CC] h-3 rounded-full" style="width: 78%"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="mb-4">
+                                <div class="flex justify-between text-sm mb-1">
+                                    <span class="font-semibold text-slate-600">Bangkok Office (CLT)</span>
+                                    <span class="text-slate-500">45%</span>
+                                </div>
+                                <div class="w-full bg-slate-100 rounded-full h-3">
+                                    <div class="bg-blue-400 h-3 rounded-full" style="width: 45%"></div>
+                                </div>
+                            </div>
+
+                            <div class="mb-2">
+                                <div class="flex justify-between text-sm mb-1">
+                                    <span class="font-semibold text-slate-600">Hanoi Office (Sci)</span>
+                                    <span class="text-slate-500">60%</span>
+                                </div>
+                                <div class="w-full bg-slate-100 rounded-full h-3">
+                                    <div class="bg-blue-300 h-3 rounded-full" style="width: 60%"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Risk Radar -->
+                        <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+                            <h3 class="font-bold text-slate-700 mb-4">Risk Radar (High Priority)</h3>
+                            <div class="space-y-3">
+                                <div class="flex items-start gap-3 p-3 bg-red-50 rounded-lg border border-red-100">
+                                    <div class="mt-1"><i class="fas fa-exclamation-triangle text-red-500"></i></div>
+                                    <div>
+                                        <p class="text-sm font-bold text-slate-800">Workshop Kuliner (Jakarta)</p>
+                                        <p class="text-xs text-slate-600">Budget shortfall $2k. Donor withdrawal risk.</p>
+                                        <button class="mt-2 text-xs bg-white border border-red-200 text-red-600 px-2 py-1 rounded font-bold">Escalate</button>
+                                    </div>
+                                </div>
+                                <div class="flex items-start gap-3 p-3 bg-yellow-50 rounded-lg border border-yellow-100">
+                                    <div class="mt-1"><i class="fas fa-clock text-yellow-600"></i></div>
+                                    <div>
+                                        <p class="text-sm font-bold text-slate-800">Mekong River Project (Bangkok)</p>
+                                        <p class="text-xs text-slate-600">Visa processing delay for international experts.</p>
+                                        <button class="mt-2 text-xs bg-white border border-yellow-200 text-yellow-700 px-2 py-1 rounded font-bold">Check Status</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- DETAIL POPUP MODAL -->
+    <div id="nodeModal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="p-6 border-b border-slate-100 flex justify-between items-start bg-slate-50 rounded-t-12">
+                <div>
+                    <span id="modalType" class="text-xs font-bold uppercase tracking-wider text-slate-500">Activity</span>
+                    <h2 id="modalTitle" class="text-xl font-bold text-slate-800 mt-1">Activity Name</h2>
+                    <p id="modalOwner" class="text-sm text-slate-500 mt-1"><i class="fas fa-user mr-1"></i> Owner: ???</p>
+                </div>
+                <button onclick="closeModal()" class="text-slate-400 hover:text-red-500 text-xl"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="p-6 grid grid-cols-2 gap-4 bg-white">
+                <div class="p-3 bg-slate-50 rounded border border-slate-100">
+                    <div class="text-xs text-slate-400 font-bold uppercase mb-2">Programmatic Data</div>
+                    <div id="modalBadges" class="flex flex-wrap gap-1"></div>
+                </div>
+                <div class="p-3 bg-slate-50 rounded border border-slate-100">
+                    <div class="text-xs text-slate-400 font-bold uppercase mb-2">Budget Availability</div>
+                    <div class="flex items-end gap-2">
+                        <span id="modalBudget" class="text-lg font-bold text-green-600">$0</span>
+                    </div>
+                </div>
+            </div>
+            <div class="p-6 pt-2">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="font-bold text-slate-700">Logs</h3>
+                    <div class="flex bg-slate-100 rounded p-1">
+                        <button onclick="filterLogs('week')" id="tabWeek" class="px-3 py-1 text-xs font-bold rounded bg-white shadow text-[#0077CC]">This Week <span id="countWeek"></span></button>
+                        <button onclick="filterLogs('month')" id="tabMonth" class="px-3 py-1 text-xs font-bold rounded text-slate-500">Last Month <span id="countMonth"></span></button>
+                    </div>
+                </div>
+                <div id="modalTimeline" class="max-h-60 overflow-y-auto pr-2"></div>
+            </div>
+            <div id="modalFooter" class="p-4 border-t border-slate-100 bg-slate-50 flex justify-end rounded-b-12">
+                <button onclick="closeModal()" class="px-4 py-2 text-slate-500 font-semibold hover:bg-slate-200 rounded mr-2">Close</button>
+                <button id="btnEditNode" onclick="goToEdit()" class="px-4 py-2 bg-[#0077CC] text-white font-semibold rounded hover:bg-blue-700 shadow flex items-center gap-2"><i class="fas fa-edit"></i> Update</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- 1. MASSIVE DATA SIMULATION (6 Staff di Jakarta, Bangkok Visible) ---
+        const currentUser = "Angga";
+        
+        // EXPANDED DUMMY LOGS (5-12 entries per person)
+        const logsA = [
+            { date: "Today, 09:30", text: "Coordination meeting with venue vendor (JCC).", period: 'week' },
+            { date: "Yesterday, 14:00", text: "Spice sample collection from Maluku arrives.", period: 'week' },
+            { date: "Tue, 10:00", text: "Approved draft layout for the main exhibition hall.", period: 'week' },
+            { date: "Mon, 13:00", text: "Budget review for catering services.", period: 'week' },
+            { date: "Last Fri", text: "Report submitted to HQ regarding Phase 1.", period: 'month' },
+            { date: "Last Thu", text: "Zoom call with Ministry of Trade.", period: 'month' },
+            { date: "Last Wed", text: "Selected 3 keynote speakers for the opening.", period: 'month' },
+            { date: "Last Mon", text: "Initial deposit paid to contractor.", period: 'month' }
+        ];
+
+        const logsSiti = [
+            { date: "Today, 08:00", text: "On-site visit to Batik Danar Hadi workshop.", period: 'week' },
+            { date: "Wed, 11:30", text: "Meeting with local artisans regarding natural dyes.", period: 'week' },
+            { date: "Tue, 15:45", text: "Data entry for 50 new motifs into the database.", period: 'week' },
+            { date: "Mon, 09:00", text: "Completed inventory check in Pekalongan.", period: 'week' },
+            { date: "Last Fri", text: "Drafted preservation guidelines for coastal batik.", period: 'month' },
+            { date: "Last Thu", text: "Submitted monthly report for Batik preservation.", period: 'month' },
+            { date: "Last Wed", text: "Workshop facilitation for young apprentices.", period: 'month' },
+            { date: "Last Tue", text: "Procurement of wax and canting tools.", period: 'month' },
+            { date: "Last Mon", text: "Coordination with Museum Tekstil Jakarta.", period: 'month' }
+        ];
+
+        const logsBudi = [
+            { date: "Thu, 10:15", text: "Wayang prototype approved by school principal.", period: 'week' },
+            { date: "Wed, 13:00", text: "Teacher training session (Batch 2).", period: 'week' },
+            { date: "Tue, 09:00", text: "Curriculum alignment meeting with Kemdikbud.", period: 'week' },
+            { date: "Last Fri", text: "Vendor payment for puppets processed.", period: 'month' },
+            { date: "Last Thu", text: "School visit to SDN 01 Menteng.", period: 'month' },
+            { date: "Last Wed", text: "Feedback collection from students.", period: 'month' },
+            { date: "Last Tue", text: "Drafted Q3 activity plan.", period: 'month' },
+            { date: "Last Mon", text: "Drafted curriculum for Q3.", period: 'month' }
+        ];
+
+        const logsDewi = [
+            { date: "Thu, 13:45", text: "Gamelan tuning maintenance completed.", period: 'week' },
+            { date: "Wed, 10:00", text: "Recording session for archival purposes.", period: 'week' },
+            { date: "Tue, 14:30", text: "Meeting with ISI Surakarta regarding experts.", period: 'week' },
+            { date: "Mon, 11:00", text: "Review of audio equipment rental quotes.", period: 'week' },
+            { date: "Last Fri", text: "Coordination with music conservatory.", period: 'week' },
+            { date: "Last Thu", text: "Weekly progress report sent.", period: 'month' },
+            { date: "Last Tue", text: "Budget adjustment request sent.", period: 'month' },
+            { date: "Last Mon", text: "Venue booking for year-end concert.", period: 'month' }
+        ];
+
+        const logsEko = [
+            { date: "Today, 10:00", text: "Safety briefing for workshop participants.", period: 'week' },
+            { date: "Wed, 15:20", text: "Kris smithing workshop venue booked.", period: 'week' },
+            { date: "Tue, 11:00", text: "Metallurgy analysis report received.", period: 'week' },
+            { date: "Last Fri", text: "Invitation letters sent to Empu (masters).", period: 'month' },
+            { date: "Last Wed", text: "Participant list finalized (20 pax).", period: 'month' },
+            { date: "Last Mon", text: "Raw material (iron/nickel) sourcing confirmed.", period: 'month' }
+        ];
+
+        const logsGita = [
+            { date: "Thu, 14:00", text: "Fair trade certification documents reviewed.", period: 'week' },
+            { date: "Tue, 09:30", text: "Coordination with Wamena local gov.", period: 'week' },
+            { date: "Mon, 08:30", text: "Video conference with Jayapura office.", period: 'week' },
+            { date: "Last Fri", text: "Material shipment delayed due to weather.", period: 'month' },
+            { date: "Last Thu", text: "Training module for weavers translation completed.", period: 'month' },
+            { date: "Last Wed", text: "Market access study published.", period: 'month' },
+            { date: "Last Mon", text: "Grant proposal submitted for expansion.", period: 'month' }
+        ];
+
+        const logsSomsak = [
+            { date: "Today, 08:00", text: "Water quality sampling at Station A4.", period: 'week' },
+            { date: "Thu, 09:00", text: "Meeting with Mekong River Commission.", period: 'week' },
+            { date: "Wed, 16:00", text: "Data synchronization with Laos team.", period: 'week' },
+            { date: "Tue, 14:00", text: "Hydrological survey data received.", period: 'week' },
+            { date: "Last Fri", text: "Community interview results compiled.", period: 'month' },
+            { date: "Last Thu", text: "Fish migration pattern chart updated.", period: 'month' },
+            { date: "Last Mon", text: "Q2 Impact Assessment uploaded.", period: 'month' },
+            { date: "Last week", text: "Drone survey footage analyzed.", period: 'month' }
+        ];
+
+        const logsMalai = [
+            { date: "Fri, 11:00", text: "Site inspection at Ayutthaya (Sector 3).", period: 'week' },
+            { date: "Thu, 13:00", text: "Visitor flow management plan drafted.", period: 'week' },
+            { date: "Wed, 09:00", text: "Meeting with brick conservation experts.", period: 'week' },
+            { date: "Tue, 10:30", text: "Structural integrity sensor calibration.", period: 'week' },
+            { date: "Last Fri", text: "Drainage system cleaning completed.", period: 'month' },
+            { date: "Last Wed", text: "Restoration blueprints approved by Ministry.", period: 'month' },
+            { date: "Last Mon", text: "Emergency consolidation of West wall.", period: 'month' },
+            { date: "Last week", text: "Report on lichen growth submitted.", period: 'month' }
+        ];
+        
+        const massiveData = {
+            id: "HQ", type: "HQ", name: "UNESCO HQ", owner: "ADG/CLT", status: "Active",
+            children: [
+                {
+                    id: "REG-JAK", type: "Regional", name: "Office Jakarta", owner: "Director JAK",
+                    children: [
+                        {
+                            id: "TH-ICH", type: "Theme", name: "Living Heritage", owner: "Chief Unit",
+                            children: [
+                                // STAFF 1 (YOU)
+                                {
+                                    id: "FP-ANGGA", type: "Focal", name: "Angga (You)", owner: "Angga",
+                                    children: [
+                                        { id: "A1", type: "Activity", name: "Pameran Rempah", owner: "Angga", status: "On Track", budget: "$45k", logs: logsA },
+                                        { id: "A2", type: "Activity", name: "Workshop Kuliner", owner: "Angga", status: "Issue", budget: "$2k", logs: [] }
+                                    ]
+                                },
+                                // STAFF 2 - SITI
+                                {
+                                    id: "FP-SITI", type: "Focal", name: "Siti", owner: "Siti",
+                                    children: [{ id: "A3", type: "Activity", name: "Batik Inventory", owner: "Siti", status: "On Track", budget: "$12k", logs: logsSiti }]
+                                },
+                                // STAFF 3 - BUDI
+                                { id: "FP-BUDI", type: "Focal", name: "Budi", owner: "Budi", children: [{ id: "A4", type: "Activity", name: "Wayang Goes to School", owner: "Budi", status: "Delayed", budget: "$5k", logs: logsBudi }] },
+                                // STAFF 4 - DEWI
+                                { id: "FP-DEWI", type: "Focal", name: "Dewi", owner: "Dewi", children: [{ id: "A5", type: "Activity", name: "Gamelan Preservation", owner: "Dewi", status: "On Track", budget: "$20k", logs: logsDewi }] },
+                                // STAFF 5 - EKO
+                                { id: "FP-EKO", type: "Focal", name: "Eko", owner: "Eko", children: [{ id: "A6", type: "Activity", name: "Kris Workshop", owner: "Eko", status: "On Track", budget: "$8k", logs: logsEko }] },
+                                // STAFF 6 - GITA
+                                { id: "FP-GITA", type: "Focal", name: "Gita", owner: "Gita", children: [{ id: "A7", type: "Activity", name: "Noken Papua", owner: "Gita", status: "Issue", budget: "$15k", logs: logsGita }] }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    id: "REG-BKK", type: "Regional", name: "Office Bangkok", owner: "Director BKK",
+                    children: [
+                        {
+                            id: "TH-SH", type: "Theme", name: "Shared Heritage", owner: "Chief BKK",
+                            children: [
+                                { id: "FP-SOMSAK", type: "Focal", name: "Somsak", owner: "Somsak", children: [{ id: "A8", type: "Activity", name: "Mekong River Project", owner: "Somsak", status: "On Track", budget: "$80k", logs: logsSomsak }] },
+                                { id: "FP-MALAI", type: "Focal", name: "Malai", owner: "Malai", children: [{ id: "A9", type: "Activity", name: "Temple Restoration", owner: "Malai", status: "On Track", budget: "$50k", logs: logsMalai }] }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        };
+
+        // --- 2. RENDER ENGINE ---
+        let nodeMap = {}; 
+
+        function renderTree() {
+            const html = `<ul>${buildNodeHTML(massiveData)}</ul>`;
+            document.getElementById('workflow-canvas').innerHTML = html;
+            attachHoverEffects();
+            
+            // Auto Fit after rendering
+            setTimeout(autoFitTree, 100);
+        }
+
+        function buildNodeHTML(node) {
+            nodeMap[node.id] = node;
+            let cssClass = `type-${node.type}`;
+            let statusIndicator = node.status === 'Issue' ? `<div class="absolute top-1 right-1 w-2 h-2 rounded-full bg-red-500"></div>` : '';
+            
+            let content = `
+                <div class="tree-card ${cssClass}" onclick="openNodeModal('${node.id}')">
+                    ${statusIndicator}
+                    <h4 class="text-[10px] font-bold uppercase text-slate-500 tracking-wider">${node.type}</h4>
+                    <p class="text-xs font-bold text-slate-800 leading-tight mt-1">${node.name}</p>
+                    ${node.budget ? `<div class="mt-2 text-[10px] text-slate-400">${node.budget}</div>` : ''}
+                </div>`;
+            
+            if (node.children && node.children.length > 0) {
+                let childrenHTML = node.children.map(child => buildNodeHTML(child)).join('');
+                return `<li>${content}<ul>${childrenHTML}</ul></li>`;
+            } else {
+                return `<li>${content}</li>`;
+            }
+        }
+
+        // --- 3. AUTO FIT & ZOOM LOGIC (NEW) ---
+        let scale = 1, panning = false, pointX = 0, pointY = 0, startX = 0, startY = 0;
+        const container = document.getElementById('workflow-container');
+        const canvas = document.getElementById('workflow-canvas');
+
+        function autoFitTree() {
+            const containerRect = container.getBoundingClientRect();
+            // Get unscaled dimensions approximation
+            const treeContent = canvas.firstElementChild; // The <ul>
+            if(!treeContent) return;
+            
+            const contentWidth = treeContent.offsetWidth + 100; // padding
+            const contentHeight = treeContent.offsetHeight + 100;
+
+            const scaleX = containerRect.width / contentWidth;
+            const scaleY = containerRect.height / contentHeight;
+            
+            scale = Math.min(scaleX, scaleY, 1.0);
+            
+            pointX = (containerRect.width - contentWidth * scale) / 2 + 50 * scale; 
+            pointY = 20; 
+
+            updateTransform();
+        }
+
+        container.addEventListener('mousedown', (e) => { panning = true; startX = e.clientX - pointX; startY = e.clientY - pointY; container.style.cursor = 'grabbing'; });
+        container.addEventListener('mouseup', () => { panning = false; container.style.cursor = 'grab'; });
+        container.addEventListener('mousemove', (e) => { if (!panning) return; e.preventDefault(); pointX = e.clientX - startX; pointY = e.clientY - startY; updateTransform(); });
+        container.addEventListener('wheel', (e) => { e.preventDefault(); const delta = -Math.sign(e.deltaY); if (delta > 0) scale *= 1.1; else scale /= 1.1; scale = Math.min(Math.max(0.1, scale), 3); updateTransform(); });
+        function updateTransform() { canvas.style.transform = `translate(${pointX}px, ${pointY}px) scale(${scale})`; }
+        function zoomIn() { scale *= 1.2; updateTransform(); }
+        function zoomOut() { scale /= 1.2; updateTransform(); }
+
+        // --- 4. MODAL & UTILS ---
+        let currentSelectedNode = null;
+        let currentLogFilter = 'week';
+
+        function openNodeModal(nodeId) {
+            const node = nodeMap[nodeId];
+            currentSelectedNode = node;
+            document.getElementById('modalTitle').innerText = node.name;
+            document.getElementById('modalType').innerText = node.type;
+            document.getElementById('modalOwner').innerHTML = `Owner: ${node.owner}`;
+            
+            // Budget
+            document.getElementById('modalBudget').innerText = node.budget || 'N/A';
+
+            // Counts
+            const logs = node.logs || [];
+            document.getElementById('countWeek').innerText = `(${logs.filter(l => l.period === 'week').length})`;
+            document.getElementById('countMonth').innerText = `(${logs.filter(l => l.period === 'month').length})`;
+
+            document.getElementById('nodeModal').classList.add('open');
+            
+            // Filter Default
+            filterLogs('week');
+
+            // Logic button edit & filter...
+            const btnEdit = document.getElementById('btnEditNode');
+            if(node.owner.includes(currentUser)) btnEdit.classList.remove('hidden'); else btnEdit.classList.add('hidden');
+        }
+
+        function filterLogs(period) {
+            currentLogFilter = period;
+            const tabWeek = document.getElementById('tabWeek');
+            const tabMonth = document.getElementById('tabMonth');
+            
+            if (period === 'week') {
+                tabWeek.classList.add('bg-white', 'shadow', 'text-[#0077CC]'); tabWeek.classList.remove('text-slate-500');
+                tabMonth.classList.remove('bg-white', 'shadow', 'text-[#0077CC]'); tabMonth.classList.add('text-slate-500');
+            } else {
+                tabMonth.classList.add('bg-white', 'shadow', 'text-[#0077CC]'); tabMonth.classList.remove('text-slate-500');
+                tabWeek.classList.remove('bg-white', 'shadow', 'text-[#0077CC]'); tabWeek.classList.add('text-slate-500');
+            }
+
+            if (!currentSelectedNode) return;
+            const allLogs = currentSelectedNode.logs || [];
+            const filteredLogs = allLogs.filter(l => l.period === period);
+            
+            renderTimelineLogs(filteredLogs);
+        }
+
+        function renderTimelineLogs(logs) {
+            const container = document.getElementById('modalTimeline');
+            container.innerHTML = '';
+            
+            if (!logs || logs.length === 0) {
+                container.innerHTML = `<div class="text-center text-slate-400 text-xs py-4">No activity logs for this ${currentLogFilter}.</div>`;
+                return;
+            }
+
+            logs.forEach(log => {
+                container.innerHTML += `
+                    <div class="timeline-item">
+                        <div class="text-[10px] font-bold text-slate-400 uppercase mb-1">${log.date}</div>
+                        <div class="text-sm text-slate-700">${log.text}</div>
+                    </div>
+                `;
+            });
+        }
+
+        function closeModal() { document.getElementById('nodeModal').classList.remove('open'); }
+        function switchMode(mode) {
+            ['view-workflow', 'view-micro', 'view-macro'].forEach(id => document.getElementById(id).classList.add('hidden'));
+            document.getElementById(`view-${mode}`).classList.remove('hidden');
+        }
+        function switchInputMethod(method) {
+            const tabAI = document.getElementById('tabInputAI');
+            const tabManual = document.getElementById('tabInputManual');
+            const viewAI = document.getElementById('inputModeAI');
+            const viewManual = document.getElementById('inputModeManual');
+            if(method === 'ai') {
+                viewAI.classList.remove('hidden'); viewManual.classList.add('hidden');
+                tabAI.classList.add('text-[#0077CC]', 'border-[#0077CC]'); tabAI.classList.remove('text-slate-400', 'border-transparent');
+                tabManual.classList.remove('text-[#0077CC]', 'border-[#0077CC]'); tabManual.classList.add('text-slate-400', 'border-transparent');
+            } else {
+                viewManual.classList.remove('hidden'); viewAI.classList.add('hidden');
+                tabManual.classList.add('text-[#0077CC]', 'border-[#0077CC]'); tabManual.classList.remove('text-slate-400', 'border-transparent');
+                tabAI.classList.remove('text-[#0077CC]', 'border-[#0077CC]'); tabAI.classList.add('text-slate-400', 'border-transparent');
+            }
+        }
+        function goToEdit() { closeModal(); switchMode('micro'); document.getElementById('microContext').innerText = `${currentSelectedNode.type} > ${currentSelectedNode.name}`; }
+        function saveLog() { alert("Data Saved!"); switchMode('workflow'); }
+        function attachHoverEffects() {
+            document.querySelectorAll('.tree-card').forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    let parent = this.closest('li');
+                    while (parent) { parent.classList.add('active-path'); let ul = parent.closest('ul'); if (ul) { ul.classList.add('active-path'); parent = ul.parentElement.closest('li'); } else break; }
+                });
+                card.addEventListener('mouseleave', () => document.querySelectorAll('.active-path').forEach(el => el.classList.remove('active-path')));
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => { renderTree(); });
+    </script>
+</body>
+</html>
