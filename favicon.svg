@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title desc">
+  <title id="title">Shadow Ops</title>
+  <desc id="desc">Connected operational nodes forming a clear hierarchy.</desc>
+  <rect width="64" height="64" rx="15" fill="#0f172a"/>
+  <path d="M32 20v9M16 38v-4h32v4M16 38v7M32 29v16M48 38v7" fill="none" stroke="#7dd3fc" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="23" y="8" width="18" height="13" rx="4" fill="#0284c7" stroke="#bae6fd" stroke-width="1.5"/>
+  <rect x="8" y="43" width="16" height="13" rx="4" fill="#10b981" stroke="#a7f3d0" stroke-width="1.5"/>
+  <rect x="24" y="43" width="16" height="13" rx="4" fill="#8b5cf6" stroke="#ddd6fe" stroke-width="1.5"/>
+  <rect x="40" y="43" width="16" height="13" rx="4" fill="#f59e0b" stroke="#fde68a" stroke-width="1.5"/>
+  <circle cx="32" cy="14.5" r="2" fill="#fff"/>
+  <circle cx="16" cy="49.5" r="1.5" fill="#fff"/>
+  <circle cx="32" cy="49.5" r="1.5" fill="#fff"/>
+  <circle cx="48" cy="49.5" r="1.5" fill="#fff"/>
+</svg>
