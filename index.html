@@ -84,7 +84,7 @@ body{font-family:'Segoe UI',Roboto,Helvetica,Arial,sans-serif;background:var(--s
 </div></div>
 <script>
 "use strict";
-const currentUserEmail = "angga@example.com"; // Demo identity only; Supabase writes always use auth.uid().
+// Identity is loaded from config for display only; write permissions come from Supabase Auth/RLS.
 let appConfig = null, supabaseClient = null, massiveData = null, nodeMap = {}, currentSelectedNode = null;
 function escapeHtml(value){return String(value??"").replace(/[&<>"']/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch]));}
 function money(value){return "$"+Number(value||0).toLocaleString(undefined,{maximumFractionDigits:2});}
