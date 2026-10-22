@@ -34,7 +34,7 @@ Edit `config.json`.
 
 ### Schema
 - `ops_nodes`: hierarchy nodes, parent-child relationships, type, status, budgets and badges.
-- `activity_logs`: activity logs, user identity, date, status, amount in USD, optional parsed AI JSON and evidence storage path.
+- `activity_logs`: activity logs, user identity, date, status, amount in USD, optional parsed AI JSON and evidence storage path. The starter UI loads logs only after a Supabase Auth session is present.
 - The frontend adapter translates the normalized table rows to the tree structure the UI expects.
 
 ### Explicit grants and RLS
