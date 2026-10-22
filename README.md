@@ -49,3 +49,10 @@ The log table is not anonymously readable. RLS stays enabled and limits log writ
 - AI Smart Log stores raw text; it does not call an AI service.
 - Evidence upload UI is a placeholder; only a future `evidence_path` column is included.
 - Live hierarchy data must be seeded into Supabase after the migration is applied.
+## Enriched UNESCO-inspired demo data
+
+The current `dummy.json` demonstrates three fictional programme units: **Education**, **Natural Sciences**, and **Culture**. Each unit contains thematic workstreams, activities, budgets, statuses, and dated operational logs (60 logs across the hierarchy).
+
+**Important provenance note:** this is a synthetic UX/testing dataset, not an official UNESCO organisation chart or a register of UNESCO projects, allocations, expenses, decisions, or field events. Public UNESCO pages are referenced only for broad thematic inspiration. No real programme allocation or operational record is claimed. Every log includes a `provenance` object that marks it as `synthetic_demo`, unverified, and without an external evidence reference. The top-level `_meta.dataProvenance` documents sources, method, and limitations.
+
+For production use, replace the dummy records with approved source data, retain source URLs and evidence references at record level, and validate permissions before publishing sensitive community or heritage information.
