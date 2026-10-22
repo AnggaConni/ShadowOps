@@ -1,673 +1,120 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>International Shadow Ops</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <style>
-        :root {
-            --primary: #0077CC;
-            --secondary: #F4F6F8;
-            --line-color: #94a3b8;
-            --highlight-color: #f59e0b;
-        }
-        body { font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: var(--secondary); }
-        .glass-panel { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2); box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); }
-
-        /* --- TREE VISUALIZATION STYLES --- */
-        .tree { white-space: nowrap; padding: 50px; display: inline-block; min-width: 100%; text-align: center; }
-        .tree ul { padding-top: 20px; position: relative; transition: all 0.5s; display: flex; justify-content: center; gap: 10px; }
-        .tree li { float: left; text-align: center; list-style-type: none; position: relative; padding: 20px 5px 0 5px; transition: all 0.5s; }
-        
-        /* Connector Lines */
-        .tree li::before, .tree li::after { content: ''; position: absolute; top: 0; right: 50%; border-top: 2px solid var(--line-color); width: 50%; height: 20px; transition: all 0.3s; }
-        .tree li::after { right: auto; left: 50%; border-left: 2px solid var(--line-color); }
-        .tree li:only-child::after, .tree li:only-child::before { display: none; }
-        .tree li:only-child { padding-top: 0; }
-        .tree li:first-child::before, .tree li:last-child::after { border: 0 none; }
-        .tree li:last-child::before { border-right: 2px solid var(--line-color); border-radius: 0 5px 0 0; }
-        .tree li:first-child::after { border-radius: 5px 0 0 0; }
-        .tree ul ul::before { content: ''; position: absolute; top: 0; left: 50%; border-left: 2px solid var(--line-color); width: 0; height: 20px; }
-
-        /* Node Cards */
-        .tree-card { 
-            background: white; border: 1px solid #cbd5e1; 
-            padding: 8px 12px; border-radius: 6px; 
-            display: inline-block; min-width: 120px; max-width: 160px;
-            transition: all 0.3s; cursor: pointer; position: relative; z-index: 10; 
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05); white-space: normal;
-        }
-        .tree-card:hover { border-color: var(--primary); transform: translateY(-3px); box-shadow: 0 8px 15px rgba(0,0,0,0.1); }
-        
-        /* Specific Styles */
-        .type-HQ { border-top: 4px solid #0077CC; background: #f0f9ff; font-size: 1.1em; }
-        .type-Regional { border-top: 4px solid #0ea5e9; background: #fff; }
-        .type-Theme { border-left: 4px solid #8b5cf6; text-align: left; }
-        .type-Focal { border-left: 4px solid #f59e0b; text-align: left; background: #fffbeb; }
-        .type-Activity { border-left: 4px solid #10b981; text-align: left; background: #f0fdf4; min-width: 140px; }
-
-        /* Hover Path Highlight */
-        .active-path > .tree-card { border-color: var(--highlight-color); background: #fffbeb; }
-        .active-path::before, .active-path::after { border-color: var(--highlight-color) !important; width: 50.5%; }
-        ul.active-path::before { border-color: var(--highlight-color) !important; }
-
-        /* Canvas & Controls */
-        #workflow-container { width: 100%; height: 100%; overflow: hidden; background-image: radial-gradient(#cbd5e1 1px, transparent 1px); background-size: 20px 20px; cursor: grab; }
-        #workflow-container:active { cursor: grabbing; }
-        #workflow-canvas { transform-origin: center top; transition: transform 0.3s ease-out; }
-
-        /* --- MODAL STYLES --- */
-        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 50; display: flex; justify-content: center; align-items: center; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
-        .modal-overlay.open { opacity: 1; pointer-events: auto; }
-        .modal-content { background: white; width: 90%; max-width: 600px; max-height: 85vh; overflow-y: auto; border-radius: 12px; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1); transform: scale(0.9); transition: transform 0.3s; }
-        .modal-overlay.open .modal-content { transform: scale(1); }
-
-        .timeline-item { position: relative; padding-left: 20px; border-left: 2px solid #e2e8f0; padding-bottom: 20px; }
-        .timeline-item::before { content: ''; position: absolute; left: -5px; top: 0; width: 8px; height: 8px; border-radius: 50%; background: #0077CC; }
-        .timeline-item:last-child { border-left: transparent; }
-
-        .badge { padding: 2px 6px; border-radius: 4px; font-size: 10px; font-weight: bold; margin-right: 4px; display: inline-block; margin-bottom: 2px;}
-        .badge-sdg { background: #E5243B; color: white; }
-        .badge-gender { background: #FF69B4; color: white; }
-        .badge-sids { background: #00BFFF; color: white; }
-    </style>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>International Shadow Ops</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+:root{--primary:#0077CC;--secondary:#F4F6F8;--line-color:#94a3b8;--highlight-color:#f59e0b}
+body{font-family:'Segoe UI',Roboto,Helvetica,Arial,sans-serif;background:var(--secondary)}
+.glass-panel{background:rgba(255,255,255,.95);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.2);box-shadow:0 4px 6px -1px rgba(0,0,0,.1)}
+.tree{white-space:nowrap;padding:50px;display:inline-block;min-width:100%;text-align:center}
+.tree ul{padding-top:20px;position:relative;transition:all .5s;display:flex;justify-content:center;gap:10px}
+.tree li{float:left;text-align:center;list-style:none;position:relative;padding:20px 5px 0;transition:all .5s}
+.tree li:before,.tree li:after{content:'';position:absolute;top:0;right:50%;border-top:2px solid var(--line-color);width:50%;height:20px;transition:all .3s}
+.tree li:after{right:auto;left:50%;border-left:2px solid var(--line-color)}
+.tree li:only-child:after,.tree li:only-child:before{display:none}.tree li:only-child{padding-top:0}
+.tree li:first-child:before,.tree li:last-child:after{border:0}
+.tree li:last-child:before{border-right:2px solid var(--line-color);border-radius:0 5px 0 0}
+.tree li:first-child:after{border-radius:5px 0 0 0}
+.tree ul ul:before{content:'';position:absolute;top:0;left:50%;border-left:2px solid var(--line-color);width:0;height:20px}
+.tree-card{background:white;border:1px solid #cbd5e1;padding:8px 12px;border-radius:6px;display:inline-block;min-width:120px;max-width:160px;transition:all .3s;cursor:pointer;position:relative;z-index:10;box-shadow:0 2px 4px rgba(0,0,0,.05);white-space:normal}
+.tree-card:hover{border-color:var(--primary);transform:translateY(-3px);box-shadow:0 8px 15px rgba(0,0,0,.1)}
+.type-HQ{border-top:4px solid #0077CC;background:#f0f9ff;font-size:1.1em}.type-Regional{border-top:4px solid #0ea5e9}
+.type-Theme{border-left:4px solid #8b5cf6;text-align:left}.type-Focal{border-left:4px solid #f59e0b;text-align:left;background:#fffbeb}
+.type-Activity{border-left:4px solid #10b981;text-align:left;background:#f0fdf4;min-width:140px}
+.active-path>.tree-card{border-color:var(--highlight-color);background:#fffbeb}
+.active-path:before,.active-path:after{border-color:var(--highlight-color)!important;width:50.5%}ul.active-path:before{border-color:var(--highlight-color)!important}
+#workflow-container{width:100%;height:100%;overflow:hidden;background-image:radial-gradient(#cbd5e1 1px,transparent 1px);background-size:20px 20px;cursor:grab}
+#workflow-container:active{cursor:grabbing}#workflow-canvas{transform-origin:center top;transition:transform .3s ease-out}
+.modal-overlay{position:fixed;inset:0;width:100%;height:100%;background:rgba(0,0,0,.5);z-index:50;display:flex;justify-content:center;align-items:center;opacity:0;pointer-events:none;transition:opacity .3s}
+.modal-overlay.open{opacity:1;pointer-events:auto}
+.modal-content{background:white;width:90%;max-width:600px;max-height:85vh;overflow-y:auto;border-radius:12px;box-shadow:0 20px 25px rgba(0,0,0,.1);transform:scale(.9);transition:transform .3s}
+.modal-overlay.open .modal-content{transform:scale(1)}
+.timeline-item{position:relative;padding-left:20px;border-left:2px solid #e2e8f0;padding-bottom:20px}
+.timeline-item:before{content:'';position:absolute;left:-5px;top:0;width:8px;height:8px;border-radius:50%;background:#0077CC}
+.timeline-item:last-child{border-left:transparent}
+.badge{padding:2px 6px;border-radius:4px;font-size:10px;font-weight:bold;margin-right:4px;display:inline-block;margin-bottom:2px}
+</style>
 </head>
 <body class="text-slate-800 h-screen flex flex-col overflow-hidden">
-
-    <!-- Header -->
-    <header class="bg-white border-b border-slate-200 h-16 flex items-center justify-between px-6 shadow-sm z-20">
-        <div class="flex items-center gap-3">
-            <div class="w-8 h-8 bg-[#0077CC] rounded text-white flex items-center justify-center font-bold text-lg">IO</div>
-            <div>
-                <h1 class="font-bold text-slate-800 leading-tight">Shadow Ops System</h1>
-                <p class="text-xs text-slate-500">Global Operations Map</p>
-            </div>
-        </div>
-        <div class="flex items-center gap-4">
-            <div class="text-right">
-                <p class="text-xs text-slate-400 uppercase font-bold">Logged In As</p>
-                <p class="text-sm font-semibold text-[#0077CC] flex items-center gap-2">
-                    <i class="fas fa-user-circle"></i> Angga (Focal Point)
-                </p>
-            </div>
-        </div>
-    </header>
-
-    <div class="flex flex-1 overflow-hidden">
-        <!-- Sidebar -->
-        <aside class="w-20 bg-slate-900 text-slate-300 flex flex-col items-center py-6 gap-6 z-20 shadow-xl">
-            <button onclick="switchMode('workflow')" id="btn-workflow" class="nav-btn active p-3 rounded-xl hover:bg-slate-700 text-[#0077CC] bg-slate-800 transition" title="Workflow Map">
-                <i class="fas fa-sitemap text-xl"></i>
-            </button>
-            <button onclick="switchMode('micro')" id="btn-micro" class="nav-btn p-3 rounded-xl hover:bg-slate-700 hover:text-white transition" title="Micro Input">
-                <i class="fas fa-microphone-lines text-xl"></i>
-            </button>
-            <button onclick="switchMode('macro')" id="btn-macro" class="nav-btn p-3 rounded-xl hover:bg-slate-700 hover:text-white transition" title="Macro Dashboard">
-                <i class="fas fa-chart-pie text-xl"></i>
-            </button>
-        </aside>
-
-        <!-- Main Content -->
-        <main class="flex-1 relative bg-[#F4F6F8]">
-            
-            <!-- 1. VIEW: WORKFLOW (Hierarchy Map) -->
-            <div id="view-workflow" class="w-full h-full relative">
-                <div class="absolute top-6 right-6 z-30 flex flex-col gap-2">
-                    <button onclick="autoFitTree()" class="bg-white p-2 rounded shadow text-green-600 hover:text-green-700 font-bold text-xs"><i class="fas fa-compress-arrows-alt mr-1"></i> FIT</button>
-                    <button onclick="zoomIn()" class="bg-white p-2 rounded shadow text-slate-600 hover:text-[#0077CC]"><i class="fas fa-plus"></i></button>
-                    <button onclick="zoomOut()" class="bg-white p-2 rounded shadow text-slate-600 hover:text-[#0077CC]"><i class="fas fa-minus"></i></button>
-                </div>
-                
-                <div class="absolute bottom-6 left-6 z-30 bg-white/80 p-3 rounded-lg backdrop-blur text-xs text-slate-500 border border-slate-200">
-                    <p><b>Tips:</b> Gunakan scroll mouse untuk zoom, drag untuk geser.</p>
-                </div>
-
-                <div id="workflow-container">
-                    <div id="workflow-canvas" class="tree">
-                        <!-- Loading State -->
-                        <div class="flex flex-col items-center justify-center h-full mt-32 text-slate-500">
-                            <i class="fas fa-spinner fa-spin text-4xl mb-4 text-[#0077CC]"></i>
-                            <p class="font-semibold">Loading Live Data from Google Sheets...</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 2. VIEW: MICRO (Input Form) -->
-            <div id="view-micro" class="hidden h-full overflow-y-auto p-6 transition-all duration-300">
-                <div class="max-w-2xl mx-auto">
-                    <div class="glass-panel rounded-2xl p-8">
-                        <h2 class="text-2xl font-bold text-slate-800 mb-2">Update Activity Log</h2>
-                        
-                        <div class="mb-4 p-3 bg-blue-50 rounded-lg border border-blue-100 flex items-center justify-between text-sm text-blue-800">
-                            <div class="flex items-center gap-2">
-                                <i class="fas fa-sitemap"></i>
-                                <span class="font-semibold">Context:</span>
-                                <span id="microContext" class="font-bold">Select from Workflow...</span>
-                            </div>
-                            <button onclick="switchMode('workflow')" class="text-xs underline hover:text-blue-600">Back to Map</button>
-                        </div>
-
-                        <!-- INPUT METHOD TABS -->
-                        <div class="flex border-b border-slate-200 mb-6">
-                            <button onclick="switchInputMethod('ai')" id="tabInputAI" class="w-1/2 py-2 text-center font-bold text-[#0077CC] border-b-2 border-[#0077CC] transition">
-                                <i class="fas fa-magic mr-2"></i> AI Smart Log
-                            </button>
-                            <button onclick="switchInputMethod('manual')" id="tabInputManual" class="w-1/2 py-2 text-center font-bold text-slate-400 hover:text-slate-600 border-b-2 border-transparent transition">
-                                <i class="fas fa-edit mr-2"></i> Manual Entry
-                            </button>
-                        </div>
-    
-                        <!-- AI INPUT MODE -->
-                        <div id="inputModeAI">
-                            <div class="relative mb-6">
-                                <textarea id="rawInput" class="w-full h-40 p-4 border border-slate-300 rounded-xl focus:ring-2 focus:ring-[#0077CC] focus:border-transparent outline-none resize-none text-lg" placeholder="Ceritakan progres hari ini (cth: Diskusi vendor pameran, ada kenaikan biaya sewa...)"></textarea>
-                                <button class="absolute bottom-4 right-4 bg-slate-100 hover:bg-slate-200 text-slate-600 p-2 rounded-full w-10 h-10 flex items-center justify-center transition" title="Voice Input">
-                                    <i class="fas fa-microphone"></i>
-                                </button>
-                            </div>
-                            <div class="text-xs text-slate-400 mb-4 flex items-center gap-2">
-                                <i class="fas fa-info-circle"></i> AI will automatically detect Category, Budget, and Status.
-                            </div>
-                        </div>
-
-                        <!-- MANUAL INPUT MODE -->
-                        <div id="inputModeManual" class="hidden space-y-4 mb-6">
-                            <div class="grid grid-cols-2 gap-4">
-                                <div>
-                                    <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Date</label>
-                                    <input type="date" id="manualDate" class="w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-[#0077CC] outline-none text-sm">
-                                </div>
-                                <div>
-                                    <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Status</label>
-                                    <select id="manualStatus" class="w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-[#0077CC] outline-none text-sm bg-white">
-                                        <option value="On Track">On Track</option>
-                                        <option value="Delayed">Delayed</option>
-                                        <option value="Issue">Critical Issue</option>
-                                        <option value="Completed">Completed</option>
-                                    </select>
-                                </div>
-                            </div>
-                            
-                            <div>
-                                <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Activity Description</label>
-                                <textarea id="manualDesc" class="w-full h-24 p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-[#0077CC] outline-none text-sm resize-none" placeholder="Describe the specific activity update..."></textarea>
-                            </div>
-
-                            <div class="grid grid-cols-2 gap-4">
-                                <div>
-                                    <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Budget Spent (USD)</label>
-                                    <div class="relative">
-                                        <span class="absolute left-3 top-3 text-slate-400">$</span>
-                                        <input type="number" id="manualBudget" class="w-full p-3 pl-6 border border-slate-300 rounded-lg focus:ring-2 focus:ring-[#0077CC] outline-none text-sm" placeholder="0">
-                                    </div>
-                                </div>
-                                <div>
-                                    <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Upload Evidence</label>
-                                    <div class="border border-dashed border-slate-300 rounded-lg p-2 flex items-center justify-center bg-slate-50 hover:bg-slate-100 cursor-pointer text-slate-500 text-xs h-[46px]">
-                                        <i class="fas fa-paperclip mr-2"></i> Attach File/Photo
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-    
-                        <button id="btnSubmitLog" onclick="saveLog()" class="w-full bg-[#0077CC] hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-xl shadow-lg transition flex items-center justify-center gap-2">
-                            <i class="fas fa-save"></i> Save Log Entry
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 3. VIEW: MACRO (Dashboard) -->
-            <div id="view-macro" class="hidden h-full overflow-y-auto p-6 transition-all duration-300">
-                <div class="max-w-6xl mx-auto">
-                    <div class="flex justify-between items-center mb-6">
-                        <h2 class="text-2xl font-bold text-slate-800">HQ Strategic Dashboard</h2>
-                        <span class="text-sm bg-blue-100 text-blue-800 py-1 px-3 rounded-full font-bold">Real-time Data</span>
-                    </div>
-
-                    <!-- KPI Cards -->
-                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
-                        <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
-                            <div class="text-xs text-slate-400 font-bold uppercase mb-1">Total Shadow Budget</div>
-                            <div id="dashTotalBudget" class="text-2xl font-bold text-[#0077CC]">Calculating...</div>
-                            <div class="text-xs text-green-600 mt-1"><i class="fas fa-info-circle"></i> Based on active projects</div>
-                        </div>
-                        <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
-                            <div class="text-xs text-slate-400 font-bold uppercase mb-1">Active Projects</div>
-                            <div id="dashActiveProjects" class="text-2xl font-bold text-slate-800">0</div>
-                            <div class="text-xs text-slate-500 mt-1">Across all regions</div>
-                        </div>
-                        <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm border-l-4 border-l-red-500">
-                            <div class="text-xs text-slate-400 font-bold uppercase mb-1">Critical Issues</div>
-                            <div id="dashCriticalIssues" class="text-2xl font-bold text-red-500">0</div>
-                            <div class="text-xs text-red-400 mt-1">Require immediate attention</div>
-                        </div>
-                        <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
-                            <div class="text-xs text-slate-400 font-bold uppercase mb-1">Burn Rate</div>
-                            <div class="text-2xl font-bold text-slate-800">65%</div>
-                            <div class="text-xs text-green-600 mt-1">On Track (Q3 Target)</div>
-                        </div>
-                    </div>
-
-                    <!-- Charts & Lists (Static for now) -->
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <!-- Regional Performance -->
-                        <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
-                            <h3 class="font-bold text-slate-700 mb-4">Regional Budget Absorption</h3>
-                            
-                            <div class="mb-4">
-                                <div class="flex justify-between text-sm mb-1">
-                                    <span class="font-semibold text-slate-600">Jakarta Office (CLT)</span>
-                                    <span class="text-slate-500">78%</span>
-                                </div>
-                                <div class="w-full bg-slate-100 rounded-full h-3">
-                                    <div class="bg-[#0077CC] h-3 rounded-full" style="width: 78%"></div>
-                                </div>
-                            </div>
-                            
-                            <div class="mb-4">
-                                <div class="flex justify-between text-sm mb-1">
-                                    <span class="font-semibold text-slate-600">Bangkok Office (CLT)</span>
-                                    <span class="text-slate-500">45%</span>
-                                </div>
-                                <div class="w-full bg-slate-100 rounded-full h-3">
-                                    <div class="bg-blue-400 h-3 rounded-full" style="width: 45%"></div>
-                                </div>
-                            </div>
-
-                            <div class="mb-2">
-                                <div class="flex justify-between text-sm mb-1">
-                                    <span class="font-semibold text-slate-600">Hanoi Office (Sci)</span>
-                                    <span class="text-slate-500">60%</span>
-                                </div>
-                                <div class="w-full bg-slate-100 rounded-full h-3">
-                                    <div class="bg-blue-300 h-3 rounded-full" style="width: 60%"></div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Risk Radar -->
-                        <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
-                            <h3 class="font-bold text-slate-700 mb-4">Risk Radar (High Priority)</h3>
-                            <div class="space-y-3">
-                                <div class="flex items-start gap-3 p-3 bg-red-50 rounded-lg border border-red-100">
-                                    <div class="mt-1"><i class="fas fa-exclamation-triangle text-red-500"></i></div>
-                                    <div>
-                                        <p class="text-sm font-bold text-slate-800">Workshop Kuliner (Jakarta)</p>
-                                        <p class="text-xs text-slate-600">Budget shortfall $2k. Donor withdrawal risk.</p>
-                                        <button class="mt-2 text-xs bg-white border border-red-200 text-red-600 px-2 py-1 rounded font-bold">Escalate</button>
-                                    </div>
-                                </div>
-                                <div class="flex items-start gap-3 p-3 bg-yellow-50 rounded-lg border border-yellow-100">
-                                    <div class="mt-1"><i class="fas fa-clock text-yellow-600"></i></div>
-                                    <div>
-                                        <p class="text-sm font-bold text-slate-800">Mekong River Project (Bangkok)</p>
-                                        <p class="text-xs text-slate-600">Visa processing delay for international experts.</p>
-                                        <button class="mt-2 text-xs bg-white border border-yellow-200 text-yellow-700 px-2 py-1 rounded font-bold">Check Status</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </main>
-    </div>
-
-    <!-- DETAIL POPUP MODAL -->
-    <div id="nodeModal" class="modal-overlay">
-        <div class="modal-content">
-            <div class="p-6 border-b border-slate-100 flex justify-between items-start bg-slate-50 rounded-t-12">
-                <div>
-                    <span id="modalType" class="text-xs font-bold uppercase tracking-wider text-slate-500">Activity</span>
-                    <h2 id="modalTitle" class="text-xl font-bold text-slate-800 mt-1">Activity Name</h2>
-                    <p id="modalOwner" class="text-sm text-slate-500 mt-1"><i class="fas fa-user mr-1"></i> Owner: ???</p>
-                </div>
-                <button onclick="closeModal()" class="text-slate-400 hover:text-red-500 text-xl"><i class="fas fa-times"></i></button>
-            </div>
-            <div class="p-6 grid grid-cols-2 gap-4 bg-white">
-                <div class="p-3 bg-slate-50 rounded border border-slate-100">
-                    <div class="text-xs text-slate-400 font-bold uppercase mb-2">Programmatic Data</div>
-                    <div id="modalBadges" class="flex flex-wrap gap-1"></div>
-                </div>
-                <div class="p-3 bg-slate-50 rounded border border-slate-100">
-                    <div class="text-xs text-slate-400 font-bold uppercase mb-2">Budget Availability</div>
-                    <div class="flex items-end gap-2">
-                        <span id="modalBudget" class="text-lg font-bold text-green-600">$0</span>
-                    </div>
-                </div>
-            </div>
-            <div class="p-6 pt-2">
-                <div class="flex justify-between items-center mb-4">
-                    <h3 class="font-bold text-slate-700">Logs</h3>
-                    <div class="flex bg-slate-100 rounded p-1">
-                        <button onclick="filterLogs('week')" id="tabWeek" class="px-3 py-1 text-xs font-bold rounded bg-white shadow text-[#0077CC]">Latest Logs <span id="countWeek"></span></button>
-                    </div>
-                </div>
-                <div id="modalTimeline" class="max-h-60 overflow-y-auto pr-2"></div>
-            </div>
-            <div id="modalFooter" class="p-4 border-t border-slate-100 bg-slate-50 flex justify-end rounded-b-12">
-                <button onclick="closeModal()" class="px-4 py-2 text-slate-500 font-semibold hover:bg-slate-200 rounded mr-2">Close</button>
-                <button id="btnEditNode" onclick="goToEdit()" class="px-4 py-2 bg-[#0077CC] text-white font-semibold rounded hover:bg-blue-700 shadow flex items-center gap-2"><i class="fas fa-edit"></i> Update</button>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        // --- 1. CONFIGURATION & STATE ---
-        const GAS_API_URL = "https://script.google.com/macros/s/AKfycbww8z_MrEPP3ThlASN6dW6w5CmD7Gr05W5DTF9nONDFqHA85w3_uY_6FmVJp-uzDlpeSw/exec";
-        const currentUserEmail = "angga@unesco.org"; // Simulated Login
-        const currentUserName = "Angga";
-
-        let massiveData = null; 
-        let nodeMap = {}; 
-        let currentSelectedNode = null;
-
-        // --- 2. FETCH DATA DARI GOOGLE SHEETS (READ) ---
-        async function loadData() {
-            try {
-                const response = await fetch(GAS_API_URL);
-                if(!response.ok) throw new Error("Network response was not ok");
-                
-                massiveData = await response.json();
-                
-                // Reset nodeMap and render
-                nodeMap = {};
-                renderTree();
-                updateDashboard();
-            } catch (error) {
-                console.error("Error fetching data:", error);
-                document.getElementById('workflow-canvas').innerHTML = `
-                    <div class="flex flex-col items-center justify-center h-full mt-32 text-red-500">
-                        <i class="fas fa-exclamation-triangle text-4xl mb-4"></i>
-                        <p class="font-semibold">Failed to load data from Google Sheets.</p>
-                        <button onclick="loadData()" class="mt-4 px-4 py-2 bg-slate-200 text-slate-700 rounded hover:bg-slate-300">Retry</button>
-                    </div>`;
-            }
-        }
-
-        // --- 3. RENDER ENGINE (TREE MAP) ---
-        function renderTree() {
-            if (!massiveData) return;
-            const html = `<ul>${buildNodeHTML(massiveData)}</ul>`;
-            document.getElementById('workflow-canvas').innerHTML = html;
-            attachHoverEffects();
-            
-            // Auto Fit after rendering
-            setTimeout(autoFitTree, 100);
-        }
-
-        function buildNodeHTML(node) {
-            nodeMap[node.id] = node;
-            let cssClass = `type-${node.type}`;
-            let statusIndicator = node.status === 'Issue' ? `<div class="absolute top-1 right-1 w-2 h-2 rounded-full bg-red-500"></div>` : '';
-            
-            let content = `
-                <div class="tree-card ${cssClass}" onclick="openNodeModal('${node.id}')">
-                    ${statusIndicator}
-                    <h4 class="text-[10px] font-bold uppercase text-slate-500 tracking-wider">${node.type}</h4>
-                    <p class="text-xs font-bold text-slate-800 leading-tight mt-1">${node.name}</p>
-                    ${node.budget ? `<div class="mt-2 text-[10px] text-slate-400">${node.budget}</div>` : ''}
-                </div>`;
-            
-            if (node.children && node.children.length > 0) {
-                let childrenHTML = node.children.map(child => buildNodeHTML(child)).join('');
-                return `<li>${content}<ul>${childrenHTML}</ul></li>`;
-            } else {
-                return `<li>${content}</li>`;
-            }
-        }
-
-        // --- 4. DASHBOARD CALCULATIONS ---
-        function updateDashboard() {
-            let totalBudget = 0;
-            let activeProjects = 0;
-            let criticalIssues = 0;
-            
-            function traverse(node) {
-                if (node.type === 'Activity') {
-                    activeProjects++;
-                    if (node.status === 'Issue') criticalIssues++;
-                    if (node.budget) {
-                        let num = parseInt(node.budget.replace(/[^0-9]/g, ''));
-                        if (!isNaN(num)) totalBudget += (num * 1000); 
-                    }
-                }
-                if (node.children) node.children.forEach(traverse);
-            }
-            
-            if(massiveData) traverse(massiveData);
-            
-            document.getElementById('dashTotalBudget').innerText = '$' + totalBudget.toLocaleString();
-            document.getElementById('dashActiveProjects').innerText = activeProjects;
-            document.getElementById('dashCriticalIssues').innerText = criticalIssues;
-        }
-
-        // --- 5. SAVE DATA KE GOOGLE SHEETS (CREATE) ---
-        async function saveLog() {
-            if (!currentSelectedNode || currentSelectedNode.type !== 'Activity') {
-                alert("Please select an Activity node from the map first to attach this log.");
-                return;
-            }
-
-            const btn = document.getElementById('btnSubmitLog');
-            const originalText = btn.innerHTML;
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving...';
-            btn.disabled = true;
-
-            const isManual = !document.getElementById('inputModeManual').classList.contains('hidden');
-            
-            // Siapkan Data Payload
-            let payload = {
-                activity_id: currentSelectedNode.id,
-                user_email: currentUserEmail
-            };
-
-            if (isManual) {
-                payload.log_date = document.getElementById('manualDate').value;
-                payload.status_update = document.getElementById('manualStatus').value;
-                payload.description = document.getElementById('manualDesc').value;
-                payload.amount_usd = document.getElementById('manualBudget').value || 0;
-                payload.ai_parsed_json = ""; // Kosongkan karena manual
-            } else {
-                // AI Input (Simulasi, hanya kirim teks mentahnya)
-                payload.description = document.getElementById('rawInput').value;
-                payload.status_update = "On Track";
-                payload.amount_usd = 0;
-                payload.log_date = new Date().toISOString().split('T')[0];
-                payload.ai_parsed_json = JSON.stringify({ source: "AI Smart Log", raw: payload.description });
-            }
-
-            try {
-                // Kirim POST Request ke Google Apps Script (sebagai plain text utk hindari CORS preflight)
-                const response = await fetch(GAS_API_URL, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'text/plain;charset=utf-8',
-                    },
-                    body: JSON.stringify(payload)
-                });
-                
-                const result = await response.json();
-                
-                if(result.status === 'success') {
-                    alert("Data berhasil disimpan ke Google Sheets!");
-                    // Bersihkan Form
-                    document.getElementById('manualDesc').value = '';
-                    document.getElementById('rawInput').value = '';
-                    document.getElementById('manualBudget').value = '';
-                    
-                    // Reload Map Data secara Background
-                    switchMode('workflow');
-                    await loadData();
-                } else {
-                    alert("Gagal menyimpan data: " + result.message);
-                }
-            } catch (error) {
-                console.error("Save error:", error);
-                alert("Terjadi kesalahan jaringan saat menyimpan data.");
-            } finally {
-                btn.innerHTML = originalText;
-                btn.disabled = false;
-            }
-        }
-
-
-        // --- 6. AUTO FIT & ZOOM LOGIC ---
-        let scale = 1, panning = false, pointX = 0, pointY = 0, startX = 0, startY = 0;
-        const container = document.getElementById('workflow-container');
-        const canvas = document.getElementById('workflow-canvas');
-
-        function autoFitTree() {
-            const containerRect = container.getBoundingClientRect();
-            const treeContent = canvas.firstElementChild; // The <ul>
-            if(!treeContent) return;
-            
-            const contentWidth = treeContent.offsetWidth + 100; // padding
-            const contentHeight = treeContent.offsetHeight + 100;
-
-            const scaleX = containerRect.width / contentWidth;
-            const scaleY = containerRect.height / contentHeight;
-            
-            scale = Math.min(scaleX, scaleY, 1.0);
-            
-            pointX = (containerRect.width - contentWidth * scale) / 2 + 50 * scale; 
-            pointY = 20; 
-
-            updateTransform();
-        }
-
-        container.addEventListener('mousedown', (e) => { panning = true; startX = e.clientX - pointX; startY = e.clientY - pointY; container.style.cursor = 'grabbing'; });
-        container.addEventListener('mouseup', () => { panning = false; container.style.cursor = 'grab'; });
-        container.addEventListener('mousemove', (e) => { if (!panning) return; e.preventDefault(); pointX = e.clientX - startX; pointY = e.clientY - startY; updateTransform(); });
-        container.addEventListener('wheel', (e) => { e.preventDefault(); const delta = -Math.sign(e.deltaY); if (delta > 0) scale *= 1.1; else scale /= 1.1; scale = Math.min(Math.max(0.1, scale), 3); updateTransform(); });
-        function updateTransform() { canvas.style.transform = `translate(${pointX}px, ${pointY}px) scale(${scale})`; }
-        function zoomIn() { scale *= 1.2; updateTransform(); }
-        function zoomOut() { scale /= 1.2; updateTransform(); }
-
-        // --- 7. MODAL & UTILS ---
-        function openNodeModal(nodeId) {
-            const node = nodeMap[nodeId];
-            currentSelectedNode = node;
-            document.getElementById('modalTitle').innerText = node.name;
-            document.getElementById('modalType').innerText = node.type;
-            document.getElementById('modalOwner').innerHTML = `Owner: ${node.owner}`;
-            
-            document.getElementById('modalBudget').innerText = node.budget || 'N/A';
-
-            // Badges
-            let badgeHTML = '';
-            if (node.badges && node.badges.length > 0) {
-                node.badges.forEach(b => {
-                    if(b.trim() !== "") badgeHTML += `<span class="badge bg-slate-600 text-white">${b.trim()}</span>`;
-                });
-            }
-            document.getElementById('modalBadges').innerHTML = badgeHTML || '-';
-
-            // Logs
-            const logs = node.logs || [];
-            document.getElementById('countWeek').innerText = `(${logs.length})`;
-            renderTimelineLogs(logs);
-
-            document.getElementById('nodeModal').classList.add('open');
-            
-            // Logic button edit & filter...
-            const btnEdit = document.getElementById('btnEditNode');
-            if(node.owner.includes(currentUserName) && node.type === 'Activity') {
-                btnEdit.classList.remove('hidden'); 
-            } else {
-                btnEdit.classList.add('hidden');
-            }
-        }
-
-        function filterLogs(period) {
-            // Placeholder: currently showing all logs for the selected node
-            if (!currentSelectedNode) return;
-            renderTimelineLogs(currentSelectedNode.logs || []);
-        }
-
-        function renderTimelineLogs(logs) {
-            const container = document.getElementById('modalTimeline');
-            container.innerHTML = '';
-            
-            if (!logs || logs.length === 0) {
-                container.innerHTML = `<div class="text-center text-slate-400 text-xs py-4">No activity logs recorded yet.</div>`;
-                return;
-            }
-
-            // Sort newest first
-            let sortedLogs = [...logs].reverse();
-
-            sortedLogs.forEach(log => {
-                container.innerHTML += `
-                    <div class="timeline-item">
-                        <div class="text-[10px] font-bold text-slate-400 uppercase mb-1">${log.date} ${log.amount > 0 ? `<span class="text-green-600 ml-2">Spent: $${log.amount}</span>` : ''}</div>
-                        <div class="text-sm text-slate-700">${log.text}</div>
-                    </div>
-                `;
-            });
-        }
-
-        function closeModal() { document.getElementById('nodeModal').classList.remove('open'); }
-        
-        function switchMode(mode) {
-            ['view-workflow', 'view-micro', 'view-macro'].forEach(id => document.getElementById(id).classList.add('hidden'));
-            document.getElementById(`view-${mode}`).classList.remove('hidden');
-            
-            ['btn-workflow', 'btn-micro', 'btn-macro'].forEach(id => {
-                document.getElementById(id).classList.remove('text-[#0077CC]', 'bg-slate-800');
-                document.getElementById(id).classList.add('text-slate-300');
-            });
-            document.getElementById(`btn-${mode}`).classList.add('text-[#0077CC]', 'bg-slate-800');
-            document.getElementById(`btn-${mode}`).classList.remove('text-slate-300');
-
-            // Force auto-fit map when returning to workflow
-            if (mode === 'workflow') setTimeout(autoFitTree, 50);
-        }
-
-        function switchInputMethod(method) {
-            const tabAI = document.getElementById('tabInputAI');
-            const tabManual = document.getElementById('tabInputManual');
-            const viewAI = document.getElementById('inputModeAI');
-            const viewManual = document.getElementById('inputModeManual');
-            if(method === 'ai') {
-                viewAI.classList.remove('hidden'); viewManual.classList.add('hidden');
-                tabAI.classList.add('text-[#0077CC]', 'border-[#0077CC]'); tabAI.classList.remove('text-slate-400', 'border-transparent');
-                tabManual.classList.remove('text-[#0077CC]', 'border-[#0077CC]'); tabManual.classList.add('text-slate-400', 'border-transparent');
-            } else {
-                viewManual.classList.remove('hidden'); viewAI.classList.add('hidden');
-                tabManual.classList.add('text-[#0077CC]', 'border-[#0077CC]'); tabManual.classList.remove('text-slate-400', 'border-transparent');
-                tabAI.classList.remove('text-[#0077CC]', 'border-[#0077CC]'); tabAI.classList.add('text-slate-400', 'border-transparent');
-            }
-        }
-
-        function goToEdit() { 
-            closeModal(); 
-            switchMode('micro'); 
-            document.getElementById('microContext').innerText = `${currentSelectedNode.type} > ${currentSelectedNode.name}`; 
-            
-            // Set today's date automatically on manual form
-            document.getElementById('manualDate').valueAsDate = new Date();
-        }
-
-        function attachHoverEffects() {
-            document.querySelectorAll('.tree-card').forEach(card => {
-                card.addEventListener('mouseenter', function() {
-                    let parent = this.closest('li');
-                    while (parent) { parent.classList.add('active-path'); let ul = parent.closest('ul'); if (ul) { ul.classList.add('active-path'); parent = ul.parentElement.closest('li'); } else break; }
-                });
-                card.addEventListener('mouseleave', () => document.querySelectorAll('.active-path').forEach(el => el.classList.remove('active-path')));
-            });
-        }
-
-        // --- INIT ---
-        document.addEventListener('DOMContentLoaded', () => { 
-            loadData(); // Memuat data langsung dari Google Sheets saat halaman dibuka
-        });
-    </script>
-</body>
-</html>
+<header class="bg-white border-b border-slate-200 h-16 flex items-center justify-between px-6 shadow-sm z-20">
+<div class="flex items-center gap-3"><div class="w-8 h-8 bg-[#0077CC] rounded text-white flex items-center justify-center font-bold text-lg">IO</div><div><h1 class="font-bold text-slate-800 leading-tight">Shadow Ops System</h1><p class="text-xs text-slate-500">Global Operations Map</p></div></div>
+<div class="text-right"><p class="text-xs text-slate-400 uppercase font-bold">Logged In As</p><p class="text-sm font-semibold text-[#0077CC] flex items-center gap-2"><i class="fas fa-user-circle"></i><span id="identityLabel">Demo User</span></p></div>
+</header>
+<div class="flex flex-1 overflow-hidden">
+<aside class="w-20 bg-slate-900 text-slate-300 flex flex-col items-center py-6 gap-6 z-20 shadow-xl">
+<button onclick="switchMode('workflow')" id="btn-workflow" class="nav-btn active p-3 rounded-xl hover:bg-slate-700 text-[#0077CC] bg-slate-800 transition" title="Workflow Map"><i class="fas fa-sitemap text-xl"></i></button>
+<button onclick="switchMode('micro')" id="btn-micro" class="nav-btn p-3 rounded-xl hover:bg-slate-700 hover:text-white transition" title="Micro Input"><i class="fas fa-microphone-lines text-xl"></i></button>
+<button onclick="switchMode('macro')" id="btn-macro" class="nav-btn p-3 rounded-xl hover:bg-slate-700 hover:text-white transition" title="Macro Dashboard"><i class="fas fa-chart-pie text-xl"></i></button>
+</aside>
+<main class="flex-1 relative bg-[#F4F6F8]">
+<div id="view-workflow" class="w-full h-full relative">
+<div class="absolute top-6 right-6 z-30 flex flex-col gap-2"><button onclick="autoFitTree()" class="bg-white p-2 rounded shadow text-green-600 font-bold text-xs"><i class="fas fa-compress-arrows-alt mr-1"></i> FIT</button><button onclick="zoomIn()" class="bg-white p-2 rounded shadow text-slate-600"><i class="fas fa-plus"></i></button><button onclick="zoomOut()" class="bg-white p-2 rounded shadow text-slate-600"><i class="fas fa-minus"></i></button></div>
+<div class="absolute bottom-6 left-6 z-30 bg-white/80 p-3 rounded-lg backdrop-blur text-xs text-slate-500 border border-slate-200"><b>Tips:</b> Scroll to zoom, drag to pan.</div>
+<div id="workflow-container"><div id="workflow-canvas" class="tree"><div class="flex flex-col items-center justify-center h-full mt-32 text-slate-500"><i class="fas fa-spinner fa-spin text-4xl mb-4 text-[#0077CC]"></i><p class="font-semibold">Loading configurable data source...</p></div></div></div>
+</div>
+<div id="view-micro" class="hidden h-full overflow-y-auto p-6 transition-all duration-300"><div class="max-w-2xl mx-auto"><div class="glass-panel rounded-2xl p-8">
+<h2 class="text-2xl font-bold text-slate-800 mb-2">Update Activity Log</h2>
+<div class="mb-4 p-3 bg-blue-50 rounded-lg border border-blue-100 flex items-center justify-between text-sm text-blue-800"><div class="flex items-center gap-2"><i class="fas fa-sitemap"></i><b>Context:</b><span id="microContext" class="font-bold">Select from Workflow...</span></div><button onclick="switchMode('workflow')" class="text-xs underline">Back to Map</button></div>
+<div class="flex border-b border-slate-200 mb-6"><button onclick="switchInputMethod('ai')" id="tabInputAI" class="w-1/2 py-2 text-center font-bold text-[#0077CC] border-b-2 border-[#0077CC]"><i class="fas fa-magic mr-2"></i> AI Smart Log</button><button onclick="switchInputMethod('manual')" id="tabInputManual" class="w-1/2 py-2 text-center font-bold text-slate-400 border-b-2 border-transparent"><i class="fas fa-edit mr-2"></i> Manual Entry</button></div>
+<div id="inputModeAI"><div class="relative mb-6"><textarea id="rawInput" class="w-full h-40 p-4 border border-slate-300 rounded-xl resize-none text-lg" placeholder="Describe today's progress..."></textarea><button class="absolute bottom-4 right-4 bg-slate-100 p-2 rounded-full w-10 h-10" title="Voice Input"><i class="fas fa-microphone"></i></button></div><div class="text-xs text-slate-400 mb-4"><i class="fas fa-info-circle"></i> AI parsing is a placeholder; raw text will be stored.</div></div>
+<div id="inputModeManual" class="hidden space-y-4 mb-6"><div class="grid grid-cols-2 gap-4"><div><label class="block text-xs font-bold text-slate-500 uppercase mb-1">Date</label><input type="date" id="manualDate" class="w-full p-3 border border-slate-300 rounded-lg"></div><div><label class="block text-xs font-bold text-slate-500 uppercase mb-1">Status</label><select id="manualStatus" class="w-full p-3 border border-slate-300 rounded-lg bg-white"><option value="On Track">On Track</option><option value="Delayed">Delayed</option><option value="Issue">Critical Issue</option><option value="Completed">Completed</option></select></div></div>
+<div><label class="block text-xs font-bold text-slate-500 uppercase mb-1">Activity Description</label><textarea id="manualDesc" class="w-full h-24 p-3 border border-slate-300 rounded-lg resize-none" placeholder="Describe the specific activity update..."></textarea></div>
+<div class="grid grid-cols-2 gap-4"><div><label class="block text-xs font-bold text-slate-500 uppercase mb-1">Budget Spent (USD)</label><div class="relative"><span class="absolute left-3 top-3 text-slate-400">$</span><input type="number" id="manualBudget" min="0" step="0.01" class="w-full p-3 pl-6 border border-slate-300 rounded-lg" placeholder="0"></div></div><div><label class="block text-xs font-bold text-slate-500 uppercase mb-1">Evidence (future)</label><div class="border border-dashed border-slate-300 rounded-lg p-2 flex items-center justify-center bg-slate-50 text-slate-500 text-xs h-[46px]"><i class="fas fa-paperclip mr-2"></i> Storage integration pending</div></div></div></div>
+<button id="btnSubmitLog" onclick="saveLog()" class="w-full bg-[#0077CC] hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-xl shadow-lg flex items-center justify-center gap-2"><i class="fas fa-save"></i> Save Log Entry</button>
+</div></div></div>
+<div id="view-macro" class="hidden h-full overflow-y-auto p-6"><div class="max-w-6xl mx-auto">
+<div class="flex justify-between items-center mb-6"><h2 class="text-2xl font-bold text-slate-800">HQ Strategic Dashboard</h2><span id="dataSourceLabel" class="text-sm bg-blue-100 text-blue-800 py-1 px-3 rounded-full font-bold">Loading source...</span></div>
+<div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+<div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm"><div class="text-xs text-slate-400 font-bold uppercase mb-1">Total Activity Budget</div><div id="dashTotalBudget" class="text-2xl font-bold text-[#0077CC]">Calculating...</div><div class="text-xs text-slate-500 mt-1">Sum of leaf activity budgets</div></div>
+<div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm"><div class="text-xs text-slate-400 font-bold uppercase mb-1">Activity Nodes</div><div id="dashActiveProjects" class="text-2xl font-bold text-slate-800">0</div><div class="text-xs text-slate-500 mt-1">Across the hierarchy</div></div>
+<div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm"><div class="text-xs text-slate-400 font-bold uppercase mb-1">Critical Issues</div><div id="dashCriticalIssues" class="text-2xl font-bold text-red-500">0</div><div class="text-xs text-red-400 mt-1">Require review</div></div>
+<div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm"><div class="text-xs text-slate-400 font-bold uppercase mb-1">Delayed Activities</div><div id="dashDelayedActivities" class="text-2xl font-bold text-amber-600">0</div><div class="text-xs text-slate-500 mt-1">Need follow-up</div></div></div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6"><div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm"><h3 class="font-bold text-slate-700 mb-4">Activity Budget by Region</h3><div id="regionalBudgetList" class="space-y-4"></div></div><div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm"><h3 class="font-bold text-slate-700 mb-4">Priority Risk Radar</h3><div id="riskList" class="space-y-3"></div></div></div>
+</div></div>
+</main></div>
+<div id="nodeModal" class="modal-overlay"><div class="modal-content">
+<div class="p-6 border-b border-slate-100 flex justify-between items-start bg-slate-50"><div><span id="modalType" class="text-xs font-bold uppercase tracking-wider text-slate-500">Activity</span><h2 id="modalTitle" class="text-xl font-bold text-slate-800 mt-1">Activity Name</h2><p id="modalOwner" class="text-sm text-slate-500 mt-1">Owner: ???</p></div><button onclick="closeModal()" class="text-slate-400 hover:text-red-500 text-xl"><i class="fas fa-times"></i></button></div>
+<div class="p-6 grid grid-cols-2 gap-4 bg-white"><div class="p-3 bg-slate-50 rounded border border-slate-100"><div class="text-xs text-slate-400 font-bold uppercase mb-2">Programmatic Data</div><div id="modalBadges" class="flex flex-wrap gap-1"></div></div><div class="p-3 bg-slate-50 rounded border border-slate-100"><div class="text-xs text-slate-400 font-bold uppercase mb-2">Budget</div><div class="flex items-end gap-2"><span id="modalBudget" class="text-lg font-bold text-green-600">$0</span></div></div></div>
+<div class="p-6 pt-2"><div class="flex justify-between items-center mb-4"><h3 class="font-bold text-slate-700">Logs</h3><div class="flex bg-slate-100 rounded p-1"><button onclick="filterLogs('week')" id="tabWeek" class="px-3 py-1 text-xs font-bold rounded bg-white shadow text-[#0077CC]">Latest Logs <span id="countWeek"></span></button></div></div><div id="modalTimeline" class="max-h-60 overflow-y-auto pr-2"></div></div>
+<div id="modalFooter" class="p-4 border-t border-slate-100 bg-slate-50 flex justify-end"><button onclick="closeModal()" class="px-4 py-2 text-slate-500 font-semibold hover:bg-slate-200 rounded mr-2">Close</button><button id="btnEditNode" onclick="goToEdit()" class="px-4 py-2 bg-[#0077CC] text-white font-semibold rounded hover:bg-blue-700 shadow flex items-center gap-2"><i class="fas fa-edit"></i> Update</button></div>
+</div></div>
+<script>
+"use strict";
+const currentUserEmail = "angga@example.com"; // Demo identity only; Supabase writes always use auth.uid().
+let appConfig = null, supabaseClient = null, massiveData = null, nodeMap = {}, currentSelectedNode = null;
+function escapeHtml(value){return String(value??"").replace(/[&<>"']/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch]));}
+function money(value){return "$"+Number(value||0).toLocaleString(undefined,{maximumFractionDigits:2});}
+function budgetLabel(value){const n=Number(value||0);if(n>=1e6)return "$"+(n/1e6).toLocaleString(undefined,{maximumFractionDigits:1})+"m";if(n>=1e3)return "$"+(n/1e3).toLocaleString(undefined,{maximumFractionDigits:1})+"k";return money(n);}
+function normalizeStatus(status){const s=String(status||"On Track").toLowerCase();if(["issue","critical issue","critical"].includes(s))return "Issue";if(["delayed","at risk"].includes(s))return "Delayed";if(["completed","complete"].includes(s))return "Completed";return "On Track";}
+async function loadJson(path){const res=await fetch(path,{cache:"no-store"});if(!res.ok)throw new Error("Could not load "+path+" ("+res.status+")");return res.json();}
+function validSupabaseConfig(){return appConfig?.supabase?.url?.startsWith("https://")&&!appConfig.supabase.url.includes("YOUR_PROJECT_REF")&&appConfig?.supabase?.anonKey&&!appConfig.supabase.anonKey.includes("YOUR_SUPABASE");}
+async function initConfig(){appConfig=await loadJson("./config.json");if(!["dummy","supabase"].includes(appConfig.dataProvider))throw new Error('config.json: dataProvider must be "dummy" or "supabase".');if(appConfig.dataProvider==="supabase"){if(!validSupabaseConfig())throw new Error("Supabase mode selected: add the project URL and anon/publishable key in config.json.");if(!window.supabase?.createClient)throw new Error("Supabase JS failed to load.");supabaseClient=window.supabase.createClient(appConfig.supabase.url,appConfig.supabase.anonKey);}document.getElementById("identityLabel").textContent=appConfig.defaultUser?.name||"Demo User";}
+function flattenHierarchy(node,parentId=null,out=[]){const row={...node,parent_id:parentId};delete row.children;out.push(row);(node.children||[]).forEach(child=>flattenHierarchy(child,node.id,out));return out;}
+function buildHierarchy(rows,logsByActivity){const byId=new Map();rows.forEach(row=>{const amount=Number(row.budget_usd||0);byId.set(String(row.id),{id:String(row.id),name:row.name,type:row.node_type||row.type||"Activity",owner:row.owner_name||row.owner||"Unassigned",status:normalizeStatus(row.status),budget:row.budget||budgetLabel(amount),budget_usd:amount,badges:Array.isArray(row.badges)?row.badges:[],description:row.description||"",logs:logsByActivity.get(String(row.id))||[],children:[]});});const roots=[];rows.forEach(row=>{const node=byId.get(String(row.id));if(row.parent_id&&byId.has(String(row.parent_id)))byId.get(String(row.parent_id)).children.push(node);else roots.push(node);});const sort=node=>{node.children.sort((a,b)=>Number(rows.find(r=>String(r.id)===a.id)?.sort_order||0)-Number(rows.find(r=>String(r.id)===b.id)?.sort_order||0));node.children.forEach(sort);};roots.forEach(sort);if(roots.length!==1)throw new Error("Supabase hierarchy must have exactly one root; found "+roots.length+".");return roots[0];}
+function normalizeDbLog(log){return{id:log.id,date:log.log_date,amount:Number(log.amount_usd||0),text:log.description||"",status:normalizeStatus(log.status_update),user_email:log.user_email||""};}
+async function loadSupabaseData(){const {nodes,logs}=appConfig.supabase.tables;const n=await supabaseClient.from(nodes).select("id,parent_id,name,node_type,owner_name,status,budget_usd,badges,description,sort_order").order("sort_order",{ascending:true});if(n.error)throw n.error;const l=await supabaseClient.from(logs).select("id,activity_id,user_email,log_date,status_update,description,amount_usd").order("log_date",{ascending:false});if(l.error)throw new Error("Could not read activity_logs. This table requires authenticated access; sign in or adjust the policy intentionally. "+l.error.message);const grouped=new Map();(l.data||[]).forEach(log=>{const key=String(log.activity_id);if(!grouped.has(key))grouped.set(key,[]);grouped.get(key).push(normalizeDbLog(log));});return buildHierarchy(n.data||[],grouped);}
+function getLocalLogMap(){try{return JSON.parse(localStorage.getItem("shadowops.demo.logs")||"{}");}catch{return {};}}
+function applyLocalLogs(root){const local=getLocalLogMap();const walk=n=>{n.logs=[...(n.logs||[]),...(local[String(n.id)]||[])];(n.children||[]).forEach(walk);};walk(root);}
+function saveLocalLog(activityId,log){const map=getLocalLogMap();map[String(activityId)]=map[String(activityId)]||[];map[String(activityId)].push(log);localStorage.setItem("shadowops.demo.logs",JSON.stringify(map));}
+async function loadData(){const area=document.getElementById("workflow-canvas");area.innerHTML='<div class="flex flex-col items-center justify-center h-full mt-32 text-slate-500"><i class="fas fa-spinner fa-spin text-4xl mb-4 text-[#0077CC]"></i><p>Loading data...</p></div>';try{if(!appConfig)await initConfig();if(appConfig.dataProvider==="dummy"){const dummy=await loadJson(appConfig.dummy?.file||"./dummy.json");massiveData=dummy.hierarchy;applyLocalLogs(massiveData);}else{massiveData=await loadSupabaseData();}nodeMap={};renderTree();updateDashboard();document.getElementById("dataSourceLabel").textContent=appConfig.dataProvider==="dummy"?"DEMO • dummy.json":"SUPABASE • live";}catch(err){console.error("ShadowOps load error:",err);area.innerHTML='<div class="flex flex-col items-center justify-center h-full mt-32 text-red-500 px-6 text-center"><i class="fas fa-exclamation-triangle text-4xl mb-4"></i><p class="font-semibold">Data could not be loaded.</p><p class="text-sm mt-2 max-w-xl">'+escapeHtml(err.message||err)+'</p><button onclick="loadData()" class="mt-4 px-4 py-2 bg-slate-200 text-slate-700 rounded">Retry</button></div>';document.getElementById("dataSourceLabel").textContent="SOURCE ERROR";}}
+function renderTree(){if(!massiveData)return;document.getElementById("workflow-canvas").innerHTML="<ul>"+buildNodeHTML(massiveData)+"</ul>";attachHoverEffects();setTimeout(autoFitTree,100);}
+function buildNodeHTML(node){nodeMap[node.id]=node;const dot=node.status==="Issue"?'<span class="absolute top-1 right-1 w-2 h-2 rounded-full bg-red-500"></span>':"";const card='<div class="tree-card type-'+escapeHtml(node.type)+'" onclick="openNodeModal(\''+escapeHtml(node.id)+'\')">'+dot+'<h4 class="text-[10px] font-bold uppercase text-slate-500 tracking-wider">'+escapeHtml(node.type)+'</h4><p class="text-xs font-bold text-slate-800 leading-tight mt-1">'+escapeHtml(node.name)+'</p>'+(node.budget?'<div class="mt-2 text-[10px] text-slate-400">'+escapeHtml(node.budget)+'</div>':"")+"</div>";return node.children?.length?"<li>"+card+"<ul>"+node.children.map(buildNodeHTML).join("")+"</ul></li>":"<li>"+card+"</li>";}
+function updateDashboard(){let budget=0,activities=0,critical=0,delayed=0;const regions=new Map(),risks=[];const walk=(n,region="Unassigned")=>{const r=n.type==="Regional"?n.name:region;if(n.type==="Activity"){activities++;budget+=Number(n.budget_usd||0);if(n.status==="Issue"){critical++;risks.push({node:n,level:"critical"});}else if(n.status==="Delayed"){delayed++;risks.push({node:n,level:"delayed"});}regions.set(r,(regions.get(r)||0)+Number(n.budget_usd||0));}(n.children||[]).forEach(c=>walk(c,r));};if(massiveData)walk(massiveData);document.getElementById("dashTotalBudget").textContent=money(budget);document.getElementById("dashActiveProjects").textContent=activities;document.getElementById("dashCriticalIssues").textContent=critical;document.getElementById("dashDelayedActivities").textContent=delayed;document.getElementById("regionalBudgetList").innerHTML=[...regions.entries()].map(([name,amount])=>{const pct=budget?Math.round(amount/budget*100):0;return'<div><div class="flex justify-between text-sm mb-1"><span class="font-semibold">'+escapeHtml(name)+'</span><span class="text-slate-500">'+money(amount)+' • '+pct+'%</span></div><div class="w-full bg-slate-100 rounded-full h-3"><div class="bg-[#0077CC] h-3 rounded-full" style="width:'+pct+'%"></div></div></div>';}).join("")||'<p class="text-sm text-slate-400">No regional data.</p>';document.getElementById("riskList").innerHTML=risks.map(({node,level})=>'<div class="flex items-start gap-3 p-3 rounded-lg border '+(level==="critical"?"bg-red-50 border-red-100":"bg-yellow-50 border-yellow-100")+'"><i class="fas '+(level==="critical"?"fa-exclamation-triangle text-red-500":"fa-clock text-yellow-600")+' mt-1"></i><div><p class="text-sm font-bold">'+escapeHtml(node.name)+'</p><p class="text-xs text-slate-600">'+escapeHtml(node.status+" • "+node.owner)+'</p><button onclick="openNodeModal(\''+escapeHtml(node.id)+'\')" class="mt-2 text-xs bg-white border px-2 py-1 rounded font-bold">Review details</button></div></div>').join("")||'<p class="text-sm text-slate-400">No delayed or critical activities.</p>';}
+async function saveLog(){if(!currentSelectedNode||currentSelectedNode.type!=="Activity"){alert("Select an Activity node from the map first.");return;}const manual=!document.getElementById("inputModeManual").classList.contains("hidden");const description=(document.getElementById(manual?"manualDesc":"rawInput").value||"").trim();const status=manual?document.getElementById("manualStatus").value:"On Track";const date=manual?(document.getElementById("manualDate").value||new Date().toISOString().slice(0,10)):new Date().toISOString().slice(0,10);const amount=Number(manual?(document.getElementById("manualBudget").value||0):0);if(!description){alert("Please enter an activity description.");return;}if(!Number.isFinite(amount)||amount<0){alert("Budget amount must be zero or greater.");return;}const btn=document.getElementById("btnSubmitLog"),original=btn.innerHTML;btn.disabled=true;btn.innerHTML='<i class="fas fa-spinner fa-spin"></i> Saving...';try{if(appConfig.dataProvider==="dummy"){saveLocalLog(currentSelectedNode.id,{id:"local-"+Date.now(),date,amount,text:description,status});alert("Demo log saved in this browser only (localStorage).");}else{const auth=await supabaseClient.auth.getUser();if(auth.error||!auth.data?.user)throw new Error("Sign in with Supabase Auth before saving logs. The visible demo identity is not authentication.");const payload={activity_id:currentSelectedNode.id,user_id:auth.data.user.id,user_email:auth.data.user.email||"",log_date:date,status_update:normalizeStatus(status),description,amount_usd:amount,ai_parsed_json:manual?{}:{source:"AI Smart Log (raw text only)",raw:description}};const saved=await supabaseClient.from(appConfig.supabase.tables.logs).insert(payload);if(saved.error)throw saved.error;alert("Activity log saved to Supabase.");}document.getElementById("manualDesc").value="";document.getElementById("rawInput").value="";document.getElementById("manualBudget").value="";switchMode("workflow");await loadData();}catch(err){console.error("Save error",err);alert("Could not save log: "+(err.message||err));}finally{btn.disabled=false;btn.innerHTML=original;}}
+let scale=1,panning=false,pointX=0,pointY=0,startX=0,startY=0;const container=document.getElementById("workflow-container"),canvas=document.getElementById("workflow-canvas");
+function autoFitTree(){const cr=container.getBoundingClientRect(),tree=canvas.firstElementChild;if(!tree)return;const w=tree.offsetWidth+100,h=tree.offsetHeight+100;scale=Math.min(cr.width/w,cr.height/h,1);pointX=(cr.width-w*scale)/2+50*scale;pointY=20;updateTransform();}
+container.addEventListener("mousedown",e=>{panning=true;startX=e.clientX-pointX;startY=e.clientY-pointY;container.style.cursor="grabbing";});container.addEventListener("mouseup",()=>{panning=false;container.style.cursor="grab";});container.addEventListener("mouseleave",()=>{panning=false;container.style.cursor="grab";});container.addEventListener("mousemove",e=>{if(!panning)return;e.preventDefault();pointX=e.clientX-startX;pointY=e.clientY-startY;updateTransform();});container.addEventListener("wheel",e=>{e.preventDefault();scale=Math.min(Math.max(.1,scale*(-Math.sign(e.deltaY)>0?1.1:1/1.1)),3);updateTransform();},{passive:false});function updateTransform(){canvas.style.transform="translate("+pointX+"px,"+pointY+"px) scale("+scale+")";}function zoomIn(){scale=Math.min(3,scale*1.2);updateTransform();}function zoomOut(){scale=Math.max(.1,scale/1.2);updateTransform();}
+function openNodeModal(id){const n=nodeMap[id];if(!n)return;currentSelectedNode=n;document.getElementById("modalTitle").textContent=n.name;document.getElementById("modalType").textContent=n.type;document.getElementById("modalOwner").textContent="Owner: "+(n.owner||"Unassigned");document.getElementById("modalBudget").textContent=n.budget||money(n.budget_usd);document.getElementById("modalBadges").innerHTML=(n.badges||[]).map(b=>'<span class="badge bg-slate-600 text-white">'+escapeHtml(b)+'</span>').join("")||"-";const logs=n.logs||[];document.getElementById("countWeek").textContent="("+logs.length+")";renderTimelineLogs(logs);document.getElementById("nodeModal").classList.add("open");document.getElementById("btnEditNode").classList.toggle("hidden",!(n.owner&&n.owner.includes(appConfig.defaultUser?.name||"Angga")&&n.type==="Activity"));}
+function filterLogs(){if(currentSelectedNode)renderTimelineLogs(currentSelectedNode.logs||[]);}function renderTimelineLogs(logs){const target=document.getElementById("modalTimeline");if(!logs?.length){target.innerHTML='<div class="text-center text-slate-400 text-xs py-4">No activity logs recorded yet.</div>';return;}target.innerHTML=[...logs].sort((a,b)=>String(b.date).localeCompare(String(a.date))).map(l=>'<div class="timeline-item"><div class="text-[10px] font-bold text-slate-400 uppercase mb-1">'+escapeHtml(l.date||"")+(Number(l.amount)>0?'<span class="text-green-600 ml-2">Spent: '+money(l.amount)+'</span>':"")+(l.status?' • '+escapeHtml(l.status):"")+'</div><div class="text-sm text-slate-700">'+escapeHtml(l.text||"")+'</div></div>').join("");}
+function closeModal(){document.getElementById("nodeModal").classList.remove("open");}
+function switchMode(mode){["view-workflow","view-micro","view-macro"].forEach(id=>document.getElementById(id).classList.add("hidden"));document.getElementById("view-"+mode).classList.remove("hidden");["btn-workflow","btn-micro","btn-macro"].forEach(id=>{id===("btn-"+mode)?id&&document.getElementById(id).classList.add("text-[#0077CC]","bg-slate-800"):document.getElementById(id).classList.remove("text-[#0077CC]","bg-slate-800");});if(mode==="workflow")setTimeout(autoFitTree,50);}
+function switchInputMethod(method){const ai=method==="ai";document.getElementById("inputModeAI").classList.toggle("hidden",!ai);document.getElementById("inputModeManual").classList.toggle("hidden",ai);for(const [id,on] of [["tabInputAI",ai],["tabInputManual",!ai]]){const el=document.getElementById(id);el.classList.toggle("text-[#0077CC]",on);el.classList.toggle("border-[#0077CC]",on);el.classList.toggle("text-slate-400",!on);el.classList.toggle("border-transparent",!on);}}
+function goToEdit(){if(!currentSelectedNode)return;closeModal();switchMode("micro");document.getElementById("microContext").textContent=currentSelectedNode.type+" > "+currentSelectedNode.name;document.getElementById("manualDate").value=new Date().toISOString().slice(0,10);}
+function attachHoverEffects(){document.querySelectorAll(".tree-card").forEach(card=>{card.addEventListener("mouseenter",function(){let p=this.closest("li");while(p){p.classList.add("active-path");const ul=p.closest("ul");if(ul){ul.classList.add("active-path");p=ul.parentElement.closest("li");}else break;}});card.addEventListener("mouseleave",()=>document.querySelectorAll(".active-path").forEach(el=>el.classList.remove("active-path")));});}
+document.addEventListener("DOMContentLoaded",async()=>{document.getElementById("manualDate").value=new Date().toISOString().slice(0,10);await loadData();});
+</script>
+</body></html>
