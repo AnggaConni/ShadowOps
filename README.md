@@ -40,7 +40,7 @@ Edit `config.json`.
 ### Explicit grants and RLS
 The migration explicitly grants:
 - `anon`: SELECT on `public.ops_nodes` only.
-- `authenticated`: SELECT/INSERT/UPDATE/DELETE on both tables, subject to RLS.
+- `authenticated`: SELECT/INSERT/UPDATE/DELETE on both tables, subject to RLS. Log rows are scoped to their owning authenticated user in the starter policy.
 - `service_role`: all table privileges for server-side use only.
 
 The log table is not anonymously readable. RLS stays enabled and limits log writes to the authenticated owner. The current header identity is mock UI only; never treat it as authentication. The frontend retrieves the current Supabase Auth user before inserting a log.
