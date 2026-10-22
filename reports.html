@@ -30,6 +30,14 @@
 <div><label class="label">Program / kontrak</label><select id="project" class="field mt-1"><option>Living Heritage Capacity Building</option><option>Community Field Mapping</option><option>Field Logistics Readiness</option><option>Vendor A — Contract Demo</option><option>HQ Core Operations</option></select></div>
 <div><label class="label">Aktivitas yang dilakukan</label><textarea id="activity" rows="4" class="field mt-1" placeholder="Apa yang Anda kerjakan hari ini? Sebutkan aktivitas yang benar-benar dilakukan."></textarea></div>
 <div><label class="label">Hasil / bukti</label><textarea id="result" rows="3" class="field mt-1" placeholder="Output, keputusan, dokumen, jumlah, atau tautan bukti."></textarea></div>
+<div class="rounded-xl border border-blue-100 bg-blue-50 p-4 space-y-3">
+<div><p class="text-sm font-extrabold text-blue-950"><i class="fa-solid fa-bullseye mr-2"></i>MEL outcome & evidence</p><p class="text-xs text-blue-800 mt-1">Opsional untuk aktivitas rutin; isi saat ingin melacak hasil, bukan hanya kegiatan.</p></div>
+<div><label class="label">Indikator / hasil yang ingin diukur</label><input id="indicator" class="field mt-1" placeholder="Contoh: peserta yang menyelesaikan pelatihan"></div>
+<div class="grid grid-cols-3 gap-2"><div><label class="label">Baseline</label><input id="baseline" class="field mt-1" placeholder="Awal"></div><div><label class="label">Target</label><input id="target" class="field mt-1" placeholder="Sasaran"></div><div><label class="label">Aktual</label><input id="actual" class="field mt-1" placeholder="Capaian"></div></div>
+<div><label class="label">Sumber / referensi bukti</label><input id="evidence" class="field mt-1" placeholder="URL, ID dokumen, daftar hadir, survei, dataset"></div>
+<div><label class="label">Status verifikasi</label><select id="verification" class="field mt-1"><option>Belum diverifikasi</option><option>Dicek oleh tim</option><option>Diverifikasi pihak ketiga</option><option>Tidak berlaku untuk entri ini</option></select></div>
+<div><label class="label">Konteks / pembelajaran</label><textarea id="learning" rows="2" class="field mt-1" placeholder="Apa yang berubah, apa yang dipelajari, dan faktor yang memengaruhi hasil?"></textarea></div>
+</div>
 <div class="grid grid-cols-2 gap-3"><div><label class="label">Durasi (jam)</label><input id="hours" type="number" min="0" max="24" step=".5" value="2" class="field mt-1"></div><div><label class="label">Status</label><select id="status" class="field mt-1"><option>Selesai</option><option>Berjalan</option><option>Terhambat</option><option>Perlu tindak lanjut</option></select></div></div>
 <div><label class="label">Tindak lanjut</label><input id="next" class="field mt-1" placeholder="Aksi berikutnya dan target waktu"></div>
 <button onclick="generate()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-extrabold py-3 rounded-xl"><i class="fa-solid fa-file-circle-check mr-2"></i>Generate laporan</button>
@@ -37,8 +45,19 @@
 </section>
 <section class="card p-5 xl:col-span-3"><div class="flex flex-wrap items-center justify-between gap-3 mb-4"><h2 class="font-extrabold text-lg">Preview laporan</h2><button onclick="copyReport()" class="border border-slate-300 px-3 py-2 rounded-lg text-sm font-bold"><i class="fa-regular fa-copy mr-1"></i>Salin</button></div>
 <div class="flex flex-wrap gap-2 mb-4"><button class="tab active" data-style="wa" onclick="setStyle('wa')">WhatsApp singkat</button><button class="tab bg-slate-100" data-style="email" onclick="setStyle('email')">Email detail</button><button class="tab bg-slate-100" data-style="daily" onclick="setStyle('daily')">Laporan harian</button><button class="tab bg-slate-100" data-style="monthly" onclick="setStyle('monthly')">Ringkasan bulanan</button></div>
-<pre id="output" class="min-h-80 whitespace-pre-wrap break-words rounded-xl border border-slate-200 bg-slate-50 p-5 text-sm leading-7 font-sans">Muat contoh dummy atau isi formulir di sebelah kiri, lalu tekan Generate laporan.</pre><p id="notice" class="text-xs text-slate-400 mt-3">Selalu periksa nama, tanggal, angka, dan bukti sebelum mengirim.</p></section>
+<pre id="output" class="min-h-80 whitespace-pre-wrap break-words rounded-xl border border-slate-200 bg-slate-50 p-5 text-sm leading-7 font-sans">Muat contoh dummy atau isi formulir di sebelah kiri, lalu tekan Generate laporan.</pre><p id="notice" class="text-xs text-slate-400 mt-3">Cek fakta dan bukti sebelum dikirim. WhatsApp dibuat ringkas tapi lengkap; email menaruh ringkasan di awal dan detail hanya jika relevan.</p></section>
 </div>
+<section class="card p-5 mt-5">
+<div class="flex items-start gap-3"><span class="w-10 h-10 rounded-xl bg-blue-50 text-blue-700 flex items-center justify-center shrink-0"><i class="fa-solid fa-arrows-rotate"></i></span><div><h2 class="text-lg font-extrabold">MEL workflow</h2><p class="text-sm text-slate-500 mt-1">Mengacu pada <a class="text-blue-700 underline font-semibold" href="https://www.unesco.org/en/global-education-coalition/skills-academy/skills-future/monitoring-evaluation" target="_blank" rel="noopener noreferrer">UNESCO Monitoring and Evaluation Toolkit</a>. Sistem perlu menghubungkan baseline, target, data aktual, sumber bukti, review, pelaporan, dan pembelajaran.</p></div></div>
+<div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-5 gap-3 mt-5">
+<div class="rounded-xl bg-slate-50 p-3"><b class="text-sm">1. Define</b><p class="text-xs text-slate-500 mt-1">Pilih framework dan indikator yang relevan.</p></div>
+<div class="rounded-xl bg-slate-50 p-3"><b class="text-sm">2. Measure</b><p class="text-xs text-slate-500 mt-1">Tetapkan baseline, target, jadwal, dan sumber data.</p></div>
+<div class="rounded-xl bg-slate-50 p-3"><b class="text-sm">3. Verify</b><p class="text-xs text-slate-500 mt-1">Periksa kelengkapan, bukti, dan kebutuhan verifikasi.</p></div>
+<div class="rounded-xl bg-slate-50 p-3"><b class="text-sm">4. Report</b><p class="text-xs text-slate-500 mt-1">Sesuaikan ringkasan dengan audiens dan keputusan.</p></div>
+<div class="rounded-xl bg-slate-50 p-3"><b class="text-sm">5. Learn</b><p class="text-xs text-slate-500 mt-1">Catat perubahan, pembelajaran, dan tindak lanjut.</p></div>
+</div>
+<div class="mt-4 rounded-xl border border-amber-200 bg-amber-50 p-4"><p class="text-sm font-extrabold text-amber-950">Communication calibration: concise, not incomplete; detailed, not bloated.</p><p class="text-sm text-amber-900 mt-1">WhatsApp: konteks + hasil utama + hambatan/keputusan yang dibutuhkan + next step. Email: executive summary di awal, detail relevan dan bukti setelahnya, lalu keputusan atau action owner. Jangan memindahkan semua detail ke email hanya karena medianya formal.</p></div>
+</section>
 <section class="card p-5 mt-5"><div class="flex flex-col md:flex-row md:items-center justify-between gap-3"><div><h2 class="text-lg font-extrabold">Financial early-warning example</h2><p class="text-sm text-slate-500">Skenario fiktif untuk memperlihatkan cara sistem menjelaskan selisih anggaran.</p></div><span class="text-xs font-extrabold px-3 py-2 rounded-full bg-red-50 text-red-700 border border-red-200">FORECAST OVERRUN</span></div>
 <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mt-4"><div class="rounded-xl bg-slate-50 p-4"><p class="text-xs text-slate-500">Nilai kontrak</p><b class="text-2xl">Rp100 jt</b></div><div class="rounded-xl bg-slate-50 p-4"><p class="text-xs text-slate-500">Sudah dibayar</p><b class="text-2xl">Rp60 jt</b></div><div class="rounded-xl bg-amber-50 p-4"><p class="text-xs text-amber-700">Estimasi akhir</p><b class="text-2xl text-amber-800">Rp115 jt</b></div><div class="rounded-xl bg-red-50 p-4"><p class="text-xs text-red-700">Potensi selisih</p><b class="text-2xl text-red-700">+Rp15 jt</b></div></div>
 <p class="text-sm leading-6 text-slate-600 mt-4"><b>Next action:</b> validasi forecast dan deliverable yang tersisa, catat penyebab beserta bukti, tetapkan penanggung jawab, lalu ajukan keputusan yang diperlukan. Sistem menandai risiko—bukan otomatis menuduh misplanning tanpa verifikasi.</p></section>
@@ -49,7 +68,46 @@ let style="wa";
 function v(id){return document.getElementById(id).value.trim()}
 function setStyle(s){style=s;document.querySelectorAll(".tab").forEach(b=>{b.classList.toggle("active",b.dataset.style===s);b.classList.toggle("bg-slate-100",b.dataset.style!==s)});generate()}
 function loadSample(){document.getElementById("date").value=new Date().toISOString().slice(0,10);document.getElementById("project").value="Living Heritage Capacity Building";document.getElementById("activity").value="Menyelaraskan jadwal fasilitator dengan tim program, meninjau 12 formulir peserta, dan mengirimkan revisi agenda kepada focal point.";document.getElementById("result").value="12 formulir ditinjau; 10 lengkap dan 2 perlu perbaikan. Agenda revisi dikirim melalui email untuk validasi.";document.getElementById("hours").value="3";document.getElementById("status").value="Berjalan";document.getElementById("next").value="Menindaklanjuti 2 formulir yang belum lengkap dan mengonfirmasi agenda final besok.";generate()}
-function generate(){const d=v("date")||"Tanggal belum diisi",p=v("project"),a=v("activity"),r=v("result")||"Belum dicatat",h=v("hours")||"0",s=v("status"),n=v("next")||"Belum ditentukan";let t="Isi aktivitas terlebih dahulu atau klik Muat contoh dummy.";if(a){if(style==="wa")t="Update hari ini — "+d+"\nProgram: "+p+"\n\n"+a+"\nHasil: "+r+"\nStatus: "+s+"\nTindak lanjut: "+n;if(style==="email")t="Subject: Daily progress update — "+p+" — "+d+"\n\nDear Team,\n\nBerikut pembaruan kegiatan untuk "+d+".\n\nProgram / workstream: "+p+"\nAktivitas: "+a+"\nHasil dan bukti: "+r+"\nDurasi: "+h+" jam\nStatus: "+s+"\nTindak lanjut: "+n+"\n\nCatatan: detail ini berdasarkan catatan yang diinput dan perlu diverifikasi bersama bukti pendukung sebelum dikirim.\n\nBest regards,";if(style==="daily")t="DAILY ACTIVITY REPORT\nTanggal: "+d+"\nProgram: "+p+"\nStatus: "+s+"\nDurasi tercatat: "+h+" jam\n\n1. Aktivitas\n"+a+"\n\n2. Hasil / bukti\n"+r+"\n\n3. Tindak lanjut\n"+n+"\n\n4. Catatan\nLampirkan bukti pendukung yang relevan dan tandai hal yang masih menunggu konfirmasi.";if(style==="monthly")t="MONTHLY SUMMARY — "+d.slice(0,7)+"\nWorkstream: "+p+"\n\nAktivitas tercatat:\n"+a+"\n\nHasil:\n"+r+"\n\nStatus terakhir: "+s+"\nDurasi pada entri ini: "+h+" jam\nTindak lanjut: "+n+"\n\nBATASAN: ini hanya ringkasan satu entri dummy, bukan laporan bulanan lengkap. Laporan bulanan sesungguhnya harus menggabungkan seluruh entri dalam periode tersebut, termasuk isu, output, bukti, dan data yang belum tersedia."}document.getElementById("output").textContent=t}
+function generate(){
+const d=v("date")||"Tanggal belum diisi",p=v("project"),a=v("activity"),r=v("result")||"Belum dicatat",hours=v("hours")||"0",s=v("status"),n=v("next")||"Belum ditentukan";
+const indicator=v("indicator"),baseline=v("baseline"),target=v("target"),actual=v("actual"),evidence=v("evidence"),verification=v("verification"),learning=v("learning");
+const hasMEL=!!(indicator||baseline||target||actual||evidence||learning);
+const melLines=(style==="wa"?[
+indicator?"Indikator: "+indicator:"",
+actual?"Capaian: "+actual+(target?" / target "+target:""):"",
+evidence?"Bukti: "+evidence:"",
+learning?"Pembelajaran: "+learning:""
+]:[
+indicator?"Indikator / outcome: "+indicator:"",
+baseline?"Baseline: "+baseline:"",
+target?"Target: "+target:"",
+actual?"Capaian aktual: "+actual:"",
+evidence?"Sumber bukti: "+evidence:"",
+"Status verifikasi: "+verification,
+learning?"Konteks / pembelajaran: "+learning:""
+]).filter(Boolean).join("\n");
+let t="Isi aktivitas terlebih dahulu atau klik Muat contoh dummy.";
+if(a){
+if(style==="wa"){
+const core="Update — "+d+" | "+p+"\n"+a+"\nHasil: "+r+"\nStatus: "+s+".";
+const outcomeLine=actual?"\nCapaian: "+actual+(target?" / target "+target:"")+".":"";
+const evidenceLine=evidence?"\nBukti: "+evidence:"";
+const nextLine="\nNext: "+n;
+t=core+outcomeLine+evidenceLine+nextLine;
+if(t.length>650)t="Update — "+d+" | "+p+"\n"+a+"\nHasil/status: "+r+" — "+s+"\nNext: "+n+(evidence?"\nBukti: "+evidence:"");
+}
+if(style==="email"){
+t="Subject: Progress update — "+p+" — "+d+"\n\nDear Team,\n\nSummary: "+a+"\n\nKey result: "+r+"\nStatus: "+s+" | Time recorded: "+hours+" hours.\n"+(hasMEL?"\nMEL details\n"+melLines+"\n":"")+"\nNext action: "+n+"\n\nPlease let me know if a decision or additional review is required. Evidence and figures should be checked before external circulation.\n\nBest regards,";
+}
+if(style==="daily"){
+t="DAILY ACTIVITY & MEL REPORT\nDate: "+d+"\nProgramme: "+p+"\nStatus: "+s+" | Time: "+hours+" hours\n\n1. Activity\n"+a+"\n\n2. Output / result\n"+r+"\n\n"+(hasMEL?"3. Monitoring details\n"+melLines+"\n\n":"")+"Next action\n"+n+"\n\nData-quality note: distinguish observed facts from estimates, identify missing evidence, and retain source references.";
+}
+if(style==="monthly"){
+t="MONTHLY MEL SUMMARY — "+d.slice(0,7)+"\nWorkstream: "+p+"\n\nActivity recorded in this entry:\n"+a+"\n\nReported output:\n"+r+"\n\nStatus: "+s+" | Time in this entry: "+hours+" hours\n"+(hasMEL?"\nIndicator and evidence\n"+melLines+"\n":"")+"\nFollow-up: "+n+"\n\nLIMITATION: This is a single-entry preview, not a complete monthly report. A valid period report must aggregate all records for the period, compare actuals with baselines and targets, summarize evidence and stakeholder feedback, explain deviations, and state data gaps.";
+}
+}
+document.getElementById("output").textContent=t;
+}
 async function copyReport(){try{await navigator.clipboard.writeText(document.getElementById("output").textContent);document.getElementById("notice").textContent="Laporan disalin. Silakan review sebelum dikirim."}catch(e){document.getElementById("notice").textContent="Clipboard tidak tersedia di konteks ini; pilih teks lalu salin manual."}}
 document.getElementById("date").value=new Date().toISOString().slice(0,10);
 </script></body></html>
