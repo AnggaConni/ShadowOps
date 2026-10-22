@@ -1,7 +1,7 @@
 {
   "_meta": {
     "isDemo": true,
-    "schemaVersion": 2,
+    "schemaVersion": 3,
     "currency": "USD",
     "generatedAt": "2026-10-22",
     "warning": "DEMO ONLY: all units, owners, budgets, activity names, dates, statuses, log text and amounts are fictional. This is not an official UNESCO org chart, programme plan, allocation, expense or activity register.",
@@ -39,14 +39,19 @@
         "Amounts are illustrative demo values, not financial actuals or approved budgets.",
         "Replace or remove this dataset before any production use."
       ]
-    }
+    },
+    "overhaulNotes": [
+      "Activity current status is an explicit current-state field; do not infer it from any historical log.",
+      "progress_pct and due_date are fictional demonstration fields for interface testing.",
+      "risk_level is a simple demo classification and must be validated against a real risk register before production use."
+    ]
   },
   "hierarchy": {
     "id": "shadowops-hq",
     "name": "Global Operations HQ",
     "type": "HQ",
     "owner": "Demo Administrator",
-    "status": "On Track",
+    "status": "Issue",
     "budget": "$297k",
     "budget_usd": 297000,
     "badges": [
@@ -111,7 +116,7 @@
         "name": "Education Unit",
         "type": "Regional",
         "owner": "Unit Coordinator (fictional)",
-        "status": "Issue",
+        "status": "Delayed",
         "budget": "$92k",
         "budget_usd": 92000,
         "badges": [
@@ -144,7 +149,7 @@
             "name": "Inclusive & Quality Education",
             "type": "Theme",
             "owner": "Unit Programme Lead (fictional)",
-            "status": "Issue",
+            "status": "On Track",
             "budget": "$51k",
             "budget_usd": 51000,
             "badges": [
@@ -176,7 +181,7 @@
                 "name": "Teacher Development & Policy Dialogue",
                 "type": "Activity",
                 "owner": "Education Programme Officer",
-                "status": "Issue",
+                "status": "On Track",
                 "budget": "$28k",
                 "budget_usd": 28000,
                 "badges": [
@@ -238,7 +243,7 @@
                     "date": "2026-10-21",
                     "amount": 95,
                     "text": "Revised agenda sent for comments; final approval remains pending.",
-                    "status": "Issue",
+                    "status": "On Track",
                     "provenance": {
                       "recordType": "synthetic_demo",
                       "source": "ShadowOps authored scenario",
@@ -250,14 +255,17 @@
                     }
                   }
                 ],
-                "children": []
+                "children": [],
+                "progress_pct": 68,
+                "due_date": "2026-11-20",
+                "risk_level": "Low"
               },
               {
                 "id": "edu-digital",
                 "name": "Digital Learning & Open Education",
                 "type": "Activity",
                 "owner": "Digital Learning Focal Point",
-                "status": "Issue",
+                "status": "On Track",
                 "budget": "$23k",
                 "budget_usd": 23000,
                 "badges": [
@@ -319,7 +327,7 @@
                     "date": "2026-10-21",
                     "amount": 95,
                     "text": "Demo materials prepared; no learner-level personal data should be collected.",
-                    "status": "Issue",
+                    "status": "On Track",
                     "provenance": {
                       "recordType": "synthetic_demo",
                       "source": "ShadowOps authored scenario",
@@ -331,7 +339,10 @@
                     }
                   }
                 ],
-                "children": []
+                "children": [],
+                "progress_pct": 54,
+                "due_date": "2026-11-15",
+                "risk_level": "Low"
               }
             ]
           },
@@ -340,7 +351,7 @@
             "name": "Literacy, TVET & Lifelong Learning",
             "type": "Theme",
             "owner": "Unit Programme Lead (fictional)",
-            "status": "Issue",
+            "status": "Delayed",
             "budget": "$41k",
             "budget_usd": 41000,
             "badges": [
@@ -372,7 +383,7 @@
                 "name": "Youth Skills & Lifelong Learning Pilot",
                 "type": "Activity",
                 "owner": "Lifelong Learning Focal Point",
-                "status": "Issue",
+                "status": "Delayed",
                 "budget": "$24k",
                 "budget_usd": 24000,
                 "badges": [
@@ -434,7 +445,7 @@
                     "date": "2026-10-21",
                     "amount": 95,
                     "text": "Pilot design revised to include a feedback loop and post-training follow-up.",
-                    "status": "Issue",
+                    "status": "Delayed",
                     "provenance": {
                       "recordType": "synthetic_demo",
                       "source": "ShadowOps authored scenario",
@@ -446,14 +457,17 @@
                     }
                   }
                 ],
-                "children": []
+                "children": [],
+                "progress_pct": 42,
+                "due_date": "2026-11-10",
+                "risk_level": "Medium"
               },
               {
                 "id": "edu-literacy",
                 "name": "Literacy & Learning Data Brief",
                 "type": "Activity",
                 "owner": "Education Data Analyst",
-                "status": "Issue",
+                "status": "Completed",
                 "budget": "$17k",
                 "budget_usd": 17000,
                 "badges": [
@@ -515,7 +529,7 @@
                     "date": "2026-10-21",
                     "amount": 95,
                     "text": "Draft is awaiting technical review; no real country ranking or statistic is represented.",
-                    "status": "Issue",
+                    "status": "Completed",
                     "provenance": {
                       "recordType": "synthetic_demo",
                       "source": "ShadowOps authored scenario",
@@ -527,7 +541,10 @@
                     }
                   }
                 ],
-                "children": []
+                "children": [],
+                "progress_pct": 100,
+                "due_date": "2026-10-18",
+                "risk_level": "Low"
               }
             ]
           }
@@ -603,7 +620,7 @@
                 "name": "Water Monitoring & Local Knowledge",
                 "type": "Activity",
                 "owner": "Water Programme Officer",
-                "status": "Issue",
+                "status": "On Track",
                 "budget": "$34k",
                 "budget_usd": 34000,
                 "badges": [
@@ -665,7 +682,7 @@
                     "date": "2026-10-21",
                     "amount": 95,
                     "text": "Data-quality checklist added; no actual sensor readings or community testimony are included.",
-                    "status": "Issue",
+                    "status": "On Track",
                     "provenance": {
                       "recordType": "synthetic_demo",
                       "source": "ShadowOps authored scenario",
@@ -677,7 +694,10 @@
                     }
                   }
                 ],
-                "children": []
+                "children": [],
+                "progress_pct": 76,
+                "due_date": "2026-11-25",
+                "risk_level": "Low"
               },
               {
                 "id": "ns-biosphere",
@@ -758,7 +778,10 @@
                     }
                   }
                 ],
-                "children": []
+                "children": [],
+                "progress_pct": 35,
+                "due_date": "2026-11-08",
+                "risk_level": "High"
               }
             ]
           },
@@ -767,7 +790,7 @@
             "name": "Open Science & Science Policy",
             "type": "Theme",
             "owner": "Unit Programme Lead (fictional)",
-            "status": "Issue",
+            "status": "Delayed",
             "budget": "$46k",
             "budget_usd": 46000,
             "badges": [
@@ -799,7 +822,7 @@
                 "name": "Open Science Capacity Workshop",
                 "type": "Activity",
                 "owner": "Open Science Focal Point",
-                "status": "Issue",
+                "status": "Delayed",
                 "budget": "$25k",
                 "budget_usd": 25000,
                 "badges": [
@@ -861,7 +884,7 @@
                     "date": "2026-10-21",
                     "amount": 95,
                     "text": "Workshop delivery remains conditional on approval of costs and learning materials.",
-                    "status": "Issue",
+                    "status": "Delayed",
                     "provenance": {
                       "recordType": "synthetic_demo",
                       "source": "ShadowOps authored scenario",
@@ -873,14 +896,17 @@
                     }
                   }
                 ],
-                "children": []
+                "children": [],
+                "progress_pct": 48,
+                "due_date": "2026-11-12",
+                "risk_level": "Medium"
               },
               {
                 "id": "ns-risk",
                 "name": "Disaster Risk & Science Advice Brief",
                 "type": "Activity",
                 "owner": "Science Policy Analyst",
-                "status": "Issue",
+                "status": "On Track",
                 "budget": "$21k",
                 "budget_usd": 21000,
                 "badges": [
@@ -942,7 +968,7 @@
                     "date": "2026-10-21",
                     "amount": 95,
                     "text": "Brief is not an official warning and should not be used for operational emergency decisions.",
-                    "status": "Issue",
+                    "status": "On Track",
                     "provenance": {
                       "recordType": "synthetic_demo",
                       "source": "ShadowOps authored scenario",
@@ -954,7 +980,10 @@
                     }
                   }
                 ],
-                "children": []
+                "children": [],
+                "progress_pct": 82,
+                "due_date": "2026-11-19",
+                "risk_level": "Low"
               }
             ]
           }
@@ -998,7 +1027,7 @@
             "name": "Living Heritage & Intangible Cultural Heritage",
             "type": "Theme",
             "owner": "Unit Programme Lead (fictional)",
-            "status": "Issue",
+            "status": "Delayed",
             "budget": "$54k",
             "budget_usd": 54000,
             "badges": [
@@ -1030,7 +1059,7 @@
                 "name": "Living Heritage Capacity Building",
                 "type": "Activity",
                 "owner": "ICH Programme Officer",
-                "status": "Issue",
+                "status": "Completed",
                 "budget": "$30k",
                 "budget_usd": 30000,
                 "badges": [
@@ -1092,7 +1121,7 @@
                     "date": "2026-10-21",
                     "amount": 95,
                     "text": "Documentation workflow updated to require informed consent and community review before publication.",
-                    "status": "Issue",
+                    "status": "Completed",
                     "provenance": {
                       "recordType": "synthetic_demo",
                       "source": "ShadowOps authored scenario",
@@ -1104,14 +1133,17 @@
                     }
                   }
                 ],
-                "children": []
+                "children": [],
+                "progress_pct": 100,
+                "due_date": "2026-10-20",
+                "risk_level": "Low"
               },
               {
                 "id": "culture-map",
                 "name": "Community Heritage Documentation Pilot",
                 "type": "Activity",
                 "owner": "Community Heritage Focal Point",
-                "status": "Issue",
+                "status": "Delayed",
                 "budget": "$24k",
                 "budget_usd": 24000,
                 "badges": [
@@ -1173,7 +1205,7 @@
                     "date": "2026-10-21",
                     "amount": 95,
                     "text": "Review process updated to allow community correction, withdrawal and access restrictions.",
-                    "status": "Issue",
+                    "status": "Delayed",
                     "provenance": {
                       "recordType": "synthetic_demo",
                       "source": "ShadowOps authored scenario",
@@ -1185,7 +1217,10 @@
                     }
                   }
                 ],
-                "children": []
+                "children": [],
+                "progress_pct": 58,
+                "due_date": "2026-11-16",
+                "risk_level": "Medium"
               }
             ]
           },
@@ -1226,7 +1261,7 @@
                 "name": "Underwater Heritage Desk Review",
                 "type": "Activity",
                 "owner": "Underwater Heritage Focal Point",
-                "status": "Issue",
+                "status": "On Track",
                 "budget": "$25k",
                 "budget_usd": 25000,
                 "badges": [
@@ -1288,7 +1323,7 @@
                     "date": "2026-10-21",
                     "amount": 95,
                     "text": "Evidence register separates sourced facts from analyst assumptions and unresolved questions.",
-                    "status": "Issue",
+                    "status": "On Track",
                     "provenance": {
                       "recordType": "synthetic_demo",
                       "source": "ShadowOps authored scenario",
@@ -1300,7 +1335,10 @@
                     }
                   }
                 ],
-                "children": []
+                "children": [],
+                "progress_pct": 63,
+                "due_date": "2026-11-22",
+                "risk_level": "Low"
               },
               {
                 "id": "culture-interpret",
@@ -1381,7 +1419,10 @@
                     }
                   }
                 ],
-                "children": []
+                "children": [],
+                "progress_pct": 29,
+                "due_date": "2026-11-06",
+                "risk_level": "High"
               }
             ]
           }
