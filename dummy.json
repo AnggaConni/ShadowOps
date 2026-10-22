@@ -1,0 +1,179 @@
+{
+  "_meta": {
+    "isDemo": true,
+    "warning": "All names, allocations and operational records below are illustrative dummy data. Replace before production.",
+    "schemaVersion": 1
+  },
+  "hierarchy": {
+    "id": "shadowops-hq",
+    "name": "Global Operations HQ",
+    "type": "HQ",
+    "owner": "Angga",
+    "status": "On Track",
+    "budget": "$120k",
+    "budget_usd": 120000,
+    "badges": [
+      "SDG",
+      "Regional Coordination"
+    ],
+    "description": "Illustrative root node for the ShadowOps mockup.",
+    "logs": [
+      {
+        "id": "demo-root-log-1",
+        "date": "2026-10-20",
+        "amount": 0,
+        "text": "Quarterly coordination plan reviewed.",
+        "status": "On Track"
+      }
+    ],
+    "children": [
+      {
+        "id": "region-asean",
+        "name": "ASEAN Regional Cluster",
+        "type": "Regional",
+        "owner": "Angga",
+        "status": "On Track",
+        "budget": "$75k",
+        "budget_usd": 75000,
+        "badges": [
+          "Regional",
+          "SDG"
+        ],
+        "description": "Illustrative regional coordination layer.",
+        "logs": [],
+        "children": [
+          {
+            "id": "theme-culture",
+            "name": "Culture & Heritage",
+            "type": "Theme",
+            "owner": "Angga",
+            "status": "On Track",
+            "budget": "$35k",
+            "budget_usd": 35000,
+            "badges": [
+              "Culture",
+              "ICH"
+            ],
+            "description": "Illustrative thematic workstream.",
+            "logs": [],
+            "children": [
+              {
+                "id": "activity-living-heritage",
+                "name": "Living Heritage Capacity Building",
+                "type": "Activity",
+                "owner": "Angga",
+                "status": "On Track",
+                "budget": "$18k",
+                "budget_usd": 18000,
+                "badges": [
+                  "Training",
+                  "SDG",
+                  "Gender"
+                ],
+                "description": "Illustrative activity record. Not an actual UNESCO project.",
+                "logs": [
+                  {
+                    "id": "demo-log-1",
+                    "date": "2026-10-18",
+                    "amount": 350,
+                    "text": "Training outline updated and shared for internal feedback.",
+                    "status": "On Track"
+                  },
+                  {
+                    "id": "demo-log-2",
+                    "date": "2026-10-20",
+                    "amount": 125,
+                    "text": "Participant requirements consolidated; venue quotation still pending.",
+                    "status": "Delayed"
+                  }
+                ],
+                "children": []
+              },
+              {
+                "id": "activity-field-mapping",
+                "name": "Community Field Mapping",
+                "type": "Activity",
+                "owner": "Regional Focal Point",
+                "status": "Delayed",
+                "budget": "$12k",
+                "budget_usd": 12000,
+                "badges": [
+                  "Mapping",
+                  "Community"
+                ],
+                "description": "Illustrative activity record.",
+                "logs": [
+                  {
+                    "id": "demo-log-3",
+                    "date": "2026-10-21",
+                    "amount": 0,
+                    "text": "Field visit date being coordinated with local partners.",
+                    "status": "Delayed"
+                  }
+                ],
+                "children": []
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "region-mekong",
+        "name": "Mekong Operations",
+        "type": "Regional",
+        "owner": "Regional Coordination Team",
+        "status": "Issue",
+        "budget": "$45k",
+        "budget_usd": 45000,
+        "badges": [
+          "Regional",
+          "Risk Review"
+        ],
+        "description": "Illustrative regional coordination layer.",
+        "logs": [],
+        "children": [
+          {
+            "id": "theme-resilience",
+            "name": "Operational Resilience",
+            "type": "Theme",
+            "owner": "Operations Team",
+            "status": "On Track",
+            "budget": "$20k",
+            "budget_usd": 20000,
+            "badges": [
+              "Resilience"
+            ],
+            "description": "Illustrative thematic workstream.",
+            "logs": [],
+            "children": [
+              {
+                "id": "activity-logistics",
+                "name": "Field Logistics Readiness",
+                "type": "Activity",
+                "owner": "Operations Team",
+                "status": "Issue",
+                "budget": "$9k",
+                "budget_usd": 9000,
+                "badges": [
+                  "Logistics",
+                  "Risk"
+                ],
+                "description": "Illustrative activity record.",
+                "logs": [
+                  {
+                    "id": "demo-log-4",
+                    "date": "2026-10-22",
+                    "amount": 500,
+                    "text": "A dependency is awaiting confirmation; review contingency options.",
+                    "status": "Issue"
+                  }
+                ],
+                "children": []
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}
