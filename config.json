@@ -1,0 +1,27 @@
+{
+  "app": "ShadowOps",
+  "version": 1,
+  "dataProvider": "dummy",
+  "defaultUser": {
+    "name": "Angga",
+    "email": "angga@example.com"
+  },
+  "dummy": {
+    "file": "./dummy.json",
+    "persistLogsLocally": true
+  },
+  "supabase": {
+    "url": "https://YOUR_PROJECT_REF.supabase.co",
+    "anonKey": "YOUR_SUPABASE_ANON_OR_PUBLISHABLE_KEY",
+    "tables": {
+      "nodes": "ops_nodes",
+      "logs": "activity_logs"
+    },
+    "readSchema": "public",
+    "requireAuthForWrites": true
+  },
+  "security": {
+    "neverExposeServiceRoleKey": true,
+    "notes": "Only use the anon/publishable key in a browser. Protect records with Supabase Auth and RLS."
+  }
+}

@@ -1,141 +1,51 @@
-# International Shadow Ops System (ISO) 🌍
-
-Strategic Operation Map & Daily Activity Tracker
-
-"No more blame games. Just data."
-
-📖 Background (The Problem)
-
-In complex operational units, classic problems often arise:
-
-Manual Reporting Nightmare: Reporting between colleagues within a unit is done manually, partially, and is difficult to track.
-
-Lack of Traceability: It is hard to track the specific daily progress of a large pipeline.
-
-The Blame Game: When targets are missed or budgets overrun, teams tend to blame each other due to a lack of historical data ("Who worked on what, when, and used how much budget?").
-
-Clarification Fatigue: Too much time is wasted on meetings just to clarify job status.
-
-💡 Solution (The Solution)
-
-Shadow Ops System is not just a dashboard. It is a platform that combines:
-
-Pipeline Tracking (Macro): Viewing the big picture of project structure, team hierarchy, and global budget status.
-
-Daily Traceability (Micro): Recording daily work logs per individual tied directly to budget and outcomes.
-
-The Goal: Total transparency. Eliminating the need for repetitive clarifications and creating a data-driven work environment, rather than one based on assumptions.
-
-🚀 Key Features
-
-1. Interactive Hierarchy Map (Workflow View)
-
-Visualization of organizational and project structure in the form of a Tree Diagram.
-
-Zoom & Pan: Easy navigation for large organizational structures.
-
-Status Indicators: Color indicators for projects that are On Track, Delayed, or Critical Issue.
-
-Budget Overview: View fund allocation directly on project nodes.
-
-2. Micro Logging (Activity Tracker)
-
-A feature for staff to record daily work without hassle.
-
-AI Smart Log: Simply type or use voice (Voice Note), AI will automatically categorize logs, detect sentiment, and status.
-
-Manual Entry: Complete form for detailed input (Date, Status, Budget Used, Upload Evidence).
-
-Context Aware: Logs are tied directly to specific activity nodes in the hierarchy map.
-
-3. Macro Dashboard (Strategic View)
-
-For leadership or HQ to view organizational health in real-time.
-
-Budget Absorption: Budget absorption charts per region/division.
-
-Risk Radar: Early detection of problematic projects before they become crises.
-
-KPI Cards: Team performance summary.
-
-4. Google Apps Script (GAS) Integration (Planned)
-
-This application is designed to be serverless using the Google ecosystem:
-
-Database: Google Sheets (as a simple relational database).
-
-API/Backend: Google Apps Script (doGet & doPost) to fetch and push log data.
-
-Authentication: Using Google Workspace login.
-
-🛠️ Tech Stack
-
-Frontend: HTML5, Modern JavaScript (ES6+), Tailwind CSS (via CDN).
-
-Icons: FontAwesome.
-
-Architecture: Single File Application (SFA) for easy initial deployment.
-
-Data Simulation: JSON Object (massiveData) mimicking API response structure.
-
-📂 Installation & Usage
-
-This project is a Single File Application, making it very easy to run.
-
-Clone Repository:
-
-git clone [https://github.com/username/shadow-ops-system.git](https://github.com/username/shadow-ops-system.git)
-
-
-Open File:
-Navigate to the project folder and open International_Shadow_Ops_Mockup.html using a modern browser (Chrome, Edge, Firefox, Safari).
-
-Navigation:
-
-Map Icon: Workflow Hierarchy (Project Map).
-
-Microphone Icon: Daily Log Input.
-
-Chart Icon: Statistical Dashboard.
-
-📅 Development Roadmap
-
-[x] Phase 1: High Fidelity Mockup & UI/UX Design.
-
-[x] Phase 2: Log Data Simulation & Interactive Tree.
-
-[ ] Phase 3: fetch() connection to Google Apps Script.
-
-[ ] Phase 4: Image Upload Feature (to Google Drive via GAS).
-
-[ ] Phase 5: Multi-user Authentication & Role Management.
-
-🤝 Contribution
-
-Contributions are always welcome! Please create a Pull Request or open an Issue to discuss new features or report bugs.
-
-📝 License
-
-Distributed under the MIT License. See LICENSE file for more information.
-
-MIT License
-
-Copyright (c) 2024 International Shadow Ops
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+# International Shadow Ops System (ISO)
+
+Strategic Operations Map & Daily Activity Tracker
+
+> "No more blame games. Just data."
+
+## Overview
+ShadowOps combines hierarchy tracking with day-to-day operational logs. Its frontend now has a configurable data layer: it runs from local dummy data today and can be switched to Supabase when the project is ready.
+
+## Features
+- Interactive hierarchy tree with zoom, pan, status indicators, and budget labels.
+- Activity logging through Manual Entry or AI Smart Log input (AI parsing is still a placeholder).
+- Data-driven KPI summary, regional activity budget, and priority-risk list.
+- Configurable data provider: `dummy.json` or Supabase.
+- Supabase SQL migration with explicit Data API grants and row-level security (RLS).
+
+## Run locally
+Serve the repository over HTTP, for example with VS Code Live Server. Opening `index.html` through `file://` may block requests for `config.json` and `dummy.json`.
+
+## Configure the source
+Edit `config.json`.
+
+- Keep `dataProvider: "dummy"` for the current mockup.
+- When Supabase is ready, change it to `"supabase"` and fill in `supabase.url` and `supabase.anonKey`.
+- The browser must use only the anon/publishable key. Never include the `service_role` key in frontend files.
+- `dummy.json` contains illustrative demo records, not actual operational data.
+- Dummy log submissions are stored in this browser's `localStorage`.
+
+## Supabase setup
+1. Run `supabase/migrations/20261022000000_shadowops_schema.sql` in Supabase SQL Editor or using the Supabase CLI.
+2. Seed `public.ops_nodes` with one record per hierarchy node. `parent_id` forms the tree. Keep IDs stable (e.g. `shadowops-hq`, `region-asean`, and `activity-living-heritage`).
+3. Enable a sign-in method in Supabase Auth and add a real sign-in UI before enabling live log writes.
+4. Set `dataProvider` to `"supabase"` in `config.json`.
+
+### Schema
+- `ops_nodes`: hierarchy nodes, parent-child relationships, type, status, budgets and badges.
+- `activity_logs`: activity logs, user identity, date, status, amount in USD, optional parsed AI JSON and evidence storage path. The starter UI loads logs only after a Supabase Auth session is present.
+- The frontend adapter translates the normalized table rows to the tree structure the UI expects.
+
+### Explicit grants and RLS
+The migration explicitly grants:
+- `anon`: SELECT on `public.ops_nodes` only.
+- `authenticated`: SELECT/INSERT/UPDATE/DELETE on both tables, subject to RLS. Log rows are scoped to their owning authenticated user in the starter policy.
+- `service_role`: all table privileges for server-side use only.
+
+The log table is not anonymously readable. RLS stays enabled and limits log writes to the authenticated owner. The current header identity is mock UI only; never treat it as authentication. The frontend retrieves the current Supabase Auth user before inserting a log.
+
+## Current limitations
+- AI Smart Log stores raw text; it does not call an AI service.
+- Evidence upload UI is a placeholder; only a future `evidence_path` column is included.
+- Live hierarchy data must be seeded into Supabase after the migration is applied.
