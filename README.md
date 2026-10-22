@@ -68,3 +68,17 @@ The executive dashboard now focuses on current delivery state and management act
 - Clear warnings that the included figures are synthetic demo values, not official allocations, expenditure or verified results.
 
 The demo activity records now carry explicit current status, a fictional progress percentage, a fictional due date and a simple illustrative risk level. Historical log status is retained as history; it must not be used as the sole basis for inferring the current activity status. These fields are for prototype UI testing and are not yet a production-grade indicator, financial or risk register.
+
+## MEL and communication-calibrated reporting
+
+The Reporting Studio incorporates a lightweight workflow inspired by the [UNESCO Monitoring and Evaluation Toolkit](https://www.unesco.org/en/global-education-coalition/skills-academy/skills-future/monitoring-evaluation): select a relevant framework, define measurement, collect data on a schedule, verify evidence where appropriate, report for different audiences, and use findings for continuous improvement and stakeholder accountability.
+
+The form includes optional indicator/outcome, baseline, target, actual result, evidence reference, verification status, and learning/context fields. These are inputs for a prototype only; the app does not yet persist these fields to a MEL database, calculate indicator trends, or aggregate real monthly reports.
+
+Communication outputs are calibrated by purpose:
+- WhatsApp: concise, but retains the essential context, result/status, evidence pointer when available, and next action.
+- Email: a decision-ready summary first, followed by relevant MEL details; formality is not a reason to overload the reader.
+- Daily report: activity, output, status, evidence/verification, learning and next action.
+- Monthly preview: explicitly warns that a real period report must aggregate all entries, compare actuals with baseline/target, and describe evidence, deviations and data gaps.
+
+The design principle is **concise, not incomplete; detailed, not bloated**. The communication format should fit the recipient's decision and follow-up needs.
