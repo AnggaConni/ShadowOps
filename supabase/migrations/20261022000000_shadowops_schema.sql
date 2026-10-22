@@ -22,7 +22,7 @@ create table if not exists public.ops_nodes (
 create table if not exists public.activity_logs (
   id uuid primary key default gen_random_uuid(),
   activity_id text not null references public.ops_nodes(id) on delete cascade,
-  user_id uuid null references auth.users(id) on delete set null,
+  user_id uuid not null references auth.users(id) on delete cascade,
   user_email text not null default '',
   log_date date not null default current_date,
   status_update text not null default 'On Track'
@@ -41,7 +41,7 @@ create index if not exists activity_logs_user_id_idx on public.activity_logs(use
 alter table public.ops_nodes enable row level security;
 alter table public.activity_logs enable row level security;
 
--- Explicit grants for tables created after the Oct 30 Data API default-grant change.
+-- Explicit Data API grants for tables created after the Oct 30, 2026 change.
 grant usage on schema public to anon, authenticated, service_role;
 grant select on public.ops_nodes to anon;
 grant select, insert, update, delete on public.ops_nodes to authenticated;
@@ -60,7 +60,7 @@ create policy "Authenticated users manage ops nodes" on public.ops_nodes
 
 drop policy if exists "Authenticated users read activity logs" on public.activity_logs;
 create policy "Authenticated users read activity logs" on public.activity_logs
-  for select to authenticated using (auth.uid() is not null);
+  for select to authenticated using (auth.uid() = user_id);
 
 drop policy if exists "Users insert their own activity logs" on public.activity_logs;
 create policy "Users insert their own activity logs" on public.activity_logs
