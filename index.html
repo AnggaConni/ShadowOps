@@ -43,7 +43,7 @@ body{font-family:'Segoe UI',Roboto,Helvetica,Arial,sans-serif;background:var(--s
 <header class="bg-white border-b border-slate-200 h-16 flex items-center justify-between px-6 shadow-sm z-20">
 <div class="flex items-center gap-3"><div class="w-8 h-8 bg-[#0077CC] rounded text-white flex items-center justify-center font-bold text-lg">IO</div><div><h1 class="font-bold text-slate-800 leading-tight">Shadow Ops System</h1><p class="text-xs text-slate-500">Global Operations Map</p></div></div>
 <div class="text-right"><p class="text-xs text-slate-400 uppercase font-bold">Logged In As</p><p class="text-sm font-semibold text-[#0077CC] flex items-center gap-2"><i class="fas fa-user-circle"></i><span id="identityLabel">Demo User</span></p></div>
-</header>
+<a href="reports.html" class="ml-auto mr-5 text-sm font-semibold text-blue-700 hover:text-blue-900" title="Open Reporting Studio"><i class="fas fa-file-lines mr-1"></i> Reports Studio</a></header>
 <div class="flex flex-1 overflow-hidden">
 <aside class="w-20 bg-slate-900 text-slate-300 flex flex-col items-center py-6 gap-6 z-20 shadow-xl">
 <button onclick="switchMode('workflow')" id="btn-workflow" class="nav-btn active p-3 rounded-xl hover:bg-slate-700 text-[#0077CC] bg-slate-800 transition" title="Workflow Map"><i class="fas fa-sitemap text-xl"></i></button>
@@ -60,7 +60,7 @@ body{font-family:'Segoe UI',Roboto,Helvetica,Arial,sans-serif;background:var(--s
 <h2 class="text-2xl font-bold text-slate-800 mb-2">Update Activity Log</h2>
 <div class="mb-4 p-3 bg-blue-50 rounded-lg border border-blue-100 flex items-center justify-between text-sm text-blue-800"><div class="flex items-center gap-2"><i class="fas fa-sitemap"></i><b>Context:</b><span id="microContext" class="font-bold">Select from Workflow...</span></div><button onclick="switchMode('workflow')" class="text-xs underline">Back to Map</button></div>
 <div class="flex border-b border-slate-200 mb-6"><button onclick="switchInputMethod('ai')" id="tabInputAI" class="w-1/2 py-2 text-center font-bold text-[#0077CC] border-b-2 border-[#0077CC]"><i class="fas fa-magic mr-2"></i> AI Smart Log</button><button onclick="switchInputMethod('manual')" id="tabInputManual" class="w-1/2 py-2 text-center font-bold text-slate-400 border-b-2 border-transparent"><i class="fas fa-edit mr-2"></i> Manual Entry</button></div>
-<div id="inputModeAI"><div class="relative mb-6"><textarea id="rawInput" class="w-full h-40 p-4 border border-slate-300 rounded-xl resize-none text-lg" placeholder="Describe today's progress..."></textarea><button class="absolute bottom-4 right-4 bg-slate-100 p-2 rounded-full w-10 h-10" title="Voice Input"><i class="fas fa-microphone"></i></button></div><div class="text-xs text-slate-400 mb-4"><i class="fas fa-info-circle"></i> AI parsing is a placeholder; raw text will be stored.</div></div>
+<div id="inputModeAI"><div class="relative mb-6"><textarea id="rawInput" class="w-full h-40 p-4 border border-slate-300 rounded-xl resize-none text-lg" placeholder="Describe today's progress..."></textarea><button id="voiceCaptureBtn" onclick="toggleVoiceCapture()" class="absolute bottom-4 right-4 bg-blue-50 text-blue-700 border border-blue-200 p-2 rounded-full w-10 h-10" title="Start browser voice-to-text"><i class="fas fa-microphone"></i></button></div><div class="text-xs text-slate-400 mb-4"><i class="fas fa-info-circle"></i> AI parsing is a placeholder; raw text will be stored.</div></div>
 <div id="inputModeManual" class="hidden space-y-4 mb-6"><div class="grid grid-cols-2 gap-4"><div><label class="block text-xs font-bold text-slate-500 uppercase mb-1">Date</label><input type="date" id="manualDate" class="w-full p-3 border border-slate-300 rounded-lg"></div><div><label class="block text-xs font-bold text-slate-500 uppercase mb-1">Status</label><select id="manualStatus" class="w-full p-3 border border-slate-300 rounded-lg bg-white"><option value="On Track">On Track</option><option value="Delayed">Delayed</option><option value="Issue">Critical Issue</option><option value="Completed">Completed</option></select></div></div>
 <div><label class="block text-xs font-bold text-slate-500 uppercase mb-1">Activity Description</label><textarea id="manualDesc" class="w-full h-24 p-3 border border-slate-300 rounded-lg resize-none" placeholder="Describe the specific activity update..."></textarea></div>
 <div class="grid grid-cols-2 gap-4"><div><label class="block text-xs font-bold text-slate-500 uppercase mb-1">Budget Spent (USD)</label><div class="relative"><span class="absolute left-3 top-3 text-slate-400">$</span><input type="number" id="manualBudget" min="0" step="0.01" class="w-full p-3 pl-6 border border-slate-300 rounded-lg" placeholder="0"></div></div><div><label class="block text-xs font-bold text-slate-500 uppercase mb-1">Evidence (future)</label><div class="border border-dashed border-slate-300 rounded-lg p-2 flex items-center justify-center bg-slate-50 text-slate-500 text-xs h-[46px]"><i class="fas fa-paperclip mr-2"></i> Storage integration pending</div></div></div></div>
@@ -117,4 +117,22 @@ function goToEdit(){if(!currentSelectedNode)return;closeModal();switchMode("micr
 function attachHoverEffects(){document.querySelectorAll(".tree-card").forEach(card=>{card.addEventListener("mouseenter",function(){let p=this.closest("li");while(p){p.classList.add("active-path");const ul=p.closest("ul");if(ul){ul.classList.add("active-path");p=ul.parentElement.closest("li");}else break;}});card.addEventListener("mouseleave",()=>document.querySelectorAll(".active-path").forEach(el=>el.classList.remove("active-path")));});}
 document.addEventListener("DOMContentLoaded",async()=>{document.getElementById("manualDate").value=new Date().toISOString().slice(0,10);await loadData();});
 </script>
+
+<script>
+let voiceRecognition = null;
+let voiceListening = false;
+function toggleVoiceCapture(){
+ const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+ if(!SR){alert("Browser ini belum mendukung Web Speech API. Coba Chrome/Edge terbaru, gunakan HTTPS atau localhost, atau ketik manual.");return;}
+ const target=document.getElementById("rawInput");
+ if(voiceListening&&voiceRecognition){voiceRecognition.stop();return;}
+ voiceRecognition=new SR();voiceRecognition.lang="id-ID";voiceRecognition.continuous=true;voiceRecognition.interimResults=true;
+ voiceRecognition.onstart=()=>{voiceListening=true;const b=document.getElementById("voiceCaptureBtn");b.classList.add("bg-red-100","text-red-700");b.innerHTML='<i class="fas fa-stop"></i>';b.title="Stop voice capture";};
+ voiceRecognition.onresult=(e)=>{let finalText="",interim="";for(let i=e.resultIndex;i<e.results.length;i++){const t=e.results[i][0].transcript;if(e.results[i].isFinal)finalText+=t+" ";else interim+=t;}if(finalText)target.value=(target.value.trim()?target.value.trim()+" ":"")+finalText.trim();if(interim)target.placeholder="Mendengar: "+interim;};
+ voiceRecognition.onerror=(e)=>{target.placeholder="Voice input: "+e.error+" — Anda tetap bisa mengetik.";};
+ voiceRecognition.onend=()=>{voiceListening=false;const b=document.getElementById("voiceCaptureBtn");if(b){b.classList.remove("bg-red-100","text-red-700");b.innerHTML='<i class="fas fa-microphone"></i>';b.title="Start browser voice-to-text";}};
+ voiceRecognition.start();
+}
+</script>
+
 </body></html>
