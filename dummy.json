@@ -1,114 +1,530 @@
 {
   "_meta": {
     "isDemo": true,
-    "warning": "All names, allocations and operational records below are illustrative dummy data. Replace before production.",
-    "schemaVersion": 1
+    "schemaVersion": 2,
+    "currency": "USD",
+    "generatedAt": "2026-10-22",
+    "warning": "DEMO ONLY: all units, owners, budgets, activity names, dates, statuses, log text and amounts are fictional. This is not an official UNESCO org chart, programme plan, allocation, expense or activity register.",
+    "dataProvenance": {
+      "method": "Authored synthetic scenarios to exercise hierarchy, activity logs, status tracking and evidence provenance fields.",
+      "thematicInspiration": [
+        {
+          "name": "UNESCO areas of expertise",
+          "url": "https://www.unesco.org/en/expertise",
+          "use": "Thematic inspiration only; not used as a source for the fictional records."
+        },
+        {
+          "name": "UNESCO Core Data Portal",
+          "url": "https://core.unesco.org/en/home",
+          "use": "Reference for the general idea of programme/project transparency; no records or budgets copied."
+        },
+        {
+          "name": "UNESCO DataHub",
+          "url": "https://data.unesco.org/pages/home/",
+          "use": "Reference for open-data context only; this demo dataset is not sourced from it."
+        }
+      ],
+      "recordLevelFields": [
+        "recordType",
+        "source",
+        "sourceUrl",
+        "verification",
+        "evidenceRef",
+        "notes",
+        "createdForDemo"
+      ],
+      "limitations": [
+        "Public UNESCO pages are used only to inspire broad themes, not to assert real programme activities.",
+        "No live UNESCO dataset, official allocation or real field record is copied into this file.",
+        "Amounts are illustrative demo values, not financial actuals or approved budgets.",
+        "Replace or remove this dataset before any production use."
+      ]
+    }
   },
   "hierarchy": {
     "id": "shadowops-hq",
     "name": "Global Operations HQ",
     "type": "HQ",
-    "owner": "Angga",
+    "owner": "Demo Administrator",
     "status": "On Track",
-    "budget": "$120k",
-    "budget_usd": 120000,
+    "budget": "$297k",
+    "budget_usd": 297000,
     "badges": [
-      "SDG",
-      "Regional Coordination"
+      "UNESCO-inspired demo",
+      "Synthetic Data",
+      "SDG"
     ],
-    "description": "Illustrative root node for the ShadowOps mockup.",
+    "description": "Demo root for ShadowOps. Three fictional units—Education, Natural Sciences and Culture—organised into themes and activities. The structure borrows broad public programme themes only; it is not an official UNESCO organisation chart.",
     "logs": [
       {
-        "id": "demo-root-log-1",
-        "date": "2026-10-20",
+        "id": "hq-log-1",
+        "date": "2026-10-01",
         "amount": 0,
-        "text": "Quarterly coordination plan reviewed.",
-        "status": "On Track"
+        "text": "Demo reporting period opened; all figures and operational entries are synthetic.",
+        "status": "On Track",
+        "provenance": {
+          "recordType": "synthetic_demo",
+          "source": "ShadowOps authored scenario",
+          "sourceUrl": null,
+          "verification": "fictional_not_verified",
+          "evidenceRef": null,
+          "notes": "Fictional demonstration record; not an official UNESCO activity, expense, decision, or allocation.",
+          "createdForDemo": "2026-10-22"
+        }
+      },
+      {
+        "id": "hq-log-2",
+        "date": "2026-10-12",
+        "amount": 0,
+        "text": "Provenance review added to distinguish authored scenario data from externally verified evidence.",
+        "status": "On Track",
+        "provenance": {
+          "recordType": "synthetic_demo",
+          "source": "ShadowOps authored scenario",
+          "sourceUrl": null,
+          "verification": "fictional_not_verified",
+          "evidenceRef": null,
+          "notes": "Fictional demonstration record; not an official UNESCO activity, expense, decision, or allocation.",
+          "createdForDemo": "2026-10-22"
+        }
+      },
+      {
+        "id": "hq-log-3",
+        "date": "2026-10-22",
+        "amount": 0,
+        "text": "Cross-unit review: do not interpret demo budgets as UNESCO allocations or log amounts as actual expenditure.",
+        "status": "On Track",
+        "provenance": {
+          "recordType": "synthetic_demo",
+          "source": "ShadowOps authored scenario",
+          "sourceUrl": null,
+          "verification": "fictional_not_verified",
+          "evidenceRef": null,
+          "notes": "Fictional demonstration record; not an official UNESCO activity, expense, decision, or allocation.",
+          "createdForDemo": "2026-10-22"
+        }
       }
     ],
     "children": [
       {
-        "id": "region-asean",
-        "name": "ASEAN Regional Cluster",
+        "id": "unit-education",
+        "name": "Education Unit",
         "type": "Regional",
-        "owner": "Angga",
-        "status": "On Track",
-        "budget": "$75k",
-        "budget_usd": 75000,
+        "owner": "Unit Coordinator (fictional)",
+        "status": "Issue",
+        "budget": "$92k",
+        "budget_usd": 92000,
         "badges": [
-          "Regional",
-          "SDG"
+          "Education",
+          "SDG 4",
+          "Capacity Building"
         ],
-        "description": "Illustrative regional coordination layer.",
-        "logs": [],
+        "description": "Synthetic unit inspired by UNESCO education themes. All activities, budgets, dates and status notes are fictional.",
+        "logs": [
+          {
+            "id": "unit-education-log-1",
+            "date": "2026-10-02",
+            "amount": 0,
+            "text": "Unit workplan and reporting assumptions reviewed for this synthetic demo.",
+            "status": "On Track",
+            "provenance": {
+              "recordType": "synthetic_demo",
+              "source": "ShadowOps authored scenario",
+              "sourceUrl": null,
+              "verification": "fictional_not_verified",
+              "evidenceRef": null,
+              "notes": "Fictional demonstration record; not an official UNESCO activity, expense, decision, or allocation.",
+              "createdForDemo": "2026-10-22"
+            }
+          }
+        ],
         "children": [
           {
-            "id": "theme-culture",
-            "name": "Culture & Heritage",
+            "id": "edu-inclusive",
+            "name": "Inclusive & Quality Education",
             "type": "Theme",
-            "owner": "Angga",
-            "status": "On Track",
-            "budget": "$35k",
-            "budget_usd": 35000,
+            "owner": "Unit Programme Lead (fictional)",
+            "status": "Issue",
+            "budget": "$51k",
+            "budget_usd": 51000,
             "badges": [
-              "Culture",
-              "ICH"
+              "Equity",
+              "Teacher Development"
             ],
-            "description": "Illustrative thematic workstream.",
-            "logs": [],
+            "description": "Illustrative workstream on inclusive learning, teacher support and education policy.",
+            "logs": [
+              {
+                "id": "edu-inclusive-review",
+                "date": "2026-10-22",
+                "amount": 0,
+                "text": "Theme-level review summarises the fictional activity records below; verify evidence and dependencies before treating status as a decision.",
+                "status": "On Track",
+                "provenance": {
+                  "recordType": "synthetic_demo",
+                  "source": "ShadowOps authored scenario",
+                  "sourceUrl": null,
+                  "verification": "fictional_not_verified",
+                  "evidenceRef": null,
+                  "notes": "Fictional demonstration record; not an official UNESCO activity, expense, decision, or allocation.",
+                  "createdForDemo": "2026-10-22"
+                }
+              }
+            ],
             "children": [
               {
-                "id": "activity-living-heritage",
-                "name": "Living Heritage Capacity Building",
+                "id": "edu-teacher",
+                "name": "Teacher Development & Policy Dialogue",
                 "type": "Activity",
-                "owner": "Angga",
-                "status": "On Track",
-                "budget": "$18k",
-                "budget_usd": 18000,
+                "owner": "Education Programme Officer",
+                "status": "Issue",
+                "budget": "$28k",
+                "budget_usd": 28000,
                 "badges": [
                   "Training",
-                  "SDG",
-                  "Gender"
+                  "Policy"
                 ],
-                "description": "Illustrative activity record. Not an actual UNESCO project.",
+                "description": "Fictional workshop and policy-dialogue activity.",
                 "logs": [
                   {
-                    "id": "demo-log-1",
-                    "date": "2026-10-18",
-                    "amount": 350,
-                    "text": "Training outline updated and shared for internal feedback.",
-                    "status": "On Track"
+                    "id": "demo-edu-teacher-1",
+                    "date": "2026-10-03",
+                    "amount": 0,
+                    "text": "Draft learning objectives and participant profile prepared for peer review.",
+                    "status": "On Track",
+                    "provenance": {
+                      "recordType": "synthetic_demo",
+                      "source": "ShadowOps authored scenario",
+                      "sourceUrl": null,
+                      "verification": "fictional_not_verified",
+                      "evidenceRef": null,
+                      "notes": "Fictional demonstration record; not an official UNESCO activity, expense, decision, or allocation.",
+                      "createdForDemo": "2026-10-22"
+                    }
                   },
                   {
-                    "id": "demo-log-2",
-                    "date": "2026-10-20",
-                    "amount": 125,
-                    "text": "Participant requirements consolidated; venue quotation still pending.",
-                    "status": "Delayed"
+                    "id": "demo-edu-teacher-2",
+                    "date": "2026-10-08",
+                    "amount": 180,
+                    "text": "Facilitator shortlist compiled; two biographies still need confirmation.",
+                    "status": "On Track",
+                    "provenance": {
+                      "recordType": "synthetic_demo",
+                      "source": "ShadowOps authored scenario",
+                      "sourceUrl": null,
+                      "verification": "fictional_not_verified",
+                      "evidenceRef": null,
+                      "notes": "Fictional demonstration record; not an official UNESCO activity, expense, decision, or allocation.",
+                      "createdForDemo": "2026-10-22"
+                    }
+                  },
+                  {
+                    "id": "demo-edu-teacher-3",
+                    "date": "2026-10-14",
+                    "amount": 420,
+                    "text": "Venue estimate received, but interpretation and accessibility costs are not yet included.",
+                    "status": "Delayed",
+                    "provenance": {
+                      "recordType": "synthetic_demo",
+                      "source": "ShadowOps authored scenario",
+                      "sourceUrl": null,
+                      "verification": "fictional_not_verified",
+                      "evidenceRef": null,
+                      "notes": "Fictional demonstration record; not an official UNESCO activity, expense, decision, or allocation.",
+                      "createdForDemo": "2026-10-22"
+                    }
+                  },
+                  {
+                    "id": "demo-edu-teacher-4",
+                    "date": "2026-10-21",
+                    "amount": 95,
+                    "text": "Revised agenda sent for comments; final approval remains pending.",
+                    "status": "Issue",
+                    "provenance": {
+                      "recordType": "synthetic_demo",
+                      "source": "ShadowOps authored scenario",
+                      "sourceUrl": null,
+                      "verification": "fictional_not_verified",
+                      "evidenceRef": null,
+                      "notes": "Fictional demonstration record; not an official UNESCO activity, expense, decision, or allocation.",
+                      "createdForDemo": "2026-10-22"
+                    }
                   }
                 ],
                 "children": []
               },
               {
-                "id": "activity-field-mapping",
-                "name": "Community Field Mapping",
+                "id": "edu-digital",
+                "name": "Digital Learning & Open Education",
                 "type": "Activity",
-                "owner": "Regional Focal Point",
-                "status": "Delayed",
-                "budget": "$12k",
-                "budget_usd": 12000,
+                "owner": "Digital Learning Focal Point",
+                "status": "Issue",
+                "budget": "$23k",
+                "budget_usd": 23000,
                 "badges": [
-                  "Mapping",
-                  "Community"
+                  "Digital Learning",
+                  "Open Education"
                 ],
-                "description": "Illustrative activity record.",
+                "description": "Fictional activity exploring accessible digital learning resources.",
                 "logs": [
                   {
-                    "id": "demo-log-3",
-                    "date": "2026-10-21",
+                    "id": "demo-edu-digital-5",
+                    "date": "2026-10-03",
                     "amount": 0,
-                    "text": "Field visit date being coordinated with local partners.",
-                    "status": "Delayed"
+                    "text": "Inventory of open learning resources started; licence fields need checking.",
+                    "status": "On Track",
+                    "provenance": {
+                      "recordType": "synthetic_demo",
+                      "source": "ShadowOps authored scenario",
+                      "sourceUrl": null,
+                      "verification": "fictional_not_verified",
+                      "evidenceRef": null,
+                      "notes": "Fictional demonstration record; not an official UNESCO activity, expense, decision, or allocation.",
+                      "createdForDemo": "2026-10-22"
+                    }
+                  },
+                  {
+                    "id": "demo-edu-digital-6",
+                    "date": "2026-10-08",
+                    "amount": 180,
+                    "text": "Connectivity assumptions added to the implementation note.",
+                    "status": "On Track",
+                    "provenance": {
+                      "recordType": "synthetic_demo",
+                      "source": "ShadowOps authored scenario",
+                      "sourceUrl": null,
+                      "verification": "fictional_not_verified",
+                      "evidenceRef": null,
+                      "notes": "Fictional demonstration record; not an official UNESCO activity, expense, decision, or allocation.",
+                      "createdForDemo": "2026-10-22"
+                    }
+                  },
+                  {
+                    "id": "demo-edu-digital-7",
+                    "date": "2026-10-14",
+                    "amount": 420,
+                    "text": "User testing delayed until accessibility review and consent language are agreed.",
+                    "status": "Delayed",
+                    "provenance": {
+                      "recordType": "synthetic_demo",
+                      "source": "ShadowOps authored scenario",
+                      "sourceUrl": null,
+                      "verification": "fictional_not_verified",
+                      "evidenceRef": null,
+                      "notes": "Fictional demonstration record; not an official UNESCO activity, expense, decision, or allocation.",
+                      "createdForDemo": "2026-10-22"
+                    }
+                  },
+                  {
+                    "id": "demo-edu-digital-8",
+                    "date": "2026-10-21",
+                    "amount": 95,
+                    "text": "Demo materials prepared; no learner-level personal data should be collected.",
+                    "status": "Issue",
+                    "provenance": {
+                      "recordType": "synthetic_demo",
+                      "source": "ShadowOps authored scenario",
+                      "sourceUrl": null,
+                      "verification": "fictional_not_verified",
+                      "evidenceRef": null,
+                      "notes": "Fictional demonstration record; not an official UNESCO activity, expense, decision, or allocation.",
+                      "createdForDemo": "2026-10-22"
+                    }
+                  }
+                ],
+                "children": []
+              }
+            ]
+          },
+          {
+            "id": "edu-skills",
+            "name": "Literacy, TVET & Lifelong Learning",
+            "type": "Theme",
+            "owner": "Unit Programme Lead (fictional)",
+            "status": "Issue",
+            "budget": "$41k",
+            "budget_usd": 41000,
+            "badges": [
+              "Literacy",
+              "Skills"
+            ],
+            "description": "Illustrative workstream on lifelong learning and youth skills.",
+            "logs": [
+              {
+                "id": "edu-skills-review",
+                "date": "2026-10-22",
+                "amount": 0,
+                "text": "Theme-level review summarises the fictional activity records below; verify evidence and dependencies before treating status as a decision.",
+                "status": "On Track",
+                "provenance": {
+                  "recordType": "synthetic_demo",
+                  "source": "ShadowOps authored scenario",
+                  "sourceUrl": null,
+                  "verification": "fictional_not_verified",
+                  "evidenceRef": null,
+                  "notes": "Fictional demonstration record; not an official UNESCO activity, expense, decision, or allocation.",
+                  "createdForDemo": "2026-10-22"
+                }
+              }
+            ],
+            "children": [
+              {
+                "id": "edu-youth",
+                "name": "Youth Skills & Lifelong Learning Pilot",
+                "type": "Activity",
+                "owner": "Lifelong Learning Focal Point",
+                "status": "Issue",
+                "budget": "$24k",
+                "budget_usd": 24000,
+                "badges": [
+                  "Youth",
+                  "TVET"
+                ],
+                "description": "Fictional pilot concept for skills mapping and lifelong learning.",
+                "logs": [
+                  {
+                    "id": "demo-edu-youth-9",
+                    "date": "2026-10-03",
+                    "amount": 0,
+                    "text": "Stakeholder map drafted with public institutions and community organisations.",
+                    "status": "On Track",
+                    "provenance": {
+                      "recordType": "synthetic_demo",
+                      "source": "ShadowOps authored scenario",
+                      "sourceUrl": null,
+                      "verification": "fictional_not_verified",
+                      "evidenceRef": null,
+                      "notes": "Fictional demonstration record; not an official UNESCO activity, expense, decision, or allocation.",
+                      "createdForDemo": "2026-10-22"
+                    }
+                  },
+                  {
+                    "id": "demo-edu-youth-10",
+                    "date": "2026-10-08",
+                    "amount": 180,
+                    "text": "Draft selection criteria circulated; regional representation needs review.",
+                    "status": "On Track",
+                    "provenance": {
+                      "recordType": "synthetic_demo",
+                      "source": "ShadowOps authored scenario",
+                      "sourceUrl": null,
+                      "verification": "fictional_not_verified",
+                      "evidenceRef": null,
+                      "notes": "Fictional demonstration record; not an official UNESCO activity, expense, decision, or allocation.",
+                      "createdForDemo": "2026-10-22"
+                    }
+                  },
+                  {
+                    "id": "demo-edu-youth-11",
+                    "date": "2026-10-14",
+                    "amount": 420,
+                    "text": "Budget estimate excludes participant travel and should not be treated as final.",
+                    "status": "Delayed",
+                    "provenance": {
+                      "recordType": "synthetic_demo",
+                      "source": "ShadowOps authored scenario",
+                      "sourceUrl": null,
+                      "verification": "fictional_not_verified",
+                      "evidenceRef": null,
+                      "notes": "Fictional demonstration record; not an official UNESCO activity, expense, decision, or allocation.",
+                      "createdForDemo": "2026-10-22"
+                    }
+                  },
+                  {
+                    "id": "demo-edu-youth-12",
+                    "date": "2026-10-21",
+                    "amount": 95,
+                    "text": "Pilot design revised to include a feedback loop and post-training follow-up.",
+                    "status": "Issue",
+                    "provenance": {
+                      "recordType": "synthetic_demo",
+                      "source": "ShadowOps authored scenario",
+                      "sourceUrl": null,
+                      "verification": "fictional_not_verified",
+                      "evidenceRef": null,
+                      "notes": "Fictional demonstration record; not an official UNESCO activity, expense, decision, or allocation.",
+                      "createdForDemo": "2026-10-22"
+                    }
+                  }
+                ],
+                "children": []
+              },
+              {
+                "id": "edu-literacy",
+                "name": "Literacy & Learning Data Brief",
+                "type": "Activity",
+                "owner": "Education Data Analyst",
+                "status": "Issue",
+                "budget": "$17k",
+                "budget_usd": 17000,
+                "badges": [
+                  "Evidence",
+                  "Data"
+                ],
+                "description": "Fictional evidence brief using mock aggregate data only.",
+                "logs": [
+                  {
+                    "id": "demo-edu-literacy-13",
+                    "date": "2026-10-03",
+                    "amount": 0,
+                    "text": "Outline agreed; indicator definitions documented in the working note.",
+                    "status": "On Track",
+                    "provenance": {
+                      "recordType": "synthetic_demo",
+                      "source": "ShadowOps authored scenario",
+                      "sourceUrl": null,
+                      "verification": "fictional_not_verified",
+                      "evidenceRef": null,
+                      "notes": "Fictional demonstration record; not an official UNESCO activity, expense, decision, or allocation.",
+                      "createdForDemo": "2026-10-22"
+                    }
+                  },
+                  {
+                    "id": "demo-edu-literacy-14",
+                    "date": "2026-10-08",
+                    "amount": 180,
+                    "text": "Mock table prepared to test the reporting layout; values are synthetic.",
+                    "status": "On Track",
+                    "provenance": {
+                      "recordType": "synthetic_demo",
+                      "source": "ShadowOps authored scenario",
+                      "sourceUrl": null,
+                      "verification": "fictional_not_verified",
+                      "evidenceRef": null,
+                      "notes": "Fictional demonstration record; not an official UNESCO activity, expense, decision, or allocation.",
+                      "createdForDemo": "2026-10-22"
+                    }
+                  },
+                  {
+                    "id": "demo-edu-literacy-15",
+                    "date": "2026-10-14",
+                    "amount": 420,
+                    "text": "Comparability caveat added because the example indicators use different reference periods.",
+                    "status": "Delayed",
+                    "provenance": {
+                      "recordType": "synthetic_demo",
+                      "source": "ShadowOps authored scenario",
+                      "sourceUrl": null,
+                      "verification": "fictional_not_verified",
+                      "evidenceRef": null,
+                      "notes": "Fictional demonstration record; not an official UNESCO activity, expense, decision, or allocation.",
+                      "createdForDemo": "2026-10-22"
+                    }
+                  },
+                  {
+                    "id": "demo-edu-literacy-16",
+                    "date": "2026-10-21",
+                    "amount": 95,
+                    "text": "Draft is awaiting technical review; no real country ranking or statistic is represented.",
+                    "status": "Issue",
+                    "provenance": {
+                      "recordType": "synthetic_demo",
+                      "source": "ShadowOps authored scenario",
+                      "sourceUrl": null,
+                      "verification": "fictional_not_verified",
+                      "evidenceRef": null,
+                      "notes": "Fictional demonstration record; not an official UNESCO activity, expense, decision, or allocation.",
+                      "createdForDemo": "2026-10-22"
+                    }
                   }
                 ],
                 "children": []
@@ -118,54 +534,851 @@
         ]
       },
       {
-        "id": "region-mekong",
-        "name": "Mekong Operations",
+        "id": "unit-natural-sciences",
+        "name": "Natural Sciences Unit",
         "type": "Regional",
-        "owner": "Regional Coordination Team",
+        "owner": "Unit Coordinator (fictional)",
         "status": "Issue",
-        "budget": "$45k",
-        "budget_usd": 45000,
+        "budget": "$108k",
+        "budget_usd": 108000,
         "badges": [
-          "Regional",
-          "Risk Review"
+          "Natural Sciences",
+          "Climate",
+          "Water"
         ],
-        "description": "Illustrative regional coordination layer.",
-        "logs": [],
+        "description": "Synthetic unit inspired by UNESCO natural-science themes, including water, biosphere and open science. No real project allocation is represented.",
+        "logs": [
+          {
+            "id": "unit-natural-sciences-log-1",
+            "date": "2026-10-02",
+            "amount": 0,
+            "text": "Unit workplan and reporting assumptions reviewed for this synthetic demo.",
+            "status": "On Track",
+            "provenance": {
+              "recordType": "synthetic_demo",
+              "source": "ShadowOps authored scenario",
+              "sourceUrl": null,
+              "verification": "fictional_not_verified",
+              "evidenceRef": null,
+              "notes": "Fictional demonstration record; not an official UNESCO activity, expense, decision, or allocation.",
+              "createdForDemo": "2026-10-22"
+            }
+          }
+        ],
         "children": [
           {
-            "id": "theme-resilience",
-            "name": "Operational Resilience",
+            "id": "ns-water",
+            "name": "Water Security & Climate Resilience",
             "type": "Theme",
-            "owner": "Operations Team",
-            "status": "On Track",
-            "budget": "$20k",
-            "budget_usd": 20000,
+            "owner": "Unit Programme Lead (fictional)",
+            "status": "Issue",
+            "budget": "$62k",
+            "budget_usd": 62000,
             "badges": [
-              "Resilience"
+              "Water",
+              "Climate Resilience"
             ],
-            "description": "Illustrative thematic workstream.",
-            "logs": [],
+            "description": "Illustrative workstream on water monitoring, climate resilience and local knowledge.",
+            "logs": [
+              {
+                "id": "ns-water-review",
+                "date": "2026-10-22",
+                "amount": 0,
+                "text": "Theme-level review summarises the fictional activity records below; verify evidence and dependencies before treating status as a decision.",
+                "status": "On Track",
+                "provenance": {
+                  "recordType": "synthetic_demo",
+                  "source": "ShadowOps authored scenario",
+                  "sourceUrl": null,
+                  "verification": "fictional_not_verified",
+                  "evidenceRef": null,
+                  "notes": "Fictional demonstration record; not an official UNESCO activity, expense, decision, or allocation.",
+                  "createdForDemo": "2026-10-22"
+                }
+              }
+            ],
             "children": [
               {
-                "id": "activity-logistics",
-                "name": "Field Logistics Readiness",
+                "id": "ns-monitor",
+                "name": "Water Monitoring & Local Knowledge",
                 "type": "Activity",
-                "owner": "Operations Team",
+                "owner": "Water Programme Officer",
                 "status": "Issue",
-                "budget": "$9k",
-                "budget_usd": 9000,
+                "budget": "$34k",
+                "budget_usd": 34000,
                 "badges": [
-                  "Logistics",
-                  "Risk"
+                  "Water",
+                  "Community"
                 ],
-                "description": "Illustrative activity record.",
+                "description": "Fictional scoping activity for a community-informed water monitoring concept.",
                 "logs": [
                   {
-                    "id": "demo-log-4",
-                    "date": "2026-10-22",
-                    "amount": 500,
-                    "text": "A dependency is awaiting confirmation; review contingency options.",
-                    "status": "Issue"
+                    "id": "demo-ns-monitor-17",
+                    "date": "2026-10-03",
+                    "amount": 0,
+                    "text": "Draft monitoring questions mapped to proposed indicators and field constraints.",
+                    "status": "On Track",
+                    "provenance": {
+                      "recordType": "synthetic_demo",
+                      "source": "ShadowOps authored scenario",
+                      "sourceUrl": null,
+                      "verification": "fictional_not_verified",
+                      "evidenceRef": null,
+                      "notes": "Fictional demonstration record; not an official UNESCO activity, expense, decision, or allocation.",
+                      "createdForDemo": "2026-10-22"
+                    }
+                  },
+                  {
+                    "id": "demo-ns-monitor-18",
+                    "date": "2026-10-08",
+                    "amount": 180,
+                    "text": "Potential data custodians identified; permission and reuse terms remain unconfirmed.",
+                    "status": "On Track",
+                    "provenance": {
+                      "recordType": "synthetic_demo",
+                      "source": "ShadowOps authored scenario",
+                      "sourceUrl": null,
+                      "verification": "fictional_not_verified",
+                      "evidenceRef": null,
+                      "notes": "Fictional demonstration record; not an official UNESCO activity, expense, decision, or allocation.",
+                      "createdForDemo": "2026-10-22"
+                    }
+                  },
+                  {
+                    "id": "demo-ns-monitor-19",
+                    "date": "2026-10-14",
+                    "amount": 420,
+                    "text": "Field schedule depends on seasonal access and local partner availability.",
+                    "status": "Delayed",
+                    "provenance": {
+                      "recordType": "synthetic_demo",
+                      "source": "ShadowOps authored scenario",
+                      "sourceUrl": null,
+                      "verification": "fictional_not_verified",
+                      "evidenceRef": null,
+                      "notes": "Fictional demonstration record; not an official UNESCO activity, expense, decision, or allocation.",
+                      "createdForDemo": "2026-10-22"
+                    }
+                  },
+                  {
+                    "id": "demo-ns-monitor-20",
+                    "date": "2026-10-21",
+                    "amount": 95,
+                    "text": "Data-quality checklist added; no actual sensor readings or community testimony are included.",
+                    "status": "Issue",
+                    "provenance": {
+                      "recordType": "synthetic_demo",
+                      "source": "ShadowOps authored scenario",
+                      "sourceUrl": null,
+                      "verification": "fictional_not_verified",
+                      "evidenceRef": null,
+                      "notes": "Fictional demonstration record; not an official UNESCO activity, expense, decision, or allocation.",
+                      "createdForDemo": "2026-10-22"
+                    }
+                  }
+                ],
+                "children": []
+              },
+              {
+                "id": "ns-biosphere",
+                "name": "Biosphere Landscape Restoration",
+                "type": "Activity",
+                "owner": "Biosphere Reserve Focal Point",
+                "status": "Issue",
+                "budget": "$28k",
+                "budget_usd": 28000,
+                "badges": [
+                  "Biosphere",
+                  "Restoration"
+                ],
+                "description": "Fictional landscape-restoration planning scenario.",
+                "logs": [
+                  {
+                    "id": "demo-ns-biosphere-21",
+                    "date": "2026-10-03",
+                    "amount": 0,
+                    "text": "Concept note links restoration options to community participation and monitoring.",
+                    "status": "On Track",
+                    "provenance": {
+                      "recordType": "synthetic_demo",
+                      "source": "ShadowOps authored scenario",
+                      "sourceUrl": null,
+                      "verification": "fictional_not_verified",
+                      "evidenceRef": null,
+                      "notes": "Fictional demonstration record; not an official UNESCO activity, expense, decision, or allocation.",
+                      "createdForDemo": "2026-10-22"
+                    }
+                  },
+                  {
+                    "id": "demo-ns-biosphere-22",
+                    "date": "2026-10-08",
+                    "amount": 180,
+                    "text": "Candidate indicators reviewed; baseline data availability varies by location.",
+                    "status": "On Track",
+                    "provenance": {
+                      "recordType": "synthetic_demo",
+                      "source": "ShadowOps authored scenario",
+                      "sourceUrl": null,
+                      "verification": "fictional_not_verified",
+                      "evidenceRef": null,
+                      "notes": "Fictional demonstration record; not an official UNESCO activity, expense, decision, or allocation.",
+                      "createdForDemo": "2026-10-22"
+                    }
+                  },
+                  {
+                    "id": "demo-ns-biosphere-23",
+                    "date": "2026-10-14",
+                    "amount": 420,
+                    "text": "Site visit postponed pending access arrangements and safety review.",
+                    "status": "Delayed",
+                    "provenance": {
+                      "recordType": "synthetic_demo",
+                      "source": "ShadowOps authored scenario",
+                      "sourceUrl": null,
+                      "verification": "fictional_not_verified",
+                      "evidenceRef": null,
+                      "notes": "Fictional demonstration record; not an official UNESCO activity, expense, decision, or allocation.",
+                      "createdForDemo": "2026-10-22"
+                    }
+                  },
+                  {
+                    "id": "demo-ns-biosphere-24",
+                    "date": "2026-10-21",
+                    "amount": 95,
+                    "text": "Map layers labelled as illustrative; verify boundaries and land-use permissions before field use.",
+                    "status": "Issue",
+                    "provenance": {
+                      "recordType": "synthetic_demo",
+                      "source": "ShadowOps authored scenario",
+                      "sourceUrl": null,
+                      "verification": "fictional_not_verified",
+                      "evidenceRef": null,
+                      "notes": "Fictional demonstration record; not an official UNESCO activity, expense, decision, or allocation.",
+                      "createdForDemo": "2026-10-22"
+                    }
+                  }
+                ],
+                "children": []
+              }
+            ]
+          },
+          {
+            "id": "ns-science",
+            "name": "Open Science & Science Policy",
+            "type": "Theme",
+            "owner": "Unit Programme Lead (fictional)",
+            "status": "Issue",
+            "budget": "$46k",
+            "budget_usd": 46000,
+            "badges": [
+              "Open Science",
+              "Science Policy"
+            ],
+            "description": "Illustrative workstream on research access, science advice and risk-informed policy.",
+            "logs": [
+              {
+                "id": "ns-science-review",
+                "date": "2026-10-22",
+                "amount": 0,
+                "text": "Theme-level review summarises the fictional activity records below; verify evidence and dependencies before treating status as a decision.",
+                "status": "On Track",
+                "provenance": {
+                  "recordType": "synthetic_demo",
+                  "source": "ShadowOps authored scenario",
+                  "sourceUrl": null,
+                  "verification": "fictional_not_verified",
+                  "evidenceRef": null,
+                  "notes": "Fictional demonstration record; not an official UNESCO activity, expense, decision, or allocation.",
+                  "createdForDemo": "2026-10-22"
+                }
+              }
+            ],
+            "children": [
+              {
+                "id": "ns-open",
+                "name": "Open Science Capacity Workshop",
+                "type": "Activity",
+                "owner": "Open Science Focal Point",
+                "status": "Issue",
+                "budget": "$25k",
+                "budget_usd": 25000,
+                "badges": [
+                  "Open Science",
+                  "Workshop"
+                ],
+                "description": "Fictional capacity workshop about responsible sharing and reproducibility.",
+                "logs": [
+                  {
+                    "id": "demo-ns-open-25",
+                    "date": "2026-10-03",
+                    "amount": 0,
+                    "text": "Session plan drafted around open access, data stewardship and reproducibility.",
+                    "status": "On Track",
+                    "provenance": {
+                      "recordType": "synthetic_demo",
+                      "source": "ShadowOps authored scenario",
+                      "sourceUrl": null,
+                      "verification": "fictional_not_verified",
+                      "evidenceRef": null,
+                      "notes": "Fictional demonstration record; not an official UNESCO activity, expense, decision, or allocation.",
+                      "createdForDemo": "2026-10-22"
+                    }
+                  },
+                  {
+                    "id": "demo-ns-open-26",
+                    "date": "2026-10-08",
+                    "amount": 180,
+                    "text": "Potential speakers identified; availability has not been confirmed.",
+                    "status": "On Track",
+                    "provenance": {
+                      "recordType": "synthetic_demo",
+                      "source": "ShadowOps authored scenario",
+                      "sourceUrl": null,
+                      "verification": "fictional_not_verified",
+                      "evidenceRef": null,
+                      "notes": "Fictional demonstration record; not an official UNESCO activity, expense, decision, or allocation.",
+                      "createdForDemo": "2026-10-22"
+                    }
+                  },
+                  {
+                    "id": "demo-ns-open-27",
+                    "date": "2026-10-14",
+                    "amount": 420,
+                    "text": "Draft checklist includes licensing, sensitive data screening and persistent identifiers.",
+                    "status": "Delayed",
+                    "provenance": {
+                      "recordType": "synthetic_demo",
+                      "source": "ShadowOps authored scenario",
+                      "sourceUrl": null,
+                      "verification": "fictional_not_verified",
+                      "evidenceRef": null,
+                      "notes": "Fictional demonstration record; not an official UNESCO activity, expense, decision, or allocation.",
+                      "createdForDemo": "2026-10-22"
+                    }
+                  },
+                  {
+                    "id": "demo-ns-open-28",
+                    "date": "2026-10-21",
+                    "amount": 95,
+                    "text": "Workshop delivery remains conditional on approval of costs and learning materials.",
+                    "status": "Issue",
+                    "provenance": {
+                      "recordType": "synthetic_demo",
+                      "source": "ShadowOps authored scenario",
+                      "sourceUrl": null,
+                      "verification": "fictional_not_verified",
+                      "evidenceRef": null,
+                      "notes": "Fictional demonstration record; not an official UNESCO activity, expense, decision, or allocation.",
+                      "createdForDemo": "2026-10-22"
+                    }
+                  }
+                ],
+                "children": []
+              },
+              {
+                "id": "ns-risk",
+                "name": "Disaster Risk & Science Advice Brief",
+                "type": "Activity",
+                "owner": "Science Policy Analyst",
+                "status": "Issue",
+                "budget": "$21k",
+                "budget_usd": 21000,
+                "badges": [
+                  "Risk",
+                  "Evidence"
+                ],
+                "description": "Fictional short brief on how scientific evidence could inform risk decisions.",
+                "logs": [
+                  {
+                    "id": "demo-ns-risk-29",
+                    "date": "2026-10-03",
+                    "amount": 0,
+                    "text": "Evidence matrix created with separate fields for source, date and confidence.",
+                    "status": "On Track",
+                    "provenance": {
+                      "recordType": "synthetic_demo",
+                      "source": "ShadowOps authored scenario",
+                      "sourceUrl": null,
+                      "verification": "fictional_not_verified",
+                      "evidenceRef": null,
+                      "notes": "Fictional demonstration record; not an official UNESCO activity, expense, decision, or allocation.",
+                      "createdForDemo": "2026-10-22"
+                    }
+                  },
+                  {
+                    "id": "demo-ns-risk-30",
+                    "date": "2026-10-08",
+                    "amount": 180,
+                    "text": "A draft claim was downgraded because the example source lacks a clear publication date.",
+                    "status": "On Track",
+                    "provenance": {
+                      "recordType": "synthetic_demo",
+                      "source": "ShadowOps authored scenario",
+                      "sourceUrl": null,
+                      "verification": "fictional_not_verified",
+                      "evidenceRef": null,
+                      "notes": "Fictional demonstration record; not an official UNESCO activity, expense, decision, or allocation.",
+                      "createdForDemo": "2026-10-22"
+                    }
+                  },
+                  {
+                    "id": "demo-ns-risk-31",
+                    "date": "2026-10-14",
+                    "amount": 420,
+                    "text": "Review note distinguishes observation, interpretation and recommendation.",
+                    "status": "Delayed",
+                    "provenance": {
+                      "recordType": "synthetic_demo",
+                      "source": "ShadowOps authored scenario",
+                      "sourceUrl": null,
+                      "verification": "fictional_not_verified",
+                      "evidenceRef": null,
+                      "notes": "Fictional demonstration record; not an official UNESCO activity, expense, decision, or allocation.",
+                      "createdForDemo": "2026-10-22"
+                    }
+                  },
+                  {
+                    "id": "demo-ns-risk-32",
+                    "date": "2026-10-21",
+                    "amount": 95,
+                    "text": "Brief is not an official warning and should not be used for operational emergency decisions.",
+                    "status": "Issue",
+                    "provenance": {
+                      "recordType": "synthetic_demo",
+                      "source": "ShadowOps authored scenario",
+                      "sourceUrl": null,
+                      "verification": "fictional_not_verified",
+                      "evidenceRef": null,
+                      "notes": "Fictional demonstration record; not an official UNESCO activity, expense, decision, or allocation.",
+                      "createdForDemo": "2026-10-22"
+                    }
+                  }
+                ],
+                "children": []
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "unit-culture",
+        "name": "Culture Unit",
+        "type": "Regional",
+        "owner": "Unit Coordinator (fictional)",
+        "status": "Issue",
+        "budget": "$97k",
+        "budget_usd": 97000,
+        "badges": [
+          "Culture",
+          "Living Heritage",
+          "World Heritage"
+        ],
+        "description": "Synthetic unit inspired by UNESCO culture themes. This is not a representation of actual UNESCO projects, grants or field operations.",
+        "logs": [
+          {
+            "id": "unit-culture-log-1",
+            "date": "2026-10-02",
+            "amount": 0,
+            "text": "Unit workplan and reporting assumptions reviewed for this synthetic demo.",
+            "status": "On Track",
+            "provenance": {
+              "recordType": "synthetic_demo",
+              "source": "ShadowOps authored scenario",
+              "sourceUrl": null,
+              "verification": "fictional_not_verified",
+              "evidenceRef": null,
+              "notes": "Fictional demonstration record; not an official UNESCO activity, expense, decision, or allocation.",
+              "createdForDemo": "2026-10-22"
+            }
+          }
+        ],
+        "children": [
+          {
+            "id": "culture-ich",
+            "name": "Living Heritage & Intangible Cultural Heritage",
+            "type": "Theme",
+            "owner": "Unit Programme Lead (fictional)",
+            "status": "Issue",
+            "budget": "$54k",
+            "budget_usd": 54000,
+            "badges": [
+              "ICH",
+              "Community"
+            ],
+            "description": "Illustrative workstream on living heritage safeguarding and community-led documentation.",
+            "logs": [
+              {
+                "id": "culture-ich-review",
+                "date": "2026-10-22",
+                "amount": 0,
+                "text": "Theme-level review summarises the fictional activity records below; verify evidence and dependencies before treating status as a decision.",
+                "status": "On Track",
+                "provenance": {
+                  "recordType": "synthetic_demo",
+                  "source": "ShadowOps authored scenario",
+                  "sourceUrl": null,
+                  "verification": "fictional_not_verified",
+                  "evidenceRef": null,
+                  "notes": "Fictional demonstration record; not an official UNESCO activity, expense, decision, or allocation.",
+                  "createdForDemo": "2026-10-22"
+                }
+              }
+            ],
+            "children": [
+              {
+                "id": "culture-living",
+                "name": "Living Heritage Capacity Building",
+                "type": "Activity",
+                "owner": "ICH Programme Officer",
+                "status": "Issue",
+                "budget": "$30k",
+                "budget_usd": 30000,
+                "badges": [
+                  "Training",
+                  "ICH"
+                ],
+                "description": "Fictional capacity-building activity; community consent is a prerequisite for documentation.",
+                "logs": [
+                  {
+                    "id": "demo-culture-living-33",
+                    "date": "2026-10-03",
+                    "amount": 0,
+                    "text": "Training outline drafted with community-led safeguarding principles.",
+                    "status": "On Track",
+                    "provenance": {
+                      "recordType": "synthetic_demo",
+                      "source": "ShadowOps authored scenario",
+                      "sourceUrl": null,
+                      "verification": "fictional_not_verified",
+                      "evidenceRef": null,
+                      "notes": "Fictional demonstration record; not an official UNESCO activity, expense, decision, or allocation.",
+                      "createdForDemo": "2026-10-22"
+                    }
+                  },
+                  {
+                    "id": "demo-culture-living-34",
+                    "date": "2026-10-08",
+                    "amount": 180,
+                    "text": "Participant list format minimised to avoid unnecessary personal information.",
+                    "status": "On Track",
+                    "provenance": {
+                      "recordType": "synthetic_demo",
+                      "source": "ShadowOps authored scenario",
+                      "sourceUrl": null,
+                      "verification": "fictional_not_verified",
+                      "evidenceRef": null,
+                      "notes": "Fictional demonstration record; not an official UNESCO activity, expense, decision, or allocation.",
+                      "createdForDemo": "2026-10-22"
+                    }
+                  },
+                  {
+                    "id": "demo-culture-living-35",
+                    "date": "2026-10-14",
+                    "amount": 420,
+                    "text": "Venue quotation received; transport and interpretation are separate unconfirmed costs.",
+                    "status": "Delayed",
+                    "provenance": {
+                      "recordType": "synthetic_demo",
+                      "source": "ShadowOps authored scenario",
+                      "sourceUrl": null,
+                      "verification": "fictional_not_verified",
+                      "evidenceRef": null,
+                      "notes": "Fictional demonstration record; not an official UNESCO activity, expense, decision, or allocation.",
+                      "createdForDemo": "2026-10-22"
+                    }
+                  },
+                  {
+                    "id": "demo-culture-living-36",
+                    "date": "2026-10-21",
+                    "amount": 95,
+                    "text": "Documentation workflow updated to require informed consent and community review before publication.",
+                    "status": "Issue",
+                    "provenance": {
+                      "recordType": "synthetic_demo",
+                      "source": "ShadowOps authored scenario",
+                      "sourceUrl": null,
+                      "verification": "fictional_not_verified",
+                      "evidenceRef": null,
+                      "notes": "Fictional demonstration record; not an official UNESCO activity, expense, decision, or allocation.",
+                      "createdForDemo": "2026-10-22"
+                    }
+                  }
+                ],
+                "children": []
+              },
+              {
+                "id": "culture-map",
+                "name": "Community Heritage Documentation Pilot",
+                "type": "Activity",
+                "owner": "Community Heritage Focal Point",
+                "status": "Issue",
+                "budget": "$24k",
+                "budget_usd": 24000,
+                "badges": [
+                  "Mapping",
+                  "Consent"
+                ],
+                "description": "Fictional pilot for documenting community heritage with access controls.",
+                "logs": [
+                  {
+                    "id": "demo-culture-map-37",
+                    "date": "2026-10-03",
+                    "amount": 0,
+                    "text": "Draft metadata includes custodian, language, date, consent and access level fields.",
+                    "status": "On Track",
+                    "provenance": {
+                      "recordType": "synthetic_demo",
+                      "source": "ShadowOps authored scenario",
+                      "sourceUrl": null,
+                      "verification": "fictional_not_verified",
+                      "evidenceRef": null,
+                      "notes": "Fictional demonstration record; not an official UNESCO activity, expense, decision, or allocation.",
+                      "createdForDemo": "2026-10-22"
+                    }
+                  },
+                  {
+                    "id": "demo-culture-map-38",
+                    "date": "2026-10-08",
+                    "amount": 180,
+                    "text": "Community consultation date proposed but not yet confirmed.",
+                    "status": "On Track",
+                    "provenance": {
+                      "recordType": "synthetic_demo",
+                      "source": "ShadowOps authored scenario",
+                      "sourceUrl": null,
+                      "verification": "fictional_not_verified",
+                      "evidenceRef": null,
+                      "notes": "Fictional demonstration record; not an official UNESCO activity, expense, decision, or allocation.",
+                      "createdForDemo": "2026-10-22"
+                    }
+                  },
+                  {
+                    "id": "demo-culture-map-39",
+                    "date": "2026-10-14",
+                    "amount": 420,
+                    "text": "One sample record marked restricted pending consent; no real cultural knowledge is included.",
+                    "status": "Delayed",
+                    "provenance": {
+                      "recordType": "synthetic_demo",
+                      "source": "ShadowOps authored scenario",
+                      "sourceUrl": null,
+                      "verification": "fictional_not_verified",
+                      "evidenceRef": null,
+                      "notes": "Fictional demonstration record; not an official UNESCO activity, expense, decision, or allocation.",
+                      "createdForDemo": "2026-10-22"
+                    }
+                  },
+                  {
+                    "id": "demo-culture-map-40",
+                    "date": "2026-10-21",
+                    "amount": 95,
+                    "text": "Review process updated to allow community correction, withdrawal and access restrictions.",
+                    "status": "Issue",
+                    "provenance": {
+                      "recordType": "synthetic_demo",
+                      "source": "ShadowOps authored scenario",
+                      "sourceUrl": null,
+                      "verification": "fictional_not_verified",
+                      "evidenceRef": null,
+                      "notes": "Fictional demonstration record; not an official UNESCO activity, expense, decision, or allocation.",
+                      "createdForDemo": "2026-10-22"
+                    }
+                  }
+                ],
+                "children": []
+              }
+            ]
+          },
+          {
+            "id": "culture-sites",
+            "name": "World Heritage & Underwater Heritage",
+            "type": "Theme",
+            "owner": "Unit Programme Lead (fictional)",
+            "status": "Issue",
+            "budget": "$43k",
+            "budget_usd": 43000,
+            "badges": [
+              "World Heritage",
+              "UCH"
+            ],
+            "description": "Illustrative workstream on heritage interpretation, desk review and responsible access.",
+            "logs": [
+              {
+                "id": "culture-sites-review",
+                "date": "2026-10-22",
+                "amount": 0,
+                "text": "Theme-level review summarises the fictional activity records below; verify evidence and dependencies before treating status as a decision.",
+                "status": "On Track",
+                "provenance": {
+                  "recordType": "synthetic_demo",
+                  "source": "ShadowOps authored scenario",
+                  "sourceUrl": null,
+                  "verification": "fictional_not_verified",
+                  "evidenceRef": null,
+                  "notes": "Fictional demonstration record; not an official UNESCO activity, expense, decision, or allocation.",
+                  "createdForDemo": "2026-10-22"
+                }
+              }
+            ],
+            "children": [
+              {
+                "id": "culture-uch",
+                "name": "Underwater Heritage Desk Review",
+                "type": "Activity",
+                "owner": "Underwater Heritage Focal Point",
+                "status": "Issue",
+                "budget": "$25k",
+                "budget_usd": 25000,
+                "badges": [
+                  "UCH",
+                  "Desk Review"
+                ],
+                "description": "Fictional desk-review exercise; no real site coordinates or sensitive location data included.",
+                "logs": [
+                  {
+                    "id": "demo-culture-uch-41",
+                    "date": "2026-10-03",
+                    "amount": 0,
+                    "text": "Public-source inventory drafted; source dates and licence terms need verification.",
+                    "status": "On Track",
+                    "provenance": {
+                      "recordType": "synthetic_demo",
+                      "source": "ShadowOps authored scenario",
+                      "sourceUrl": null,
+                      "verification": "fictional_not_verified",
+                      "evidenceRef": null,
+                      "notes": "Fictional demonstration record; not an official UNESCO activity, expense, decision, or allocation.",
+                      "createdForDemo": "2026-10-22"
+                    }
+                  },
+                  {
+                    "id": "demo-culture-uch-42",
+                    "date": "2026-10-08",
+                    "amount": 180,
+                    "text": "Sensitive-location policy added; precise coordinates should not be published without authorisation.",
+                    "status": "On Track",
+                    "provenance": {
+                      "recordType": "synthetic_demo",
+                      "source": "ShadowOps authored scenario",
+                      "sourceUrl": null,
+                      "verification": "fictional_not_verified",
+                      "evidenceRef": null,
+                      "notes": "Fictional demonstration record; not an official UNESCO activity, expense, decision, or allocation.",
+                      "createdForDemo": "2026-10-22"
+                    }
+                  },
+                  {
+                    "id": "demo-culture-uch-43",
+                    "date": "2026-10-14",
+                    "amount": 420,
+                    "text": "Desk review cannot establish site condition or ownership; field verification is outside this demo.",
+                    "status": "Delayed",
+                    "provenance": {
+                      "recordType": "synthetic_demo",
+                      "source": "ShadowOps authored scenario",
+                      "sourceUrl": null,
+                      "verification": "fictional_not_verified",
+                      "evidenceRef": null,
+                      "notes": "Fictional demonstration record; not an official UNESCO activity, expense, decision, or allocation.",
+                      "createdForDemo": "2026-10-22"
+                    }
+                  },
+                  {
+                    "id": "demo-culture-uch-44",
+                    "date": "2026-10-21",
+                    "amount": 95,
+                    "text": "Evidence register separates sourced facts from analyst assumptions and unresolved questions.",
+                    "status": "Issue",
+                    "provenance": {
+                      "recordType": "synthetic_demo",
+                      "source": "ShadowOps authored scenario",
+                      "sourceUrl": null,
+                      "verification": "fictional_not_verified",
+                      "evidenceRef": null,
+                      "notes": "Fictional demonstration record; not an official UNESCO activity, expense, decision, or allocation.",
+                      "createdForDemo": "2026-10-22"
+                    }
+                  }
+                ],
+                "children": []
+              },
+              {
+                "id": "culture-interpret",
+                "name": "Heritage Site Interpretation Toolkit",
+                "type": "Activity",
+                "owner": "Heritage Interpretation Officer",
+                "status": "Issue",
+                "budget": "$18k",
+                "budget_usd": 18000,
+                "badges": [
+                  "Interpretation",
+                  "Public Engagement"
+                ],
+                "description": "Fictional toolkit activity for accessible and context-aware heritage interpretation.",
+                "logs": [
+                  {
+                    "id": "demo-culture-interpret-45",
+                    "date": "2026-10-03",
+                    "amount": 0,
+                    "text": "Audience needs outlined for local visitors, educators and community guides.",
+                    "status": "On Track",
+                    "provenance": {
+                      "recordType": "synthetic_demo",
+                      "source": "ShadowOps authored scenario",
+                      "sourceUrl": null,
+                      "verification": "fictional_not_verified",
+                      "evidenceRef": null,
+                      "notes": "Fictional demonstration record; not an official UNESCO activity, expense, decision, or allocation.",
+                      "createdForDemo": "2026-10-22"
+                    }
+                  },
+                  {
+                    "id": "demo-culture-interpret-46",
+                    "date": "2026-10-08",
+                    "amount": 180,
+                    "text": "Draft text flagged for historical review and consultation with relevant custodians.",
+                    "status": "On Track",
+                    "provenance": {
+                      "recordType": "synthetic_demo",
+                      "source": "ShadowOps authored scenario",
+                      "sourceUrl": null,
+                      "verification": "fictional_not_verified",
+                      "evidenceRef": null,
+                      "notes": "Fictional demonstration record; not an official UNESCO activity, expense, decision, or allocation.",
+                      "createdForDemo": "2026-10-22"
+                    }
+                  },
+                  {
+                    "id": "demo-culture-interpret-47",
+                    "date": "2026-10-14",
+                    "amount": 420,
+                    "text": "Accessibility review requested for plain language, captions and multilingual delivery.",
+                    "status": "Delayed",
+                    "provenance": {
+                      "recordType": "synthetic_demo",
+                      "source": "ShadowOps authored scenario",
+                      "sourceUrl": null,
+                      "verification": "fictional_not_verified",
+                      "evidenceRef": null,
+                      "notes": "Fictional demonstration record; not an official UNESCO activity, expense, decision, or allocation.",
+                      "createdForDemo": "2026-10-22"
+                    }
+                  },
+                  {
+                    "id": "demo-culture-interpret-48",
+                    "date": "2026-10-21",
+                    "amount": 95,
+                    "text": "Toolkit marked draft; factual claims and image rights require sign-off before publication.",
+                    "status": "Issue",
+                    "provenance": {
+                      "recordType": "synthetic_demo",
+                      "source": "ShadowOps authored scenario",
+                      "sourceUrl": null,
+                      "verification": "fictional_not_verified",
+                      "evidenceRef": null,
+                      "notes": "Fictional demonstration record; not an official UNESCO activity, expense, decision, or allocation.",
+                      "createdForDemo": "2026-10-22"
+                    }
                   }
                 ],
                 "children": []
