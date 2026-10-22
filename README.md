@@ -56,3 +56,15 @@ The current `dummy.json` demonstrates three fictional programme units: **Educati
 **Important provenance note:** this is a synthetic UX/testing dataset, not an official UNESCO organisation chart or a register of UNESCO projects, allocations, expenses, decisions, or field events. Public UNESCO pages are referenced only for broad thematic inspiration. No real programme allocation or operational record is claimed. Every log includes a `provenance` object that marks it as `synthetic_demo`, unverified, and without an external evidence reference. The top-level `_meta.dataProvenance` documents sources, method, and limitations.
 
 For production use, replace the dummy records with approved source data, retain source URLs and evidence references at record level, and validate permissions before publishing sensitive community or heritage information.
+
+## Operations dashboard overhaul (October 2026)
+
+The executive dashboard now focuses on current delivery state and management action rather than treating every historical log as a current critical issue. It includes:
+
+- Portfolio overview KPIs for planned activity budget, tracked activities, current issues and delays.
+- Delivery-health distribution for On Track, Delayed, Issue and Completed activities.
+- Search and status filters to narrow the management-attention list.
+- Budget distribution by unit and a concise Capture → Validate → Review & Decide → Publish & Learn reporting flow.
+- Clear warnings that the included figures are synthetic demo values, not official allocations, expenditure or verified results.
+
+The demo activity records now carry explicit current status, a fictional progress percentage, a fictional due date and a simple illustrative risk level. Historical log status is retained as history; it must not be used as the sole basis for inferring the current activity status. These fields are for prototype UI testing and are not yet a production-grade indicator, financial or risk register.
